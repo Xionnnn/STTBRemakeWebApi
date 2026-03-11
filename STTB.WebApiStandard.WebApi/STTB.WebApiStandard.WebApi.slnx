@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../STTB.WebApiStandard.Contracts/STTB.WebApiStandard.Contracts.csproj" />
+  <Project Path="../STTB.WebApiStandard.Entities/STTB.WebApiStandard.Entities.csproj" />
+  <Project Path="../STTB.WebApiStandard/STTB.WebApiStandard.csproj" />
+  <Project Path="STTB.WebApiStandard.WebApi.csproj" />
+</Solution>
