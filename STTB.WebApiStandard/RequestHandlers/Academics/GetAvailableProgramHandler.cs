@@ -36,6 +36,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Academics
                 .Select(p => new ItemDTO
                 {
                     ProgramId = p.Id,
+                    Slug = p.Slug,
                     ProgramName = p.Name,
                     Degree = p.DegreeAbbr,
                     Duration = p.StudyDuration,

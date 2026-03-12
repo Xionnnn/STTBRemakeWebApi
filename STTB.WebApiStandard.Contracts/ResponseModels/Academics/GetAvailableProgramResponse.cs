@@ -12,6 +12,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
     public class ItemDTO
     {
         public long ProgramId { get; set; }
+        public string Slug { get; set; } = string.Empty;
         public string ProgramName { get; set; } = string.Empty;
         public string Degree { get; set; } = string.Empty;
         public int? Duration { get; set; } = null;

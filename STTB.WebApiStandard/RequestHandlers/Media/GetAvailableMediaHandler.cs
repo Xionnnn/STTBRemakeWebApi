@@ -11,30 +11,29 @@ using System.Threading.Tasks;
 
 namespace STTB.WebApiStandard.RequestHandlers.Media
 {
-    public class GetAvailableVideoHandler : IRequestHandler<GetAvailableVideoRequest, GetAvailableVideoResponse>
+    public class GetAvailableMediaHandler : IRequestHandler<GetAvailableMediaRequest, GetAvailableMediaResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly ILogger<GetAvailableVideoHandler> _logger;
+        private readonly ILogger<GetAvailableMediaHandler> _logger;
 
-        public GetAvailableVideoHandler(SttbDbContext db, ILogger<GetAvailableVideoHandler> logger)
+        public GetAvailableMediaHandler(SttbDbContext db, ILogger<GetAvailableMediaHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<GetAvailableVideoResponse> Handle(GetAvailableVideoRequest request, CancellationToken ct)
+        public async Task<GetAvailableMediaResponse> Handle(GetAvailableMediaRequest request, CancellationToken ct)
         {
-            // 1. Initial query: IsPublished and MediaFormat = 'Video'
+            var formatLower = request.MediaFormat.ToLower();
             var query = _db.MediaItems
                 .Include(m => m.MediaItemTopics)
                     .ThenInclude(mt => mt.TopicCategory)
-                .Where(m => m.IsPublished && m.MediaFormat == "video")
+                .Where(m => m.IsPublished && m.MediaFormat.ToLower() == formatLower)
                 .AsNoTracking();
 
-            // 2. Apply Filters
-            if (!string.IsNullOrWhiteSpace(request.VideoTitle))
+            if (!string.IsNullOrWhiteSpace(request.MediaTitle))
             {
-                query = query.Where(m => m.Title.Contains(request.VideoTitle));
+                query = query.Where(m => m.Title.Contains(request.MediaTitle));
             }
 
             if (!string.IsNullOrWhiteSpace(request.AuthorName))
@@ -54,35 +53,32 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
                 query = query.Where(m => m.PublishedAt >= dateUtc && m.PublishedAt < dateUtc.AddDays(1));
             }
 
-            // 3. Optional Fetch Limit
             if (request.FetchLimit.HasValue)
             {
                 query = query.Take(request.FetchLimit.Value);
             }
 
-            // 4. Apply Sorting
             query = ApplySorting(query, request.OrderBy, request.OrderState);
 
             var totalItems = await query.CountAsync(ct);
 
-            // 5. Pagination and Projection (including Theme, Author, Description, Category)
             var items = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(m => new VideoDTO
+                .Select(m => new MediaDTO
                 {
                     Id = m.Id,
                     Slug = m.Slug,
-                    VideoTitle = m.Title,
+                    MediaTitle = m.Title,
                     AuthorName = m.AuthorName ?? string.Empty,
-                    VideoDescription = m.Description ?? string.Empty,
+                    MediaDescription = m.Description ?? string.Empty,
                     Theme = m.Theme ?? string.Empty,
                     PublicationDate = m.PublishedAt,
                     Category = m.MediaItemTopics
                         .Select(mt => mt.TopicCategory.Name)
                         .ToList(),
                     ThumbnailPath = _db.Assets
-                        .Where(a => a.ModelType == "media_items\\video_thumbnail" && a.ModelId == m.Id)
+                        .Where(a => a.ModelType == $"media_items\\{formatLower}_thumbnail" && a.ModelId == m.Id)
                         .Select(a => a.FilePath)
                         .FirstOrDefault() ?? string.Empty
                 })
@@ -92,12 +88,12 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
 
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
 
-            return new GetAvailableVideoResponse
+            return new GetAvailableMediaResponse
             {
                 Items = items,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,
-                TotalVideo = totalItems,  
+                TotalMedia = totalItems,  
                 TotalPages = totalPages
             };
         }
@@ -116,7 +112,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
 
             return orderBy switch
             {
-                "VideoTitle" => isDescending
+                "MediaTitle" => isDescending
                     ? query.OrderByDescending(m => m.Title)
                     : query.OrderBy(m => m.Title),
 

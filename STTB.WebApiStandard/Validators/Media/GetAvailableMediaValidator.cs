@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace STTB.WebApiStandard.Validators.Media
 {
-    public class GetAvailableVideoValidator : AbstractValidator<GetAvailableVideoRequest>
+    public class GetAvailableMediaValidator : AbstractValidator<GetAvailableMediaRequest>
     {
         private readonly string[] _allowedOrderBy = { "VideoTitle", "AuthorName" };
         private readonly string[] _allowedOrderState = { "asc", "desc" };
 
-        public GetAvailableVideoValidator()
+        public GetAvailableMediaValidator()
         {
             RuleFor(x => x.PageNumber)
                 .GreaterThan(0)

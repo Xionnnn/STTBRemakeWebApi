@@ -10,29 +10,28 @@ using System.Threading.Tasks;
 
 namespace STTB.WebApiStandard.RequestHandlers.Media
 {
-    public class GetVideoCategoriesHandler : IRequestHandler<GetVideoCategoriesRequest, GetVideoCategoriesResponse>
+    public class GetMediaCategoriesHandler : IRequestHandler<GetMediaCategoriesRequest, GetMediaCategoriesResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly ILogger<GetVideoCategoriesHandler> _logger;
+        private readonly ILogger<GetMediaCategoriesHandler> _logger;
 
-        public GetVideoCategoriesHandler(SttbDbContext db, ILogger<GetVideoCategoriesHandler> logger)
+        public GetMediaCategoriesHandler(SttbDbContext db, ILogger<GetMediaCategoriesHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<GetVideoCategoriesResponse> Handle(GetVideoCategoriesRequest request, CancellationToken ct)
+        public async Task<GetMediaCategoriesResponse> Handle(GetMediaCategoriesRequest request, CancellationToken ct)
         {
-            // The prompt says "all video category". Using MediaTopicCategory as video categories.
             var categories = await _db.MediaTopicCategories
                 .AsNoTracking()
                 .OrderBy(c => c.Name)
                 .Select(c => c.Name)
                 .ToListAsync(ct);
 
-            _logger.LogInformation($"Found {categories.Count} video categories");
+            _logger.LogInformation($"Found {categories.Count} media categories");
 
-            return new GetVideoCategoriesResponse
+            return new GetMediaCategoriesResponse
             {
                 Items = categories
             };

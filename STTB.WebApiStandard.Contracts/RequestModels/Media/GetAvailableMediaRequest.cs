@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using STTB.WebApiStandard.Contracts.ResponseModels.Media;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,10 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.Media
 {
-    public class GetAvailableVideoRequest : IRequest<GetAvailableVideoResponse>
+    public class GetAvailableMediaRequest : IRequest<GetAvailableMediaResponse>
     {
-        public string VideoTitle { get; set; } = string.Empty;
+        public string MediaFormat { get; set; } = string.Empty;
+        public string MediaTitle { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
         public string AuthorName { get; set; } = string.Empty;
         public string OrderBy { get; set; } = string.Empty;

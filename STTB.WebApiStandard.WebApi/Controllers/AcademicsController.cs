@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.Academic;
 
+using STTB.WebApiStandard.Contracts.RequestModels.Academics;
+
 namespace STTB.WebApiStandard.WebApi.Controllers
 {
     [Route("api/v1/academics")]
@@ -28,6 +30,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers
         {
             var request = new GetProgramRequest { ProgramSlug = slug };
             var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("get-academic-requirements")]
+        public async Task<IActionResult> GetAcademicRequirements(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAcademicRequirementsRequest(), ct);
             return Ok(response);
         }
     }
