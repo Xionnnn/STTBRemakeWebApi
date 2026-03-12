@@ -59,7 +59,7 @@ namespace STTB.WebApiStandard.RequestHandlers.News
                 .Take(request.PageSize)
                 .Select(n => new NewsDTO
                 {
-                    Id = (int?)n.Id,
+                    Id = n.Id,
                     Slug = n.Slug,
                     Title = n.Title,
                     content = n.Content,

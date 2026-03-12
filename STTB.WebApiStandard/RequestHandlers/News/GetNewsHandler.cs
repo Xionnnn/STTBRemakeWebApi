@@ -27,7 +27,7 @@ namespace STTB.WebApiStandard.RequestHandlers.News
                 .AsNoTracking()
                 .Select(n => new GetNewsResponse
                 {
-                    Id = (int?)n.Id,
+                    Id = n.Id,
                     Slug = n.Slug,
                     Title = n.Title,
                     Content = n.Content,

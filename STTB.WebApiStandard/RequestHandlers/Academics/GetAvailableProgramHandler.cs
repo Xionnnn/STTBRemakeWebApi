@@ -35,7 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Academics
             var items = await query
                 .Select(p => new ItemDTO
                 {
-                    ProgramId = (int?)p.Id,
+                    ProgramId = p.Id,
                     ProgramName = p.Name,
                     Degree = p.DegreeAbbr,
                     Duration = p.StudyDuration,

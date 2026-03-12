@@ -18,7 +18,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.News
     }
     public class NewsDTO
     {
-        public int? Id { get; set; } = null;
+        public long Id { get; set; }
         public string Slug { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string content { get; set; } = string.Empty;
