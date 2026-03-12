@@ -22,5 +22,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }
+
+        [HttpGet("get-program/{slug}")]
+        public async Task<IActionResult> GetProgram(string slug, CancellationToken ct)
+        {
+            var request = new GetProgramRequest { ProgramSlug = slug };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
     }
 }
