@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,7 +22,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.News
         public string Slug { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string content { get; set; } = string.Empty;
-        public string PublicationDate { get; set; } = string.Empty;
+        public DateTime PublicationDate { get; set; }
         public string ImagePath { get; set; } = string.Empty;
     }
 }

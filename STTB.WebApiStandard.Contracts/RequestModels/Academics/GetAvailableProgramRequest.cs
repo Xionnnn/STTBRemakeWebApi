@@ -4,7 +4,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.Academic
 {
-    public class GetAvailableProgramsRequest
+    public class GetAvailableProgramRequest
     {
     }
 }

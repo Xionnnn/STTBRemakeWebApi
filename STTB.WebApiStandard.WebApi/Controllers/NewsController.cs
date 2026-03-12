@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.News;
@@ -19,6 +19,14 @@ namespace STTB.WebApiStandard.WebApi.Controllers
         [HttpGet("get-available-news")]
         public async Task<IActionResult> GetAvailable([FromQuery] GetAvailableNewsRequest request, CancellationToken ct)
         {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("get-news/{slug}")]
+        public async Task<IActionResult> GetNews(string slug, CancellationToken ct)
+        {
+            var request = new GetNewsRequest { NewsSlug = slug };
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }

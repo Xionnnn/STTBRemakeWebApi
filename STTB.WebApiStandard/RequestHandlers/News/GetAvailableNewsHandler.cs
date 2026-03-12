@@ -63,7 +63,7 @@ namespace STTB.WebApiStandard.RequestHandlers.News
                     Slug = n.Slug,
                     Title = n.Title,
                     content = n.Content,
-                    PublicationDate = n.PublishedAt.ToString("dd-MM-yyyy HH:mm"),
+                    PublicationDate = n.PublishedAt,
                     ImagePath = _db.Assets
                         .Where(a => a.ModelType == "news_posts\\news_image" && a.ModelId == n.Id)
                         .Select(a => a.FilePath)

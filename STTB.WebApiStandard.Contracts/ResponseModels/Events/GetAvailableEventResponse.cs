@@ -4,7 +4,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.Events
 {
-    public class GetAvailableEventsResponse
+    public class GetAvailableEventResponse
     {
         public IReadOnlyList<EventDTO> Items { get; set; } = Array.Empty<EventDTO>();
     }

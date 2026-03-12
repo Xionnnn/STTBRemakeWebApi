@@ -4,7 +4,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
 {
-    public class GetAvailableProgramsResponse
+    public class GetAvailableProgramResponse
     {
         public IReadOnlyList<ItemDTO> Items { get; set; } = Array.Empty<ItemDTO>();
     }
