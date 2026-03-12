@@ -13,9 +13,9 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
     {
         public int? ProgramId { get; set; } = null;
         public string ProgramName { get; set; } = string.Empty;
+        public string Degree { get; set; } = string.Empty;
         public int? Duration { get; set; } = null;
-        public string Description { get; set; } = string.Empty;
-        public IReadOnlyList<string> Highlight { get; set; } = Array.Empty<string>();
+        public int? TotalCredit { get; set; } = null;
     }
 
 }
