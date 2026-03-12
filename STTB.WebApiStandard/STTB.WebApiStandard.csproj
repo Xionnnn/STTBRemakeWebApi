@@ -19,8 +19,4 @@
     <ProjectReference Include="..\STTB.WebApiStandard.Entities\STTB.WebApiStandard.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\Events\" />
-  </ItemGroup>
-
 </Project>
