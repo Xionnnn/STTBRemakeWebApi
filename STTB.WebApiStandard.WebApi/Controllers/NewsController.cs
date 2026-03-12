@@ -30,5 +30,12 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }
+
+        [HttpGet("get-all-categories")]
+        public async Task<IActionResult> GetAllCategories(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAllNewsCategoriesRequest(), ct);
+            return Ok(response);
+        }
     }
 }

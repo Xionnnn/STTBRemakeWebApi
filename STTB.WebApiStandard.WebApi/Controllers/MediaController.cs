@@ -24,5 +24,12 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }
+
+        [HttpGet("get-video-categories")]
+        public async Task<IActionResult> GetVideoCategories(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetVideoCategoriesRequest(), ct);
+            return Ok(response);
+        }
     }
 }
