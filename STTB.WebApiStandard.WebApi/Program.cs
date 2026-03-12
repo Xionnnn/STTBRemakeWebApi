@@ -71,6 +71,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//Local Storage / Static Files
+app.UseStaticFiles();
+
 // Error Compliant
 app.UseExceptionHandler("/error");
 

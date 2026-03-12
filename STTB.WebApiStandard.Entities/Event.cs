@@ -27,6 +27,8 @@ public partial class Event
 
     public DateTime UpdatedAt { get; set; }
 
+    public string? Location { get; set; }
+
     public virtual ICollection<EventCategoryMap> EventCategoryMaps { get; set; } = new List<EventCategoryMap>();
 
     public virtual EventOrganizer? EventOrganizer { get; set; }
