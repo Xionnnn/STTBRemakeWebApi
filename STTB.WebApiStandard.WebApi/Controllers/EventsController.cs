@@ -30,5 +30,12 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }
+
+        [HttpGet("get-all-organizers")]
+        public async Task<IActionResult> GetAllOrganizers(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAllOrganizersRequest(), ct);
+            return Ok(response);
+        }
     }
 }

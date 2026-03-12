@@ -40,6 +40,12 @@ namespace STTB.WebApiStandard.RequestHandlers.Events
                     .Any(ecm => ecm.Category.Name.Contains(request.CategoryName)));
             }
 
+            if (!string.IsNullOrWhiteSpace(request.OrganizerName))
+            {
+                query = query.Where(e => e.EventOrganizer != null
+                    && e.EventOrganizer.Name.Contains(request.OrganizerName));
+            }
+
             if (request.EventDate.HasValue)
             {
                 var dateUtc = DateTime.SpecifyKind(request.EventDate.Value.Date, DateTimeKind.Utc);

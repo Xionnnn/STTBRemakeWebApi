@@ -55,6 +55,12 @@ namespace STTB.WebApiStandard.Validators.Events
                 .When(x => x.CategoryName != string.Empty)
                 .WithMessage("CategoryName cannot be null or contain only whitespace when provided.");
 
+            // OrganizerName: if provided, cannot be whitespace-only
+            RuleFor(x => x.OrganizerName)
+                .Must(value => !string.IsNullOrWhiteSpace(value))
+                .When(x => x.OrganizerName != string.Empty)
+                .WithMessage("OrganizerName cannot be null or contain only whitespace when provided.");
+
             // FetchLimit: if provided, must be > 0
             RuleFor(x => x.FetchLimit)
                 .GreaterThan(0)

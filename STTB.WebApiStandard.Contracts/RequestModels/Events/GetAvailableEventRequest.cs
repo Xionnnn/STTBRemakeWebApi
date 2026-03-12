@@ -10,6 +10,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.Events
     {
         public string EventTitle { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
+        public string OrganizerName { get; set; } = string.Empty;
         public string OrderBy { get; set; } = string.Empty;
         public string OrderState { get; set; } = string.Empty;
         public int PageNumber { get; set; } = 1;
