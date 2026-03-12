@@ -64,6 +64,9 @@ namespace STTB.WebApiStandard.RequestHandlers.News
                     Title = n.Title,
                     content = n.Content,
                     PublicationDate = n.PublishedAt,
+                    Category = n.NewsPostCategories
+                        .Select(npc => npc.Category.Name)
+                        .ToList(),
                     ImagePath = _db.Assets
                         .Where(a => a.ModelType == "news_posts\\news_image" && a.ModelId == n.Id)
                         .Select(a => a.FilePath)

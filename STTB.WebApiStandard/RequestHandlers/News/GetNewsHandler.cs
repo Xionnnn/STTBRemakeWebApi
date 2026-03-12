@@ -23,6 +23,8 @@ namespace STTB.WebApiStandard.RequestHandlers.News
         public async Task<GetNewsResponse?> Handle(GetNewsRequest request, CancellationToken ct)
         {
             var news = await _db.NewsPosts
+                .Include(n => n.NewsPostCategories)
+                    .ThenInclude(npc => npc.Category)
                 .Where(n => n.Slug == request.NewsSlug && n.IsPublished)
                 .AsNoTracking()
                 .Select(n => new GetNewsResponse
@@ -32,6 +34,9 @@ namespace STTB.WebApiStandard.RequestHandlers.News
                     Title = n.Title,
                     Content = n.Content,
                     PublicationDate = n.PublishedAt,
+                    Category = n.NewsPostCategories
+                        .Select(npc => npc.Category.Name)
+                        .ToList(),
                     ImagePath = _db.Assets
                         .Where(a => a.ModelType == "news_posts\\news_image" && a.ModelId == n.Id)
                         .Select(a => a.FilePath)

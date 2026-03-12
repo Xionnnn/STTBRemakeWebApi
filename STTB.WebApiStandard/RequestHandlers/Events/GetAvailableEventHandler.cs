@@ -78,7 +78,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Events
                     OrganizerName = e.EventOrganizer != null ? e.EventOrganizer.Name : string.Empty,
                     Category = e.EventCategoryMaps
                         .Select(ecm => ecm.Category.Name)
-                        .FirstOrDefault() ?? string.Empty,
+                        .ToList(),
                     ImagePath = _db.Assets
                         .Where(a => a.ModelType == "events\\event_image" && a.ModelId == e.Id)
                         .Select(a => a.FilePath)

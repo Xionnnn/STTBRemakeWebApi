@@ -24,5 +24,6 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.News
         public string content { get; set; } = string.Empty;
         public DateTime PublicationDate { get; set; }
         public string ImagePath { get; set; } = string.Empty;
+        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
     }
 }

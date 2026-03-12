@@ -11,7 +11,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Events
         public DateTime? EndsAtDate { get; set; }
         public string Location { get; set; } = string.Empty;
         public string OrganizerName { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
+        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
         public string Description { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
     }
