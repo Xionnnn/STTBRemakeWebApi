@@ -1,0 +1,404 @@
+-- =========================================
+-- REVISED MINIMAL STTB PROFILE WEB SCHEMA
+-- PostgreSQL
+-- =========================================
+
+-- =========================
+-- 1) SHARED ASSETS
+-- =========================
+CREATE TABLE assets (
+    id BIGSERIAL PRIMARY KEY,
+    file_name VARCHAR(255) NOT NULL,
+    file_path TEXT NOT NULL UNIQUE,
+    mime_type VARCHAR(100) NOT NULL,
+    title VARCHAR(255),
+    alt_text VARCHAR(255),
+    size_bytes BIGINT,
+    width INT,
+    height INT,
+    model_type VARCHAR(255),
+    model_id BIGINT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- =========================
+-- 2) CMS AUTH
+-- minimal, non-polymorphic
+-- =========================
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    last_login_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE roles (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE permissions (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE role_permissions (
+    role_id BIGINT NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+    permission_id BIGINT NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (role_id, permission_id)
+);
+
+CREATE TABLE user_roles (
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    role_id BIGINT NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (user_id, role_id)
+);
+
+CREATE TABLE user_permissions (
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    permission_id BIGINT NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (user_id, permission_id)
+);
+
+-- =========================
+-- 3) ADMISSION DEADLINES
+-- =========================
+CREATE TABLE admission_deadlines (
+    id BIGSERIAL PRIMARY KEY,
+    academic_year VARCHAR(9) NOT NULL UNIQUE,
+    first_batch_closing_at TIMESTAMPTZ NOT NULL,
+    second_batch_closing_at TIMESTAMPTZ NOT NULL,
+    third_batch_closing_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT chk_admission_deadlines_academic_year_format
+        CHECK (academic_year ~ '^[0-9]{4}-[0-9]{4}$'),
+    CONSTRAINT chk_admission_deadlines_batch_order
+        CHECK (
+            first_batch_closing_at <= second_batch_closing_at
+            AND second_batch_closing_at <= third_batch_closing_at
+        )
+);
+
+-- =========================
+-- 4) ACADEMICS
+-- =========================
+CREATE TABLE academic_programs (
+    id BIGSERIAL PRIMARY KEY,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    degree_abbr VARCHAR(30) NOT NULL,
+    graduate_profile_motto VARCHAR(150) NOT NULL,
+    graduate_profile_description TEXT,
+    informed_description TEXT NOT NULL,
+    transformed_description TEXT NOT NULL,
+    transformative_description TEXT NOT NULL,
+    total_credits INT NOT NULL CHECK (total_credits >= 0),
+    study_duration INT NOT NULL CHECK (study_duration > 0),
+    learning_system_text TEXT,
+    is_published BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_systems (
+    id BIGSERIAL PRIMARY KEY,
+    program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    system_text TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_requirements (
+    id BIGSERIAL PRIMARY KEY,
+    program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    requirement_text TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_notes (
+    id BIGSERIAL PRIMARY KEY,
+    program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    note_text TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_graduate_criteria (
+    id BIGSERIAL PRIMARY KEY,
+    program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    criterion_name VARCHAR(30) NOT NULL CHECK (
+        criterion_name IN ('Informed', 'Transformed', 'Transformative')
+    ),
+    description TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (program_id, criterion_name)
+);
+
+CREATE TABLE academic_course_categories (
+    id BIGSERIAL PRIMARY KEY,
+    program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    name VARCHAR(150) NOT NULL,
+    total_credits INT NOT NULL CHECK (total_credits >= 0),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_courses (
+    id BIGSERIAL PRIMARY KEY,
+    category_id BIGINT NOT NULL REFERENCES academic_course_categories(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    credits INT NOT NULL CHECK (credits >= 0),
+    description TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_cost_categories (
+    id BIGSERIAL PRIMARY KEY,
+    category_name VARCHAR(150) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_costs (
+    id BIGSERIAL PRIMARY KEY,
+    academic_program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    price NUMERIC(14,2) NOT NULL CHECK (price >= 0),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE academic_program_cost_category_map (
+    academic_program_cost_id BIGINT NOT NULL REFERENCES academic_program_costs(id) ON DELETE CASCADE,
+    academic_program_cost_category_id BIGINT NOT NULL REFERENCES academic_program_cost_categories(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (academic_program_cost_id, academic_program_cost_category_id)
+);
+
+-- =========================
+-- 5) LECTURERS
+-- =========================
+CREATE TABLE lecturer_degrees (
+    id BIGSERIAL PRIMARY KEY,
+    degree_name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lecturer_roles (
+    id BIGSERIAL PRIMARY KEY,
+    role_name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lecturers (
+    id BIGSERIAL PRIMARY KEY,
+    lecturer_name VARCHAR(150) NOT NULL,
+    joined_at TIMESTAMPTZ NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lecturer_degree_map (
+    lecturer_id BIGINT NOT NULL REFERENCES lecturers(id) ON DELETE CASCADE,
+    lecturer_degree_id BIGINT NOT NULL REFERENCES lecturer_degrees(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (lecturer_id, lecturer_degree_id)
+);
+
+CREATE TABLE lecturer_role_map (
+    lecturer_id BIGINT NOT NULL REFERENCES lecturers(id) ON DELETE CASCADE,
+    lecturer_role_id BIGINT NOT NULL REFERENCES lecturer_roles(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (lecturer_id, lecturer_role_id)
+);
+
+-- =========================
+-- 6) FOUNDATION ADMINISTRATORS
+-- =========================
+CREATE TABLE foundation_administrators (
+    id BIGSERIAL PRIMARY KEY,
+    admin_name VARCHAR(150) NOT NULL,
+    division VARCHAR(30) NOT NULL CHECK (
+        division IN ('Dewan Pembina', 'Dewan Pengurus', 'Anggota')
+    ),
+    role VARCHAR(20),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT chk_foundation_administrators_role_division
+        CHECK (
+            (
+                division = 'Dewan Pengurus'
+                AND role IN ('Ketua', 'Wakil Ketua', 'Sekretaris', 'Bendahara')
+            )
+            OR
+            (
+                division IN ('Dewan Pembina', 'Anggota')
+                AND role IS NULL
+            )
+        )
+);
+
+-- =========================
+-- 7) LIBRARY MEMBERS
+-- =========================
+CREATE TABLE library_members (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    institution_name VARCHAR(255) NOT NULL,
+    address TEXT NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    contact VARCHAR(50) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- =========================
+-- 8) EVENTS
+-- =========================
+CREATE TABLE event_categories (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    slug VARCHAR(120) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE event_organizers (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL UNIQUE,
+    organizer_type VARCHAR(20) NOT NULL CHECK (
+        organizer_type IN ('organization', 'person')
+    ),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE events (
+    id BIGSERIAL PRIMARY KEY,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    title VARCHAR(255) NOT NULL,
+    summary TEXT,
+    description TEXT,
+    location VARCHAR(255),
+    start_at TIMESTAMPTZ NOT NULL,
+    end_at TIMESTAMPTZ,
+    event_organizer_id BIGINT REFERENCES event_organizers(id) ON DELETE SET NULL,
+    is_published BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT chk_events_date_range CHECK (end_at IS NULL OR end_at >= start_at)
+);
+
+CREATE TABLE event_category_map (
+    event_id BIGINT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+    category_id BIGINT NOT NULL REFERENCES event_categories(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (event_id, category_id)
+);
+
+-- =========================
+-- 9) NEWS
+-- =========================
+CREATE TABLE news_categories (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE news_posts (
+    id BIGSERIAL PRIMARY KEY,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    published_at TIMESTAMPTZ NOT NULL,
+    is_featured BOOLEAN NOT NULL DEFAULT FALSE,
+    is_published BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE news_post_categories (
+    news_post_id BIGINT NOT NULL REFERENCES news_posts(id) ON DELETE CASCADE,
+    category_id BIGINT NOT NULL REFERENCES news_categories(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (news_post_id, category_id)
+);
+
+-- =========================
+-- 10) MEDIA
+-- =========================
+CREATE TABLE media_collections (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_topic_categories (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_items (
+    id BIGSERIAL PRIMARY KEY,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    title VARCHAR(255) NOT NULL,
+    media_format VARCHAR(20) NOT NULL CHECK (
+        media_format IN ('article', 'video', 'journal', 'buletin', 'monograf')
+    ),
+    collection_id BIGINT REFERENCES media_collections(id) ON DELETE SET NULL,
+    description TEXT,
+    content TEXT,
+    video_url TEXT,
+    theme VARCHAR(255),
+    author_name VARCHAR(150),
+    author_position VARCHAR(150),
+    published_at TIMESTAMPTZ NOT NULL,
+    is_published BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT chk_media_payload CHECK (
+        (media_format = 'video' AND video_url IS NOT NULL)
+        OR
+        (media_format IN ('article', 'journal', 'buletin', 'monograf') AND content IS NOT NULL)
+    )
+);
+
+CREATE TABLE media_item_topics (
+    media_item_id BIGINT NOT NULL REFERENCES media_items(id) ON DELETE CASCADE,
+    topic_category_id BIGINT NOT NULL REFERENCES media_topic_categories(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (media_item_id, topic_category_id)
+);
