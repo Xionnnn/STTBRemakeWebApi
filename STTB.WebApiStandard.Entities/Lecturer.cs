@@ -17,6 +17,8 @@ public partial class Lecturer
 
     public DateTime UpdatedAt { get; set; }
 
+    public string OrganizationalRole { get; set; } = null!;
+
     public virtual ICollection<LecturerDegreeMap> LecturerDegreeMaps { get; set; } = new List<LecturerDegreeMap>();
 
     public virtual ICollection<LecturerRoleMap> LecturerRoleMaps { get; set; } = new List<LecturerRoleMap>();

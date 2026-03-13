@@ -36,6 +36,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Profiles
                 .Select(l => new LecturerDto
                 {
                     Id = l.Id,
+                    OrganizationalRole = l.OrganizationalRole,
                     LecturerName = l.LecturerName,
                     Roles = l.LecturerRoleMaps.Select(rm => rm.LecturerRole.RoleName).ToList(),
                     Degrees = l.LecturerDegreeMaps.Select(dm => dm.LecturerDegree.DegreeName).ToList()

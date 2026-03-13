@@ -552,6 +552,10 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.LecturerName)
                 .HasMaxLength(150)
                 .HasColumnName("lecturer_name");
+            entity.Property(e => e.OrganizationalRole)
+                .HasMaxLength(150)
+                .HasDefaultValueSql("'Anggota'::character varying")
+                .HasColumnName("organizational_role");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
