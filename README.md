@@ -22,7 +22,7 @@ Below is the model_type list
 
 
 ## DDL
-the DDL for this api endpoint is stored in STTB.WebApiStandard.Entities\Sql\migration.sql
+the DDL for this api endpoint is stored in STTB.WebApiStandard.Entities\Sql\migration.txt
 
 ## **Api Endpoint**
 There are total of 18 endpoint covering Academic Program, News, Events, Media, University Profiles, and Admissions.
