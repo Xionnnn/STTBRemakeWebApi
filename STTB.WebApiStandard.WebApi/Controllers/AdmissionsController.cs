@@ -24,5 +24,12 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             var response = await _mediator.Send(new GetAdmissionScheduleRequest(), ct);
             return Ok(response);
         }
+
+        [HttpGet("get-all-admission-costs")]
+        public async Task<IActionResult> GetAllAdmissionCosts(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAllAdmissionCostRequest(), ct);
+            return Ok(response);
+        }
     }
 }
