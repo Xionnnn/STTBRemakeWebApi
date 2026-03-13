@@ -24,7 +24,6 @@ namespace STTB.WebApiStandard.RequestHandlers.Admissions
 
         public async Task<GetAdmissionScheduleResponse> Handle(GetAdmissionScheduleRequest request, CancellationToken ct)
         {
-            // Fetch the latest admission deadline based on created date or academic year
             var schedule = await _db.AdmissionDeadlines
                 .AsNoTracking()
                 .OrderByDescending(d => d.CreatedAt)
