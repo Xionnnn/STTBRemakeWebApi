@@ -38,6 +38,10 @@ namespace STTB.WebApiStandard.RequestHandlers.Profiles
                     Id = l.Id,
                     OrganizationalRole = l.OrganizationalRole,
                     LecturerName = l.LecturerName,
+                    LecturerImagePath = _db.Assets
+                        .Where(a => a.ModelType == @"lecturers\lecturer_image" && a.ModelId == l.Id)
+                        .Select(a => a.FilePath)
+                        .FirstOrDefault() ?? string.Empty,
                     Roles = l.LecturerRoleMaps.Select(rm => rm.LecturerRole.RoleName).ToList(),
                     Degrees = l.LecturerDegreeMaps.Select(dm => dm.LecturerDegree.DegreeName).ToList()
                 })
