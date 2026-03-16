@@ -215,6 +215,7 @@ CREATE TABLE lecturer_roles (
 CREATE TABLE lecturers (
     id BIGSERIAL PRIMARY KEY,
     lecturer_name VARCHAR(150) NOT NULL,
+    organizational_role VARCHAR(150) NOT NULL,
     joined_at TIMESTAMPTZ NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -270,6 +271,7 @@ CREATE TABLE library_members (
     id BIGSERIAL PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     institution_name VARCHAR(255) NOT NULL,
+    DOB DATE NOT NULL,
     address TEXT NOT NULL,
     email VARCHAR(150) NOT NULL,
     contact VARCHAR(50) NOT NULL,
@@ -402,3 +404,41 @@ CREATE TABLE media_item_topics (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (media_item_id, topic_category_id)
 );
+
+-- =========================================
+-- DONOR MEMBERS
+-- PostgreSQL
+-- =========================================
+
+CREATE TABLE donor_members (
+    id BIGSERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100),
+    salutation VARCHAR(50),
+    contact VARCHAR(50),
+    address TEXT,
+    email VARCHAR(255),
+    donation_type VARCHAR(50) NOT NULL CHECK (
+        donation_type IN ('perbulan', 'sekali_pembayaran')
+    ),
+    donation_area VARCHAR(20) NOT NULL CHECK (
+        donation_area IN ('beasiswa', 'perpustakaan_digital','dukungan_sttb')
+    ),
+    proof_of_support BOOLEAN NOT NULL DEFAULT FALSE,
+    donation_amount NUMERIC(15,2) NOT NULL CHECK (donation_amount >= 0),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE donor_scholarship_details (
+    id BIGSERIAL PRIMARY KEY,
+    donor_member_id BIGINT NOT NULL UNIQUE
+        REFERENCES donor_members(id) ON DELETE CASCADE,
+    student_name VARCHAR(255) NOT NULL,
+    academic_program_id BIGINT NOT NULL
+        REFERENCES academic_programs(id) ON DELETE RESTRICT,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
