@@ -32,7 +32,6 @@ namespace STTB.WebApiStandard.RequestHandlers.Profiles
                     .ThenInclude(ldm => ldm.LecturerDegree)
                 .Where(l => l.IsActive)
                 .AsNoTracking()
-                .OrderBy(l => l.LecturerName)
                 .Select(l => new LecturerDto
                 {
                     Id = l.Id,
