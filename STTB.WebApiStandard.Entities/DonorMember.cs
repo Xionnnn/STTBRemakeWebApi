@@ -21,9 +21,9 @@ public partial class DonorMember
 
     public string DonationType { get; set; } = null!;
 
-    public bool ProofOfSupport { get; set; }
+    public string DonationArea { get; set; } = null!;
 
-    public string? ProofOfDonationPath { get; set; }
+    public bool ProofOfSupport { get; set; }
 
     public decimal DonationAmount { get; set; }
 

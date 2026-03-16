@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace STTB.WebApiStandard.WebApi.Controllers
 {
-    [Route("api/v1/library")]
+    [Route("api/v1/libraries")]
     [ApiController]
     public class LibraryController : ControllerBase
     {

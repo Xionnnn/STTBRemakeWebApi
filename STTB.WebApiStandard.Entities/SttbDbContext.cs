@@ -421,6 +421,9 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.DonationAmount)
                 .HasPrecision(15, 2)
                 .HasColumnName("donation_amount");
+            entity.Property(e => e.DonationArea)
+                .HasMaxLength(20)
+                .HasColumnName("donation_area");
             entity.Property(e => e.DonationType)
                 .HasMaxLength(50)
                 .HasColumnName("donation_type");
@@ -433,7 +436,6 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(100)
                 .HasColumnName("last_name");
-            entity.Property(e => e.ProofOfDonationPath).HasColumnName("proof_of_donation_path");
             entity.Property(e => e.ProofOfSupport).HasColumnName("proof_of_support");
             entity.Property(e => e.Salutation)
                 .HasMaxLength(50)
