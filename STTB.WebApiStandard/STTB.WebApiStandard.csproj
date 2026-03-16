@@ -19,7 +19,12 @@
     <ProjectReference Include="..\STTB.WebApiStandard.Entities\STTB.WebApiStandard.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+
+	<ItemGroup>
     <Folder Include="Validators\Profiles\" />
   </ItemGroup>
 

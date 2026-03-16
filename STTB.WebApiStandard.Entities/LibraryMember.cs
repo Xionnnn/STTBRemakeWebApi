@@ -11,6 +11,8 @@ public partial class LibraryMember
 
     public string InstitutionName { get; set; } = null!;
 
+    public DateOnly Dob { get; set; }
+
     public string Address { get; set; } = null!;
 
     public string Email { get; set; } = null!;

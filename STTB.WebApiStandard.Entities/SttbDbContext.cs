@@ -737,6 +737,7 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Dob).HasColumnName("dob");
             entity.Property(e => e.Email)
                 .HasMaxLength(150)
                 .HasColumnName("email");
