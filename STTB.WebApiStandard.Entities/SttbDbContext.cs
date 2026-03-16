@@ -39,6 +39,10 @@ public partial class SttbDbContext : DbContext
 
     public virtual DbSet<Asset> Assets { get; set; }
 
+    public virtual DbSet<DonorMember> DonorMembers { get; set; }
+
+    public virtual DbSet<DonorScholarshipDetail> DonorScholarshipDetails { get; set; }
+
     public virtual DbSet<Event> Events { get; set; }
 
     public virtual DbSet<EventCategory> EventCategories { get; set; }
@@ -398,6 +402,76 @@ public partial class SttbDbContext : DbContext
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
             entity.Property(e => e.Width).HasColumnName("width");
+        });
+
+        modelBuilder.Entity<DonorMember>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("donor_members_pkey");
+
+            entity.ToTable("donor_members");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Address).HasColumnName("address");
+            entity.Property(e => e.Contact)
+                .HasMaxLength(50)
+                .HasColumnName("contact");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DonationAmount)
+                .HasPrecision(15, 2)
+                .HasColumnName("donation_amount");
+            entity.Property(e => e.DonationType)
+                .HasMaxLength(50)
+                .HasColumnName("donation_type");
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .HasColumnName("email");
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(100)
+                .HasColumnName("first_name");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(100)
+                .HasColumnName("last_name");
+            entity.Property(e => e.ProofOfDonationPath).HasColumnName("proof_of_donation_path");
+            entity.Property(e => e.ProofOfSupport).HasColumnName("proof_of_support");
+            entity.Property(e => e.Salutation)
+                .HasMaxLength(50)
+                .HasColumnName("salutation");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<DonorScholarshipDetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("donor_scholarship_details_pkey");
+
+            entity.ToTable("donor_scholarship_details");
+
+            entity.HasIndex(e => e.DonorMemberId, "donor_scholarship_details_donor_member_id_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AcademicProgramId).HasColumnName("academic_program_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DonorMemberId).HasColumnName("donor_member_id");
+            entity.Property(e => e.StudentName)
+                .HasMaxLength(255)
+                .HasColumnName("student_name");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.AcademicProgram).WithMany(p => p.DonorScholarshipDetails)
+                .HasForeignKey(d => d.AcademicProgramId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("donor_scholarship_details_academic_program_id_fkey");
+
+            entity.HasOne(d => d.DonorMember).WithOne(p => p.DonorScholarshipDetail)
+                .HasForeignKey<DonorScholarshipDetail>(d => d.DonorMemberId)
+                .HasConstraintName("donor_scholarship_details_donor_member_id_fkey");
         });
 
         modelBuilder.Entity<Event>(entity =>

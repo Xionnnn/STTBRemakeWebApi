@@ -46,4 +46,6 @@ public partial class AcademicProgram
     public virtual ICollection<AcademicProgramRequirement> AcademicProgramRequirements { get; set; } = new List<AcademicProgramRequirement>();
 
     public virtual ICollection<AcademicProgramSystem> AcademicProgramSystems { get; set; } = new List<AcademicProgramSystem>();
+
+    public virtual ICollection<DonorScholarshipDetail> DonorScholarshipDetails { get; set; } = new List<DonorScholarshipDetail>();
 }
