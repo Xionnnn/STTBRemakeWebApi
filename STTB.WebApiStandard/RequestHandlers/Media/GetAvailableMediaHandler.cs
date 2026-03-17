@@ -28,6 +28,8 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
             var query = _db.MediaItems
                 .Include(m => m.MediaItemTopics)
                     .ThenInclude(mt => mt.TopicCategory)
+                .Include(m => m.MediaItemWriters)
+                    .ThenInclude(mw => mw.MediaWriter)
                 .Where(m => m.IsPublished && m.MediaFormat.ToLower() == formatLower)
                 .AsNoTracking();
 
@@ -38,7 +40,8 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
 
             if (!string.IsNullOrWhiteSpace(request.AuthorName))
             {
-                query = query.Where(m => m.AuthorName.Contains(request.AuthorName));
+                query = query.Where(m => m.MediaItemWriters
+                    .Any(mw => mw.MediaWriter.AuthorName.Contains(request.AuthorName)));
             }
 
             if (!string.IsNullOrWhiteSpace(request.CategoryName))
@@ -70,9 +73,14 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
                     Id = m.Id,
                     Slug = m.Slug,
                     MediaTitle = m.Title,
-                    AuthorName = m.AuthorName ?? string.Empty,
+                    Authors = m.MediaItemWriters
+                        .Select(mw => new AuthorDTO
+                        {
+                            AuthorName = mw.MediaWriter.AuthorName,
+                            AuthorPosition = mw.MediaWriter.AuthorPosition ?? string.Empty
+                        })
+                        .ToList(),
                     MediaDescription = m.Description ?? string.Empty,
-                    Theme = m.Theme ?? string.Empty,
                     PublicationDate = m.PublishedAt,
                     Category = m.MediaItemTopics
                         .Select(mt => mt.TopicCategory.Name)
@@ -117,8 +125,12 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
                     : query.OrderBy(m => m.Title),
 
                 "AuthorName" => isDescending
-                    ? query.OrderByDescending(m => m.AuthorName)
-                    : query.OrderBy(m => m.AuthorName),
+                    ? query.OrderByDescending(m => m.MediaItemWriters
+                        .Select(mw => mw.MediaWriter.AuthorName)
+                        .FirstOrDefault())
+                    : query.OrderBy(m => m.MediaItemWriters
+                        .Select(mw => mw.MediaWriter.AuthorName)
+                        .FirstOrDefault()),
 
                 // Default: latest created_at
                 _ => query.OrderByDescending(m => m.CreatedAt)

@@ -23,22 +23,32 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
             var journal = await _db.MediaItems
                 .Include(m => m.MediaItemTopics)
                     .ThenInclude(mt => mt.TopicCategory)
+                .Include(m => m.MediaItemWriters)
+                    .ThenInclude(mw => mw.MediaWriter)
+                .Include(m => m.MediaItemsJournal)
                 .Where(m => m.IsPublished && m.MediaFormat.ToLower() == "journal" && m.Slug == request.JournalSlug)
                 .Select(m => new GetJournalDetailResponse
                 {
                     Id = m.Id,
                     JournalTitle = m.Title,
-                    AuthorName = m.AuthorName ?? string.Empty,
-                    JournalDescription = m.Description ?? string.Empty,
-                    Theme = m.Theme ?? string.Empty,
                     PublicationDate = m.PublishedAt,
                     Category = m.MediaItemTopics
                         .Select(mt => mt.TopicCategory.Name)
                         .ToList(),
+                    Authors = m.MediaItemWriters
+                        .Select(mw => new AuthorDTO
+                        {
+                            AuthorName = mw.MediaWriter.AuthorName,
+                            AuthorPosition = mw.MediaWriter.AuthorPosition ?? string.Empty
+                        })
+                        .ToList(),
                     JournalPath = _db.Assets
                         .Where(a => a.ModelType == "media_items\\journal_content" && a.ModelId == m.Id)
                         .Select(a => a.FilePath)
-                        .FirstOrDefault() ?? string.Empty
+                        .FirstOrDefault() ?? string.Empty,
+                    Issn = m.MediaItemsJournal != null ? m.MediaItemsJournal.Issn ?? string.Empty : string.Empty,
+                    EIssn = m.MediaItemsJournal != null ? m.MediaItemsJournal.EIssn ?? string.Empty : string.Empty,
+                    Doi = m.MediaItemsJournal != null ? m.MediaItemsJournal.Doi ?? string.Empty : string.Empty
                 })
                 .FirstOrDefaultAsync(ct);
 

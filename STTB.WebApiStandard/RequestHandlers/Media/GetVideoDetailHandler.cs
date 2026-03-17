@@ -23,19 +23,27 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
             var video = await _db.MediaItems
                 .Include(m => m.MediaItemTopics)
                     .ThenInclude(mt => mt.TopicCategory)
+                .Include(m => m.MediaItemWriters)
+                    .ThenInclude(mw => mw.MediaWriter)
+                .Include(m => m.MediaItemsVideo)
                 .Where(m => m.IsPublished && m.MediaFormat.ToLower() == "video" && m.Slug == request.VideoSlug)
                 .Select(m => new GetVideoDetailResponse
                 {
                     Id = m.Id,
                     VideoTitle = m.Title,
-                    AuthorName = m.AuthorName ?? string.Empty,
                     VideoDescription = m.Description ?? string.Empty,
-                    Theme = m.Theme ?? string.Empty,
                     PublicationDate = m.PublishedAt,
                     Category = m.MediaItemTopics
                         .Select(mt => mt.TopicCategory.Name)
                         .ToList(),
-                    VideoUrl = m.VideoUrl ?? string.Empty
+                    Authors = m.MediaItemWriters
+                        .Select(mw => new AuthorDTO
+                        {
+                            AuthorName = mw.MediaWriter.AuthorName,
+                            AuthorPosition = mw.MediaWriter.AuthorPosition ?? string.Empty
+                        })
+                        .ToList(),
+                    VideoUrl = m.MediaItemsVideo != null ? m.MediaItemsVideo.VideoUrl : string.Empty
                 })
                 .FirstOrDefaultAsync(ct);
 

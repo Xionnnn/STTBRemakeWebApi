@@ -71,6 +71,12 @@ public partial class SttbDbContext : DbContext
 
     public virtual DbSet<MediaItemWriter> MediaItemWriters { get; set; }
 
+    public virtual DbSet<MediaItemsJournal> MediaItemsJournals { get; set; }
+
+    public virtual DbSet<MediaItemsMonograf> MediaItemsMonografs { get; set; }
+
+    public virtual DbSet<MediaItemsVideo> MediaItemsVideos { get; set; }
+
     public virtual DbSet<MediaTopicCategory> MediaTopicCategories { get; set; }
 
     public virtual DbSet<MediaWriter> MediaWriters { get; set; }
@@ -834,6 +840,92 @@ public partial class SttbDbContext : DbContext
             entity.HasOne(d => d.MediaWriter).WithMany(p => p.MediaItemWriters)
                 .HasForeignKey(d => d.MediaWriterId)
                 .HasConstraintName("media_item_writers_media_writer_id_fkey");
+        });
+
+        modelBuilder.Entity<MediaItemsJournal>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_items_journal_pkey");
+
+            entity.ToTable("media_items_journal");
+
+            entity.HasIndex(e => e.MediaItemId, "media_items_journal_media_item_id_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Doi)
+                .HasMaxLength(255)
+                .HasColumnName("doi");
+            entity.Property(e => e.EIssn)
+                .HasMaxLength(20)
+                .HasColumnName("e_issn");
+            entity.Property(e => e.Issn)
+                .HasMaxLength(20)
+                .HasColumnName("issn");
+            entity.Property(e => e.MediaItemId).HasColumnName("media_item_id");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.MediaItem).WithOne(p => p.MediaItemsJournal)
+                .HasForeignKey<MediaItemsJournal>(d => d.MediaItemId)
+                .HasConstraintName("media_items_journal_media_item_id_fkey");
+        });
+
+        modelBuilder.Entity<MediaItemsMonograf>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_items_monograf_pkey");
+
+            entity.ToTable("media_items_monograf");
+
+            entity.HasIndex(e => e.MediaItemId, "media_items_monograf_media_item_id_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Contact)
+                .HasMaxLength(100)
+                .HasColumnName("contact");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Isbn)
+                .HasMaxLength(20)
+                .HasColumnName("isbn");
+            entity.Property(e => e.MediaItemId).HasColumnName("media_item_id");
+            entity.Property(e => e.Price)
+                .HasPrecision(14, 2)
+                .HasColumnName("price");
+            entity.Property(e => e.Synopsis).HasColumnName("synopsis");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.MediaItem).WithOne(p => p.MediaItemsMonograf)
+                .HasForeignKey<MediaItemsMonograf>(d => d.MediaItemId)
+                .HasConstraintName("media_items_monograf_media_item_id_fkey");
+        });
+
+        modelBuilder.Entity<MediaItemsVideo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_items_video_pkey");
+
+            entity.ToTable("media_items_video");
+
+            entity.HasIndex(e => e.MediaItemId, "media_items_video_media_item_id_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.MediaItemId).HasColumnName("media_item_id");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.VideoUrl).HasColumnName("video_url");
+
+            entity.HasOne(d => d.MediaItem).WithOne(p => p.MediaItemsVideo)
+                .HasForeignKey<MediaItemsVideo>(d => d.MediaItemId)
+                .HasConstraintName("media_items_video_media_item_id_fkey");
         });
 
         modelBuilder.Entity<MediaTopicCategory>(entity =>

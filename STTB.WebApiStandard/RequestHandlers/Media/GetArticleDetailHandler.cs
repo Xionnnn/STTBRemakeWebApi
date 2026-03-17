@@ -23,24 +23,26 @@ namespace STTB.WebApiStandard.RequestHandlers.Media
             var article = await _db.MediaItems
                 .Include(m => m.MediaItemTopics)
                     .ThenInclude(mt => mt.TopicCategory)
+                .Include(m => m.MediaItemWriters)
+                    .ThenInclude(mw => mw.MediaWriter)
                 .Where(m => m.IsPublished && m.MediaFormat.ToLower() == "article" && m.Slug == request.ArticleSlug)
                 .Select(m => new GetArticleDetailResponse
                 {
                     Id = m.Id,
                     ArticleTitle = m.Title,
-                    AuthorName = m.AuthorName ?? string.Empty,
-                    AuthorPosition = m.AuthorPosition ?? string.Empty,
                     ArticleDescription = m.Description ?? string.Empty,
-                    Theme = m.Theme ?? string.Empty,
                     PublicationDate = m.PublishedAt,
                     Category = m.MediaItemTopics
                         .Select(mt => mt.TopicCategory.Name)
                         .ToList(),
+                    Authors = m.MediaItemWriters
+                        .Select(mw => new AuthorDTO
+                        {
+                            AuthorName = mw.MediaWriter.AuthorName,
+                            AuthorPosition = mw.MediaWriter.AuthorPosition ?? string.Empty
+                        })
+                        .ToList(),
                     ArticleContent = m.Content ?? string.Empty,
-                    AuthorImagePath = _db.Assets
-                        .Where(a => a.ModelType == "media_items\\article_author_image" && a.ModelId == m.Id)
-                        .Select(a => a.FilePath)
-                        .FirstOrDefault() ?? string.Empty,
                     ThumbnailPath = _db.Assets
                         .Where(a => a.ModelType == "media_items\\article_thumbnail" && a.ModelId == m.Id)
                         .Select(a => a.FilePath)

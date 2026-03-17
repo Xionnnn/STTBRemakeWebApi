@@ -28,4 +28,10 @@ public partial class MediaItem
     public virtual ICollection<MediaItemTopic> MediaItemTopics { get; set; } = new List<MediaItemTopic>();
 
     public virtual ICollection<MediaItemWriter> MediaItemWriters { get; set; } = new List<MediaItemWriter>();
+
+    public virtual MediaItemsJournal? MediaItemsJournal { get; set; }
+
+    public virtual MediaItemsMonograf? MediaItemsMonograf { get; set; }
+
+    public virtual MediaItemsVideo? MediaItemsVideo { get; set; }
 }
