@@ -68,5 +68,14 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             if (response == null) return NotFound();
             return Ok(response);
         }
+
+        [HttpGet("get-buletin/{slug}")]
+        public async Task<IActionResult> GetBuletinDetail([FromRoute] string slug, CancellationToken ct)
+        {
+            var request = new GetBuletinDetailRequest { BuletinSlug = slug };
+            var response = await _mediator.Send(request, ct);
+            if (response == null) return NotFound();
+            return Ok(response);
+        }
     }
 }
