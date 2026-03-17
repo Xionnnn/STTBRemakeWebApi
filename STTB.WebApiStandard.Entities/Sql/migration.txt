@@ -324,6 +324,7 @@ CREATE TABLE event_category_map (
     PRIMARY KEY (event_id, category_id)
 );
 
+
 -- =========================
 -- 9) NEWS
 -- =========================
@@ -357,13 +358,6 @@ CREATE TABLE news_post_categories (
 -- =========================
 -- 10) MEDIA
 -- =========================
-CREATE TABLE media_collections (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
 
 CREATE TABLE media_topic_categories (
     id BIGSERIAL PRIMARY KEY,
@@ -379,23 +373,14 @@ CREATE TABLE media_items (
     media_format VARCHAR(20) NOT NULL CHECK (
         media_format IN ('article', 'video', 'journal', 'buletin', 'monograf')
     ),
-    collection_id BIGINT REFERENCES media_collections(id) ON DELETE SET NULL,
     description TEXT,
     content TEXT,
-    video_url TEXT,
-    theme VARCHAR(255),
-    author_name VARCHAR(150),
-    author_position VARCHAR(150),
     published_at TIMESTAMPTZ NOT NULL,
     is_published BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT chk_media_payload CHECK (
-        (media_format = 'video' AND video_url IS NOT NULL)
-        OR
-        (media_format IN ('article', 'journal', 'buletin', 'monograf') AND content IS NOT NULL)
-    )
 );
+
 
 CREATE TABLE media_item_topics (
     media_item_id BIGINT NOT NULL REFERENCES media_items(id) ON DELETE CASCADE,
@@ -403,6 +388,53 @@ CREATE TABLE media_item_topics (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (media_item_id, topic_category_id)
+);
+
+CREATE TABLE media_writers (
+    id BIGSERIAL PRIMARY KEY,
+    author_name VARCHAR(150) NOT NULL,
+    author_position VARCHAR(150),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_item_writers (
+    media_item_id BIGINT NOT NULL REFERENCES media_items(id) ON DELETE CASCADE,
+    media_writer_id BIGINT NOT NULL REFERENCES media_writers(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (media_item_id, media_writer_id)
+);
+
+CREATE TABLE media_items_video (
+    id BIGSERIAL PRIMARY KEY,
+    media_item_id BIGINT NOT NULL UNIQUE
+        REFERENCES media_items(id) ON DELETE CASCADE,
+    video_url TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_items_journal (
+    id BIGSERIAL PRIMARY KEY,
+    media_item_id BIGINT NOT NULL UNIQUE
+        REFERENCES media_items(id) ON DELETE CASCADE,
+    issn VARCHAR(20),
+    e_issn VARCHAR(20),
+    doi VARCHAR(255),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_items_monograf (
+    id BIGSERIAL PRIMARY KEY,
+    media_item_id BIGINT NOT NULL UNIQUE
+        REFERENCES media_items(id) ON DELETE CASCADE,
+    price NUMERIC(14,2) CHECK (price >= 0),
+    contact VARCHAR(100),
+    isbn VARCHAR(20),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- =========================================
