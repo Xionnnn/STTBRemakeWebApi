@@ -9,8 +9,6 @@ public partial class MediaItemsMonograf
 
     public long MediaItemId { get; set; }
 
-    public string? Synopsis { get; set; }
-
     public decimal? Price { get; set; }
 
     public string? Contact { get; set; }

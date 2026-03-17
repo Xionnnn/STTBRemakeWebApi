@@ -895,7 +895,6 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.Price)
                 .HasPrecision(14, 2)
                 .HasColumnName("price");
-            entity.Property(e => e.Synopsis).HasColumnName("synopsis");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
