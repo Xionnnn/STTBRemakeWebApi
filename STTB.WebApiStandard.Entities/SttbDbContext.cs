@@ -65,13 +65,15 @@ public partial class SttbDbContext : DbContext
 
     public virtual DbSet<LibraryMember> LibraryMembers { get; set; }
 
-    public virtual DbSet<MediaCollection> MediaCollections { get; set; }
-
     public virtual DbSet<MediaItem> MediaItems { get; set; }
 
     public virtual DbSet<MediaItemTopic> MediaItemTopics { get; set; }
 
+    public virtual DbSet<MediaItemWriter> MediaItemWriters { get; set; }
+
     public virtual DbSet<MediaTopicCategory> MediaTopicCategories { get; set; }
+
+    public virtual DbSet<MediaWriter> MediaWriters { get; set; }
 
     public virtual DbSet<NewsCategory> NewsCategories { get; set; }
 
@@ -754,27 +756,6 @@ public partial class SttbDbContext : DbContext
                 .HasColumnName("updated_at");
         });
 
-        modelBuilder.Entity<MediaCollection>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("media_collections_pkey");
-
-            entity.ToTable("media_collections");
-
-            entity.HasIndex(e => e.Name, "media_collections_name_key").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Name)
-                .HasMaxLength(100)
-                .HasColumnName("name");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-        });
-
         modelBuilder.Entity<MediaItem>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("media_items_pkey");
@@ -784,13 +765,6 @@ public partial class SttbDbContext : DbContext
             entity.HasIndex(e => e.Slug, "media_items_slug_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.AuthorName)
-                .HasMaxLength(150)
-                .HasColumnName("author_name");
-            entity.Property(e => e.AuthorPosition)
-                .HasMaxLength(150)
-                .HasColumnName("author_position");
-            entity.Property(e => e.CollectionId).HasColumnName("collection_id");
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
@@ -806,21 +780,12 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.Slug)
                 .HasMaxLength(255)
                 .HasColumnName("slug");
-            entity.Property(e => e.Theme)
-                .HasMaxLength(255)
-                .HasColumnName("theme");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
-            entity.Property(e => e.VideoUrl).HasColumnName("video_url");
-
-            entity.HasOne(d => d.Collection).WithMany(p => p.MediaItems)
-                .HasForeignKey(d => d.CollectionId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("media_items_collection_id_fkey");
         });
 
         modelBuilder.Entity<MediaItemTopic>(entity =>
@@ -847,6 +812,30 @@ public partial class SttbDbContext : DbContext
                 .HasConstraintName("media_item_topics_topic_category_id_fkey");
         });
 
+        modelBuilder.Entity<MediaItemWriter>(entity =>
+        {
+            entity.HasKey(e => new { e.MediaItemId, e.MediaWriterId }).HasName("media_item_writers_pkey");
+
+            entity.ToTable("media_item_writers");
+
+            entity.Property(e => e.MediaItemId).HasColumnName("media_item_id");
+            entity.Property(e => e.MediaWriterId).HasColumnName("media_writer_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.MediaItem).WithMany(p => p.MediaItemWriters)
+                .HasForeignKey(d => d.MediaItemId)
+                .HasConstraintName("media_item_writers_media_item_id_fkey");
+
+            entity.HasOne(d => d.MediaWriter).WithMany(p => p.MediaItemWriters)
+                .HasForeignKey(d => d.MediaWriterId)
+                .HasConstraintName("media_item_writers_media_writer_id_fkey");
+        });
+
         modelBuilder.Entity<MediaTopicCategory>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("media_topic_categories_pkey");
@@ -862,6 +851,27 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(150)
                 .HasColumnName("name");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<MediaWriter>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_writers_pkey");
+
+            entity.ToTable("media_writers");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AuthorName)
+                .HasMaxLength(150)
+                .HasColumnName("author_name");
+            entity.Property(e => e.AuthorPosition)
+                .HasMaxLength(150)
+                .HasColumnName("author_position");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
