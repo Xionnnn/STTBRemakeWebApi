@@ -14,7 +14,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Media
         public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
         public string ArticleContent { get; set; } = string.Empty;
         public string ThumbnailPath { get; set; } = string.Empty;
-    }
+    }   
     public class AuthorDTO
     {
         public string AuthorName { get; set; } = string.Empty;

@@ -59,5 +59,14 @@ namespace STTB.WebApiStandard.WebApi.Controllers
             if (response == null) return NotFound();
             return Ok(response);
         }
+
+        [HttpGet("get-monograf/{slug}")]
+        public async Task<IActionResult> GetMonografDetail([FromRoute] string slug, CancellationToken ct)
+        {
+            var request = new GetMonografDetailRequest { MonografSlug = slug };
+            var response = await _mediator.Send(request, ct);
+            if (response == null) return NotFound();
+            return Ok(response);
+        }
     }
 }

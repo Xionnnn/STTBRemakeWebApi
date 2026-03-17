@@ -1,10 +1,18 @@
-﻿using System;
+﻿using FluentValidation;
+using STTB.WebApiStandard.Contracts.RequestModels.Media;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace STTB.WebApiStandard.Validators.Media
 {
-    internal class GetMonografDetailValidator
+    public class GetMonografDetailValidator: AbstractValidator<GetMonografDetailRequest>
     {
+        public GetMonografDetailValidator()
+        {
+            RuleFor(x => x.MonografSlug)
+                .NotEmpty()
+                .WithMessage("MonografSlug is required");
+        }
     }
 }

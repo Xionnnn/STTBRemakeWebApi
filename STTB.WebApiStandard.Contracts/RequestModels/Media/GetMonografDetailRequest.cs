@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MediatR;
+using STTB.WebApiStandard.Contracts.ResponseModels.Media;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.Media
 {
-    public class GetMonografDetailRequest
+    public class GetMonografDetailRequest : IRequest<GetMonografDetailResponse>
     {
         public string MonografSlug { get; set; } = string.Empty;
     }
