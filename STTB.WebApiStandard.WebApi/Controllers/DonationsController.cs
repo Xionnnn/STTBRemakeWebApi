@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Donations;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Donations;
 
 namespace STTB.WebApiStandard.WebApi.Controllers
 {

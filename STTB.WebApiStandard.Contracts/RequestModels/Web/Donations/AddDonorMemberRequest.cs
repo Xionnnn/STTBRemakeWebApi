@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using STTB.WebApiStandard.Contracts.ResponseModels.Donations;
 
-namespace STTB.WebApiStandard.Contracts.RequestModels.Donations
+namespace STTB.WebApiStandard.Contracts.RequestModels.Web.Donations
 {
     public class AddDonorMemberRequest : IRequest<AddDonorMemberResponse>
     {

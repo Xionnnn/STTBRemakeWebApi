@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using STTB.WebApiStandard.Contracts.RequestModels.Profiles;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Profiles;
 using STTB.WebApiStandard.Contracts.ResponseModels.Profiles;
 using STTB.WebApiStandard.Entities;
 using System;

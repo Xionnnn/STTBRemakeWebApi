@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using STTB.WebApiStandard.Contracts.RequestModels.Academics;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 using STTB.WebApiStandard.Contracts.ResponseModels.Academics;
 using STTB.WebApiStandard.Entities;
 using System.Linq;

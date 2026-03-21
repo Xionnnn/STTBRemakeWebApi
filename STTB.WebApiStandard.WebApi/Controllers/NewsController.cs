@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.News;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.News;
 
 namespace STTB.WebApiStandard.WebApi.Controllers
 {

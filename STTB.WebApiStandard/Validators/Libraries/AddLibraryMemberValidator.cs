@@ -1,5 +1,5 @@
 using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.Libraries;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Libraries;
 
 namespace STTB.WebApiStandard.Validators.Libraries
 {

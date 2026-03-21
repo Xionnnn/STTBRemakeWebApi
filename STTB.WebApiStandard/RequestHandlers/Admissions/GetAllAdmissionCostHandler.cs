@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using STTB.WebApiStandard.Contracts.RequestModels.Admissions;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Admissions;
 using STTB.WebApiStandard.Contracts.ResponseModels.Admissions;
 using STTB.WebApiStandard.Entities;
 using System.Linq;

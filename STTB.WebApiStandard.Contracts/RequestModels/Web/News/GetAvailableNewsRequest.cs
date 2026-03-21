@@ -1,16 +1,15 @@
 using MediatR;
-using STTB.WebApiStandard.Contracts.ResponseModels.Events;
+using STTB.WebApiStandard.Contracts.ResponseModels.News;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.RequestModels.Events
+namespace STTB.WebApiStandard.Contracts.RequestModels.Web.News
 {
-    public class GetAvailableEventRequest : IRequest<GetAvailableEventResponse>
+    public class GetAvailableNewsRequest : IRequest<GetAvailableNewsResponse>
     {
-        public string EventTitle { get; set; } = string.Empty;
+        public string NewsTitle { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
-        public string OrganizerName { get; set; } = string.Empty;
         public string OrderBy { get; set; } = string.Empty;
         public string OrderState { get; set; } = string.Empty;
         public int PageNumber { get; set; } = 1;

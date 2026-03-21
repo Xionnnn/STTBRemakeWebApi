@@ -1,5 +1,5 @@
 using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.Donations;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Donations;
 
 namespace STTB.WebApiStandard.Validators.Donations
 {

@@ -1,5 +1,5 @@
 using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.News;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.News;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Events;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Events;
 
 namespace STTB.WebApiStandard.WebApi.Controllers
 {

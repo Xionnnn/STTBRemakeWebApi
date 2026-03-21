@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Media;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Media;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Admissions;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Admissions;
 using System.Threading;
 using System.Threading.Tasks;
 

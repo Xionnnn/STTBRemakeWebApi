@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using STTB.WebApiStandard.Contracts.RequestModels.News;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.News;
 using STTB.WebApiStandard.Contracts.ResponseModels.News;
 using STTB.WebApiStandard.Entities;
 using System.Linq;

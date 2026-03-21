@@ -1,5 +1,5 @@
 using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.Academic;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 using System;
 using System.Collections.Generic;
 using System.Text;

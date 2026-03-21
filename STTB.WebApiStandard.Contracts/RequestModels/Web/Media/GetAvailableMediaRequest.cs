@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.RequestModels.Media
+namespace STTB.WebApiStandard.Contracts.RequestModels.Web.Media
 {
     public class GetAvailableMediaRequest : IRequest<GetAvailableMediaResponse>
     {

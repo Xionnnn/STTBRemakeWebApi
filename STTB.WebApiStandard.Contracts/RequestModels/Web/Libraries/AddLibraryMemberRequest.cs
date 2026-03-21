@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using STTB.WebApiStandard.Contracts.ResponseModels.Libraries;
 
-namespace STTB.WebApiStandard.Contracts.RequestModels.Libraries
+namespace STTB.WebApiStandard.Contracts.RequestModels.Web.Libraries
 {
     public class AddLibraryMemberRequest : IRequest<AddLibraryMemberResponse>
     {

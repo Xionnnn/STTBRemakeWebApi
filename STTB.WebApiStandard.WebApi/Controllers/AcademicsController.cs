@@ -1,9 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Academic;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 
-using STTB.WebApiStandard.Contracts.RequestModels.Academics;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 
 namespace STTB.WebApiStandard.WebApi.Controllers
 {

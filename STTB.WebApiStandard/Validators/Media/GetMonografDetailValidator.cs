@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.Media;
+using FluentValidation;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;

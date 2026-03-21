@@ -1,5 +1,5 @@
 using FluentValidation;
-using STTB.WebApiStandard.Contracts.RequestModels.Media;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Media;
 using System.Linq;
 
 namespace STTB.WebApiStandard.Validators.Media

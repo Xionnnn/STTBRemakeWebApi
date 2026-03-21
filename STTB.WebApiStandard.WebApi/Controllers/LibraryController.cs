@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using STTB.WebApiStandard.Contracts.RequestModels.Libraries;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Libraries;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using STTB.WebApiStandard.Contracts.RequestModels.Donations;
+using STTB.WebApiStandard.Contracts.RequestModels.Web.Donations;
 using STTB.WebApiStandard.Contracts.ResponseModels.Donations;
 using STTB.WebApiStandard.Entities;
 
