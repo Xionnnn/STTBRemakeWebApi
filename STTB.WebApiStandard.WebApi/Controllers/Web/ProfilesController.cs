@@ -5,7 +5,7 @@ using STTB.WebApiStandard.Contracts.RequestModels.Web.Profiles;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace STTB.WebApiStandard.WebApi.Controllers
+namespace STTB.WebApiStandard.WebApi.Controllers.Web
 {
     [Route("api/v1/profiles")]
     [ApiController]

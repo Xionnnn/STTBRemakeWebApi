@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 
-using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
-
-namespace STTB.WebApiStandard.WebApi.Controllers
+namespace STTB.WebApiStandard.WebApi.Controllers.Web
 {
     [Route("api/v1/academics")]
     [ApiController]

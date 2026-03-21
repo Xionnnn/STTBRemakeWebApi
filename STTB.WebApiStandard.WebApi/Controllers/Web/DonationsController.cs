@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Donations;
 
-namespace STTB.WebApiStandard.WebApi.Controllers
+namespace STTB.WebApiStandard.WebApi.Controllers.Web
 {
     [Route("api/v1/donations")]
     [ApiController]
