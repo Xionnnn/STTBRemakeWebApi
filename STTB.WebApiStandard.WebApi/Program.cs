@@ -4,8 +4,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using STTB.WebApiStandard.RequestHandlers.News;
-using STTB.WebApiStandard.Validators.News;
+using STTB.WebApiStandard.RequestHandlers.Web.News;
+using STTB.WebApiStandard.Validators.Web.News;
 
 var builder = WebApplication.CreateBuilder(args);
 

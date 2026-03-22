@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\CMS\" />
     <Folder Include="logs\" />
     <Folder Include="wwwroot\Uploads\images\" />
   </ItemGroup>

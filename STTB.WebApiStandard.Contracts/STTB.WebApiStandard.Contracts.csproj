@@ -16,6 +16,7 @@
 	
   <ItemGroup>
     <Folder Include="RequestModels\CMS\" />
+    <Folder Include="ResponseModels\CMS\" />
   </ItemGroup>
 
 </Project>

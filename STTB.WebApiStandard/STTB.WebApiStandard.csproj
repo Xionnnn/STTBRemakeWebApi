@@ -25,7 +25,9 @@
 
 
 	<ItemGroup>
-    <Folder Include="Validators\Profiles\" />
+    <Folder Include="RequestHandlers\CMS\" />
+    <Folder Include="Validators\CMS\" />
+    <Folder Include="Validators\Web\Profiles\" />
   </ItemGroup>
 
 </Project>
