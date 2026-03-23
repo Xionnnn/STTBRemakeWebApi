@@ -1,11 +1,16 @@
 using STTB.WebApiStandard.Commons.Behaviors;
+using STTB.WebApiStandard.Commons.Authorizations;
 using STTB.WebApiStandard.Entities;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using STTB.WebApiStandard.RequestHandlers.Web.News;
 using STTB.WebApiStandard.Validators.Web.News;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +40,52 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// JWT Authentication
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"]!;
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+    };
+});
+
+// Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CanManageAcademics", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageAcademics")));
+
+    options.AddPolicy("CanManageNews", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageNews")));
+
+    options.AddPolicy("CanManageEvents", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageEvents")));
+
+    options.AddPolicy("CanManageMedia", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageMedia")));
+
+    options.AddPolicy("CanManageUsers", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageUsers")));
+});
+
+// Authorization Handlers
+builder.Services.AddSingleton<IAuthorizationHandler, SuperAdminBypassHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 // CORS Configuration
 builder.Services.AddCors(options =>
@@ -80,6 +131,7 @@ app.UseExceptionHandler("/error");
 // Enable CORS - harus sebelum UseAuthorization
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

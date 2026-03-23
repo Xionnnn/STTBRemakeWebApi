@@ -13,10 +13,5 @@
   <ItemGroup>
 	<FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="RequestModels\CMS\" />
-    <Folder Include="ResponseModels\CMS\" />
-  </ItemGroup>
 
 </Project>
