@@ -29,6 +29,7 @@
 	<ItemGroup>
     <Folder Include="RequestHandlers\CMS\AdmissionCosts\" />
     <Folder Include="RequestHandlers\CMS\AcademicPrograms\" />
+    <Folder Include="RequestHandlers\CMS\Events\" />
     <Folder Include="Validators\CMS\AdmissionCosts\" />
     <Folder Include="Validators\CMS\AcademicPrograms\" />
     <Folder Include="Validators\Web\Profiles\" />
