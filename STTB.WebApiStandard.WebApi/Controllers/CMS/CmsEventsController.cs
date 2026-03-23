@@ -24,6 +24,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpGet("get-all-categories")]
+        public async Task<IActionResult> GetAllCategories(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAllEventCategoriesRequest(), ct);
+            return Ok(response);
+        }
+
         [HttpGet("get-event/{id}")]
         public async Task<IActionResult> GetEvent(long id, CancellationToken ct)
         {
