@@ -84,6 +84,12 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("CanManageLecturers", policy =>
         policy.Requirements.Add(new PermissionRequirement("CanManageLecturers")));
+
+    options.AddPolicy("CanManageAdmissionCost", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageAdmissionCost")));
+
+    options.AddPolicy("CanManageAdministrator", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageAdministrator")));
 });
 
 // Authorization Handlers

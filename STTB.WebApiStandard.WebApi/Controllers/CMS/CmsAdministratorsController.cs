@@ -7,7 +7,7 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/administrators")]
     [ApiController]
-    [Authorize] // Added as a baseline auth. Adjust with a specific Policy (e.g., CanManageAdministrators) if needed later.
+    [Authorize(Policy = "CanManageAdministrator")]
     public class CmsAdministratorsController : ControllerBase
     {
         private readonly IMediator _mediator;
