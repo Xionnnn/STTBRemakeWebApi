@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 .Include(m => m.MediaItemsVideo)
                 .Include(m => m.MediaItemTopics).ThenInclude(mt => mt.TopicCategory)
                 .Include(m => m.MediaItemWriters).ThenInclude(mw => mw.MediaWriter)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Video", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "video", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Video {request.Id} not found.");

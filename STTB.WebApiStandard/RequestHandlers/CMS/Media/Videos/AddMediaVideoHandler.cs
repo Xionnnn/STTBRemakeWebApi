@@ -33,7 +33,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 Title = request.VideoTitle,
                 Slug = slug,
                 Description = request.VideoDescription,
-                MediaFormat = "Video",
+                MediaFormat = "video",
                 PublishedAt = request.PublicationDate,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,

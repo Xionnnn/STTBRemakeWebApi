@@ -22,7 +22,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
         {
             var media = await _db.MediaItems
                 .Include(m => m.MediaItemsJournal)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Jurnal", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "journal", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Journal {request.Id} not found.");

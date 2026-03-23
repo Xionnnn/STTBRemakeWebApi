@@ -33,7 +33,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
                 Title = request.MonografTitle,
                 Slug = slug,
                 Description = request.Synopsis,
-                MediaFormat = "Monograf",
+                MediaFormat = "monograf",
                 PublishedAt = request.PublicationDate,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,

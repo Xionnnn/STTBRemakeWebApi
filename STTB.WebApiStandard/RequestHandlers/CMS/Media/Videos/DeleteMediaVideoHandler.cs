@@ -21,7 +21,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
         {
             var media = await _db.MediaItems
                 .Include(m => m.MediaItemsVideo)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Video", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "video", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Video {request.Id} not found.");

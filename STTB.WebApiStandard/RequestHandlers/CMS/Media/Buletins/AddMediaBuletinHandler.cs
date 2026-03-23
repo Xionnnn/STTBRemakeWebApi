@@ -33,7 +33,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 Title = request.BuletinTitle,
                 Slug = slug,
                 Description = request.Description,
-                MediaFormat = "Buletin",
+                MediaFormat = "buletin",
                 PublishedAt = request.PublicationDate,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,

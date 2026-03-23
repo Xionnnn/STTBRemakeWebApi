@@ -32,7 +32,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
             {
                 Title = request.JournalTitle,
                 Slug = slug,
-                MediaFormat = "Jurnal",
+                MediaFormat = "journal",
                 PublishedAt = request.PublicationDate,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,

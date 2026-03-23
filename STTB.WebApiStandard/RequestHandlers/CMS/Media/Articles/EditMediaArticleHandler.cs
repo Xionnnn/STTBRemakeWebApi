@@ -29,7 +29,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
             var media = await _db.MediaItems
                 .Include(m => m.MediaItemTopics).ThenInclude(mt => mt.TopicCategory)
                 .Include(m => m.MediaItemWriters).ThenInclude(mw => mw.MediaWriter)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Artikel", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "article", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Article {request.Id} not found.");

@@ -20,7 +20,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
 
         public async Task Handle(DeleteMediaBuletinRequest request, CancellationToken ct)
         {
-            var media = await _db.MediaItems.FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Buletin", ct);
+            var media = await _db.MediaItems.FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "buletin", ct);
             if (media == null)
                 throw new InvalidOperationException($"Buletin {request.Id} not found.");
 

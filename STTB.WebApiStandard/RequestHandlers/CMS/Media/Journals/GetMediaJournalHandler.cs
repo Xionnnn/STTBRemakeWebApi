@@ -25,7 +25,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 .Include(m => m.MediaItemsJournal)
                 .Include(m => m.MediaItemTopics).ThenInclude(mt => mt.TopicCategory)
                 .Include(m => m.MediaItemWriters).ThenInclude(mw => mw.MediaWriter)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Jurnal", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "journal", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Journal {request.Id} not found.");

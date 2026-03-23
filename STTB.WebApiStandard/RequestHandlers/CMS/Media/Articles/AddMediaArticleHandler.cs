@@ -33,7 +33,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 Title = request.ArticleTitle,
                 Slug = slug,
                 Description = request.ArticleContent,
-                MediaFormat = "Artikel",
+                MediaFormat = "article",
                 PublishedAt = request.PublicationDate,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,

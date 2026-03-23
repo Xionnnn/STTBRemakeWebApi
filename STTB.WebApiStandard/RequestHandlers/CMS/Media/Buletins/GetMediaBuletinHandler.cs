@@ -24,7 +24,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
             var media = await _db.MediaItems
                 .Include(m => m.MediaItemTopics).ThenInclude(mt => mt.TopicCategory)
                 .Include(m => m.MediaItemWriters).ThenInclude(mw => mw.MediaWriter)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Buletin", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "buletin", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Buletin {request.Id} not found.");

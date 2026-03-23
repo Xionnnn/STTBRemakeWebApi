@@ -25,7 +25,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
                 .Include(m => m.MediaItemsMonograf)
                 .Include(m => m.MediaItemTopics).ThenInclude(mt => mt.TopicCategory)
                 .Include(m => m.MediaItemWriters).ThenInclude(mw => mw.MediaWriter)
-                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "Monograf", ct);
+                .FirstOrDefaultAsync(m => m.Id == request.Id && m.MediaFormat == "monograf", ct);
 
             if (media == null)
                 throw new InvalidOperationException($"Monograf {request.Id} not found.");
