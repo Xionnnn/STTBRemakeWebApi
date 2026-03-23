@@ -31,6 +31,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-event")]
+        public async Task<IActionResult> AddEvent([FromForm] AddEventRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpGet("get-event/{id}")]
         public async Task<IActionResult> GetEvent(long id, CancellationToken ct)
         {

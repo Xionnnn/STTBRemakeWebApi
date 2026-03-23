@@ -47,7 +47,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
                     CategoryName = c.AcademicProgramCostCategoryMaps.FirstOrDefault() != null 
                         ? c.AcademicProgramCostCategoryMaps.First().AcademicProgramCostCategory.CategoryName 
                         : string.Empty,
-                    ProgramName = c.AcademicProgram.ProgramName,
+                    ProgramName = c.AcademicProgram.Name,
                     CostName = c.Name,
                     Cost = c.Price,
                     CreatedAt = c.CreatedAt
@@ -93,8 +93,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
                     : query.OrderBy(c => c.Price),
 
                 "ProgramName" => isDescending
-                    ? query.OrderByDescending(c => c.AcademicProgram.ProgramName)
-                    : query.OrderBy(c => c.AcademicProgram.ProgramName),
+                    ? query.OrderByDescending(c => c.AcademicProgram.Name)
+                    : query.OrderBy(c => c.AcademicProgram.Name),
                     
                 // For CategoryName sorting, we'd have to sort by the first mapped category name
                 "CategoryName" => isDescending

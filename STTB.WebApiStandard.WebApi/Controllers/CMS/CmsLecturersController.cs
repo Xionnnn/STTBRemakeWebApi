@@ -32,6 +32,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-lecturer")]
+        public async Task<IActionResult> AddLecturer([FromForm] AddLecturerRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpPut("edit-lecturer")]
         public async Task<IActionResult> EditLecturer([FromForm] EditLecturerRequest request, CancellationToken ct)
         {

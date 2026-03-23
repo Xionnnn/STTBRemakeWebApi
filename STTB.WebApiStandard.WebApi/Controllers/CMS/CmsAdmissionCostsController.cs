@@ -32,6 +32,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-cost")]
+        public async Task<IActionResult> AddCost([FromBody] AddCostRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpPut("edit-cost")]
         public async Task<IActionResult> EditCost([FromBody] EditCostRequest request, CancellationToken ct)
         {

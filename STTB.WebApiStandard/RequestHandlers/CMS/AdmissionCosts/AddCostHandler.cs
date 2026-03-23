@@ -4,33 +4,25 @@ using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionCosts;
 using STTB.WebApiStandard.Entities;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
 {
-    public class EditCostHandler : IRequestHandler<EditCostRequest, EditCostResponse>
+    public class AddCostHandler : IRequestHandler<AddCostRequest, AddCostResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly ILogger<EditCostHandler> _logger;
+        private readonly ILogger<AddCostHandler> _logger;
 
-        public EditCostHandler(SttbDbContext db, ILogger<EditCostHandler> logger)
+        public AddCostHandler(SttbDbContext db, ILogger<AddCostHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<EditCostResponse> Handle(EditCostRequest request, CancellationToken ct)
+        public async Task<AddCostResponse> Handle(AddCostRequest request, CancellationToken ct)
         {
-            var cost = await _db.AcademicProgramCosts
-                .Include(c => c.AcademicProgram)
-                .Include(c => c.AcademicProgramCostCategoryMaps)
-                    .ThenInclude(m => m.AcademicProgramCostCategory)
-                .FirstOrDefaultAsync(c => c.Id == request.Id, ct);
-
-            if (cost == null)
-            {
-                throw new KeyNotFoundException($"Cost with ID {request.Id} was not found.");
-            }
-
             // Verify Program
             var program = await _db.AcademicPrograms.FirstOrDefaultAsync(p => p.Name == request.ProgramName, ct);
             if (program == null)
@@ -41,14 +33,19 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
             if (category == null)
                 throw new InvalidOperationException($"Category '{request.CategoryName}' not found.");
 
-            // Update basic fields
-            cost.Name = request.CostName;
-            cost.Price = request.Cost;
-            cost.AcademicProgramId = program.Id;
-            cost.UpdatedAt = DateTime.UtcNow;
+            var cost = new AcademicProgramCost
+            {
+                Name = request.CostName,
+                Price = request.Cost,
+                AcademicProgramId = program.Id,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            await _db.AcademicProgramCosts.AddAsync(cost, ct);
+            await _db.SaveChangesAsync(ct);
 
             // Rebuild Category Map
-            _db.AcademicProgramCostCategoryMaps.RemoveRange(cost.AcademicProgramCostCategoryMaps);
             cost.AcademicProgramCostCategoryMaps.Add(new AcademicProgramCostCategoryMap
             {
                 AcademicProgramCostId = cost.Id,
@@ -58,9 +55,9 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
             });
 
             await _db.SaveChangesAsync(ct);
-            _logger.LogInformation("Cost {Id} updated successfully.", cost.Id);
+            _logger.LogInformation("Cost {Id} created successfully.", cost.Id);
 
-            return new EditCostResponse
+            return new AddCostResponse
             {
                 Id = cost.Id,
                 CategoryName = category.CategoryName,

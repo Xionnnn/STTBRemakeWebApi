@@ -32,6 +32,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-administrator")]
+        public async Task<IActionResult> AddAdministrator([FromBody] AddAdministratorRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpPut("edit-administrator")]
         public async Task<IActionResult> EditAdministrator([FromBody] EditAdministratorRequest request, CancellationToken ct)
         {

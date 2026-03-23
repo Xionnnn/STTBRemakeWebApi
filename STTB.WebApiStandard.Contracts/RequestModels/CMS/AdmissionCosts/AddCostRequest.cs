@@ -1,0 +1,15 @@
+using MediatR;
+using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionCosts;
+using System;
+using System.Collections.Generic;
+
+namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts
+{
+    public class AddCostRequest : IRequest<AddCostResponse>
+    {
+        public string CategoryName { get; set; } = string.Empty;
+        public string ProgramName { get; set; } = string.Empty;
+        public string CostName { get; set; } = string.Empty;
+        public decimal Cost { get; set; }
+    }
+}

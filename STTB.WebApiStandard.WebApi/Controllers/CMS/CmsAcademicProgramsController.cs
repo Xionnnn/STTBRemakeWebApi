@@ -32,6 +32,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-academic-program")]
+        public async Task<IActionResult> AddAcademicProgram([FromBody] AddAcademicProgramRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpPut("edit-academic-program")]
         public async Task<IActionResult> EditAcademicProgram([FromBody] EditAcademicProgramRequest request, CancellationToken ct)
         {

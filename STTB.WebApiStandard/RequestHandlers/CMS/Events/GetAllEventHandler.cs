@@ -47,8 +47,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
             // Fetch Assets for the events in this page
             var eventIds = eventsList.Select(e => e.Id).ToList();
             var assets = await _db.Assets
-                .Where(a => a.ModelType == @"events\event_image" && eventIds.Contains(a.ModelId))
-                .ToDictionaryAsync(a => a.ModelId, a => a.FilePath, ct);
+                .Where(a => a.ModelType == @"events\event_image" && a.ModelId.HasValue && eventIds.Contains(a.ModelId.Value))
+                .ToDictionaryAsync(a => a.ModelId.Value, a => a.FilePath, ct);
 
             var items = eventsList.Select(e => new EventDTO
             {

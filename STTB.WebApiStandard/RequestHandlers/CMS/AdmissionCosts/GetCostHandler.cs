@@ -38,7 +38,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
                 CategoryName = cost.AcademicProgramCostCategoryMaps.FirstOrDefault() != null 
                     ? cost.AcademicProgramCostCategoryMaps.First().AcademicProgramCostCategory.CategoryName 
                     : string.Empty,
-                ProgramName = cost.AcademicProgram?.ProgramName ?? string.Empty,
+                ProgramName = cost.AcademicProgram?.Name ?? string.Empty,
                 CostName = cost.Name,
                 Cost = cost.Price
             };

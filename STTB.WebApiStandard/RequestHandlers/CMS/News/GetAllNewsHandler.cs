@@ -46,8 +46,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
             // Fetch Assets to get image paths
             var newsIds = newsList.Select(n => n.Id).ToList();
             var assets = await _db.Assets
-                .Where(a => a.ModelType == @"news_posts\news_image" && newsIds.Contains(a.ModelId))
-                .ToDictionaryAsync(a => a.ModelId, a => a.FilePath, ct);
+                .Where(a => a.ModelType == @"news_posts\news_image" && a.ModelId.HasValue && newsIds.Contains(a.ModelId.Value))
+                .ToDictionaryAsync(a => a.ModelId.Value, a => a.FilePath, ct);
 
             var items = newsList.Select(n => new NewsDTO
             {

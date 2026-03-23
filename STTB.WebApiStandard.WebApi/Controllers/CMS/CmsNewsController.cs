@@ -31,6 +31,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-news")]
+        public async Task<IActionResult> AddNews([FromForm] AddNewsRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpGet("get-news/{id}")]
         public async Task<IActionResult> GetNews(long id, CancellationToken ct)
         {
