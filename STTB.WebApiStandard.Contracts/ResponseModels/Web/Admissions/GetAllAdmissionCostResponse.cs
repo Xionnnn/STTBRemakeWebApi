@@ -12,7 +12,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Admissions
     {
         public int Id { get; set; }
         public string ProgramName { get; set; } = string.Empty;
-        public string Slug { get; set; }
+        public string Slug { get; set; } = string.Empty;
         public IReadOnlyList<CategoryCostDTO> CostCategory { get; set; } = Array.Empty<CategoryCostDTO>();
     }
     public class CategoryCostDTO
