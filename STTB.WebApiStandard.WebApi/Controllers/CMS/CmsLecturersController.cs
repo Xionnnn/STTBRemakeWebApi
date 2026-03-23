@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/lecturers")]
     [ApiController]
-    [Authorize(Policy = "CanManageLecturers")]
+    //[Authorize(Policy = "CanManageLecturers")]
+    [Authorize]
     public class CmsLecturersController : ControllerBase
     {
         private readonly IMediator _mediator;

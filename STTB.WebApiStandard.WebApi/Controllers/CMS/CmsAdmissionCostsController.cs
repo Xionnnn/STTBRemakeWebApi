@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/costs")]
     [ApiController]
-    [Authorize(Policy = "CanManageAdmissionCost")]
+    //[Authorize(Policy = "CanManageAdmissionCost")]
+    [Authorize]
     public class CmsAdmissionCostsController : ControllerBase
     {
         private readonly IMediator _mediator;
