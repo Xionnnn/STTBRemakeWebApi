@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using STTB.WebApiStandard.Contracts.ResponseModels.Dashboards;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Dashboard
 {
-    public class GetDashboardDataRequest
+    public class GetDashboardDataRequest : IRequest<GetDashboardDataResponse>
     {
     }
 }
