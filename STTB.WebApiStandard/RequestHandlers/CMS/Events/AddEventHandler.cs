@@ -33,8 +33,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
                 Title = request.EventTitle,
                 Description = request.Description,
                 Location = request.Location,
-                StartAt = request.StartsAtDate,
-                EndAt = request.EndsAtDate,
+                StartAt = DateTime.SpecifyKind(request.StartsAtDate, DateTimeKind.Utc),
+                EndAt = request.EndsAtDate.HasValue ? DateTime.SpecifyKind(request.EndsAtDate.Value, DateTimeKind.Utc) : (DateTime?)null,
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -143,7 +143,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
                 StartsAtDate = ev.StartAt,
                 EndsAtDate = ev.EndAt,
                 OrganizerName = request.OrganizerName,
-                Category = request.Category ?? Array.Empty<string>(),
+                Category = request.Category ?? new List<string>(),
                 ImagePath = finalImagePath,
                 IsPublished = ev.IsPublished
             };

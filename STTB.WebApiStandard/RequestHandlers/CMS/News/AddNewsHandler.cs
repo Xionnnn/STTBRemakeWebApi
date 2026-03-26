@@ -32,7 +32,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
                 Slug = request.Slug,
                 Title = request.Title,
                 Content = request.Content,
-                PublishedAt = request.PublicationDate,
+                PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc),
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -115,7 +115,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
                 Title = news.Title,
                 Content = news.Content,
                 PublicationDate = news.PublishedAt,
-                Category = request.Category ?? Array.Empty<string>(),
+                Category = request.Category ?? new List<string>(),
                 ImagePath = finalImagePath,
                 IsPublished = news.IsPublished
             };

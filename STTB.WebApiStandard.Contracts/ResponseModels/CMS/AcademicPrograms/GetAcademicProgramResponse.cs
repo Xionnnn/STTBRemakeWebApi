@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -25,7 +25,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms
     {
         public string CategoryName { get; set; } = string.Empty;
         public int? TotalCredits { get; set; } = null;
-        public IReadOnlyList<LectureDTO> Lectures { get; set; } = Array.Empty<LectureDTO>();
+        public List<LectureDTO> Lectures { get; set; } = new List<LectureDTO>();
 
 
     }

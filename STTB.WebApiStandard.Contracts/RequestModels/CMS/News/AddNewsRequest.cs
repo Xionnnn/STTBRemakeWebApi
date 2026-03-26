@@ -13,7 +13,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.News
         public string Content { get; set; } = string.Empty;
         public DateTime PublicationDate { get; set; }
         public IFormFile? NewsImage { get; set; }
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
+        public List<string> Category { get; set; } = new List<string>();
         public bool IsPublished { get; set; }
     }
 }

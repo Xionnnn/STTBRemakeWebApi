@@ -15,7 +15,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Events
         public DateTime StartsAtDate { get; set; }
         public DateTime? EndsAtDate { get; set; }
         public string OrganizerName { get; set; } = string.Empty;
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
+        public List<string> Category { get; set; } = new List<string>();
         public IFormFile? EventImage { get; set; }
         public bool IsPublished { get; set; }
     }

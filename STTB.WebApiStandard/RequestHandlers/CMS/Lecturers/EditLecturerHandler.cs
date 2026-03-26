@@ -35,7 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
             lecturer.LecturerName = request.LecturerName;
             lecturer.OrganizationalRole = request.OrganizationalRole;
             lecturer.IsActive = request.IsActive;
-            lecturer.JoinedAt = request.JoinedAt;
+            lecturer.JoinedAt = DateTime.SpecifyKind(request.JoinedAt, DateTimeKind.Utc);
             lecturer.UpdatedAt = DateTime.UtcNow;
 
             // Handle Roles

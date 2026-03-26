@@ -13,8 +13,8 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Lecturers
         public string LecturerName { get; set; } = string.Empty;
         public IFormFile? LecturerImage { get; set; }
         public string OrganizationalRole { get; set; } = string.Empty;
-        public IReadOnlyList<string> Roles { get; set; } = Array.Empty<string>();
-        public IReadOnlyList<string> Degrees { get; set; } = Array.Empty<string>();
+        public List<string> Roles { get; set; } = new List<string>();
+        public List<string> Degrees { get; set; } = new List<string>();
         public bool IsActive { get; set; }
         public DateTime JoinedAt { get; set; }
     }

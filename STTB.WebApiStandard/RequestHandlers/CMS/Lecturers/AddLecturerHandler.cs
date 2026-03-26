@@ -32,7 +32,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                 LecturerName = request.LecturerName,
                 OrganizationalRole = request.OrganizationalRole,
                 IsActive = request.IsActive,
-                JoinedAt = request.JoinedAt,
+                JoinedAt = DateTime.SpecifyKind(request.JoinedAt, DateTimeKind.Utc),
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -121,8 +121,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                 LecturerName = lecturer.LecturerName,
                 ImagePath = finalImagePath,
                 OrganizationalRole = lecturer.OrganizationalRole,
-                Roles = request.Roles ?? Array.Empty<string>(),
-                Degrees = request.Degrees ?? Array.Empty<string>(),
+                Roles = request.Roles ?? new List<string>(),
+                Degrees = request.Degrees ?? new List<string>(),
                 IsActive = lecturer.IsActive,
                 JoinedAt = lecturer.JoinedAt
             };
