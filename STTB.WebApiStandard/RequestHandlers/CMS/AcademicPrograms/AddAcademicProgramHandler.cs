@@ -6,6 +6,7 @@ using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Entities;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,9 +25,12 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
 
         public async Task<AddAcademicProgramResponse> Handle(AddAcademicProgramRequest request, CancellationToken ct)
         {
+            var slug = GenerateSlug(request.Slug);
+
             var program = new AcademicProgram
             {
                 Name = request.ProgramName,
+                Slug = slug,
                 GraduateProfileDescription = request.ProgramDescription,
                 DegreeAbbr = request.Degree,
                 GraduateProfileMotto = request.Motto,
@@ -129,6 +133,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             {
                 Id = program.Id,
                 ProgramName = program.Name,
+                Slug = program.Slug,
                 ProgramDescription = program.GraduateProfileDescription ?? string.Empty,
                 ProgramRequirements = program.AcademicProgramRequirements.Select(r => r.RequirementText).ToList(),
                 TotalCredits = program.TotalCredits,
@@ -152,6 +157,15 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                     }).ToList()
                 }).ToList()
             };
+        }
+
+        private string GenerateSlug(string phrase)
+        {
+            string str = phrase.ToLower();
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            str = Regex.Replace(str, @"\s+", "-");
+            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim('-');
+            return str;
         }
     }
 }
