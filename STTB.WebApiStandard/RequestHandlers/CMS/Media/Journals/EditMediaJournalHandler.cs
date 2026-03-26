@@ -97,7 +97,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
 
             if (request.JournalFile != null && request.JournalFile.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "files");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "documents", "media_items");
                 if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + request.JournalFile.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -105,7 +105,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     await request.JournalFile.CopyToAsync(fileStream, ct);
                 }
-                finalJournalPath = $"/Uploads/files/{uniqueFileName}";
+                finalJournalPath = $"/Uploads/documents/media_items/{uniqueFileName}";
 
                 if (journalAsset != null)
                 {
@@ -132,7 +132,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
 
             if (request.Thumbnail != null && request.Thumbnail.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "media_items");
                 if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + request.Thumbnail.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -140,7 +140,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     await request.Thumbnail.CopyToAsync(fileStream, ct);
                 }
-                finalThumbnailPath = $"/Uploads/images/{uniqueFileName}";
+                finalThumbnailPath = $"/Uploads/images/media_items/{uniqueFileName}";
 
                 if (thumbnailAsset != null)
                 {

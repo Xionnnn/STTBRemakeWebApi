@@ -89,7 +89,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
 
             if (request.Thumbnail != null && request.Thumbnail.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "media_items");
                 if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + request.Thumbnail.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -97,7 +97,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 {
                     await request.Thumbnail.CopyToAsync(fileStream, ct);
                 }
-                finalThumbnailPath = $"/Uploads/images/{uniqueFileName}";
+                finalThumbnailPath = $"/Uploads/images/media_items/{uniqueFileName}";
 
                 if (asset != null)
                 {
