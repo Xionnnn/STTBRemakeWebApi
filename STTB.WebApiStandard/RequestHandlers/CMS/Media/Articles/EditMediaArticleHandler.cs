@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Media;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Articles;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Articles;
 using STTB.WebApiStandard.Entities;
@@ -36,7 +37,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
 
             media.Title = request.ArticleTitle;
             media.Slug = GenerateSlug(request.ArticleTitle);
-            media.Description = request.ArticleContent;
+            media.Description = request.ArticleDescription;
+            media.Content = request.ArticleContent;
             media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
@@ -118,7 +120,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
                 Category = request.Category ?? new List<string>(),
-                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Authors = request.Authors ?? new List<AuthorDTO>(),
                 ThumbnailPath = finalThumbnailPath
             };
         }

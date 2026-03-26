@@ -8,10 +8,10 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Monograf
     {
         public long Id { get; set; }
         public string MonografTitle { get; set; } = string.Empty;
-        public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
+        public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public DateTime PublicationDate { get; set; }
         public bool IsPublished { get; set; }
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
+        public List<string> Category { get; set; } = new List<string>();
         public string Synopsis { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string Isbn { get; set; } = string.Empty;
