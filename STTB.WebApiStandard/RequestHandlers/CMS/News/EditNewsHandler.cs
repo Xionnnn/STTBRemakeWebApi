@@ -34,7 +34,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
             news.Slug = request.Slug;
             news.Title = request.Title;
             news.Content = request.Content;
-            news.PublishedAt = request.PublicationDate;
+            news.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             news.IsPublished = request.IsPublished;
             news.UpdatedAt = DateTime.UtcNow;
 
@@ -76,7 +76,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
             string finalImagePath = string.Empty;
             if (request.NewsImage != null && request.NewsImage.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "news");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "news_posts");
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
@@ -88,7 +88,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
                     await request.NewsImage.CopyToAsync(fileStream, ct);
                 }
 
-                finalImagePath = $"/Uploads/images/news/{uniqueFileName}";
+                finalImagePath = $"/Uploads/images/news_posts/{uniqueFileName}";
 
                 var existingAsset = await _db.Assets
                     .FirstOrDefaultAsync(a => a.ModelType == @"news_posts\news_image" && a.ModelId == news.Id, ct);
@@ -137,7 +137,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
                 Title = news.Title,
                 Content = news.Content,
                 PublicationDate = news.PublishedAt,
-                Category = request.Category ?? Array.Empty<string>(),
+                Category = request.Category ?? new List<string>(),
                 ImagePath = finalImagePath,
                 IsPublished = news.IsPublished
             };

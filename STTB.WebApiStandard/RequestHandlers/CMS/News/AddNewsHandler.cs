@@ -78,7 +78,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
             string finalImagePath = string.Empty;
             if (request.NewsImage != null && request.NewsImage.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "news");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "news_posts");
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
@@ -90,7 +90,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
                     await request.NewsImage.CopyToAsync(fileStream, ct);
                 }
 
-                finalImagePath = $"/Uploads/images/news/{uniqueFileName}";
+                finalImagePath = $"/Uploads/images/news_posts/{uniqueFileName}";
 
                 await _db.Assets.AddAsync(new Asset
                 {

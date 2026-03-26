@@ -79,7 +79,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
             string finalImagePath = string.Empty;
             if (request.LecturerImage != null && request.LecturerImage.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "lecturers");
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
@@ -91,7 +91,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                     await request.LecturerImage.CopyToAsync(fileStream, ct);
                 }
 
-                finalImagePath = $"/Uploads/images/{uniqueFileName}";
+                finalImagePath = $"/Uploads/images/lecturers/{uniqueFileName}";
 
                 // Update Asset record
                 var existingAsset = await _db.Assets
