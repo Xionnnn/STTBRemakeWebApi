@@ -5,6 +5,7 @@ using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Buletins;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Buletins;
 using STTB.WebApiStandard.Entities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -34,7 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 Slug = slug,
                 Description = request.Description,
                 MediaFormat = "buletin",
-                PublishedAt = request.PublicationDate,
+                PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc),
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -140,8 +141,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 Description = media.Description ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 BuletinPath = finalBuletinPath,
                 ThumbnailPath = finalThumbnailPath
             };

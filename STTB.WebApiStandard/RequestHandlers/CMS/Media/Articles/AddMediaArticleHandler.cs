@@ -5,6 +5,7 @@ using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Articles;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Articles;
 using STTB.WebApiStandard.Entities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -32,9 +33,10 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
             {
                 Title = request.ArticleTitle,
                 Slug = slug,
-                Description = request.ArticleContent,
+                Description = request.ArticleDescription,
+                Content = request.ArticleContent,
                 MediaFormat = "article",
-                PublishedAt = request.PublicationDate,
+                PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc),
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -107,11 +109,12 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
             {
                 Id = media.Id,
                 ArticleTitle = media.Title,
-                ArticleContent = media.Description ?? string.Empty,
+                ArticleDescription = media.Description ?? string.Empty,
+                ArticleContent = media.Content ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 ThumbnailPath = finalThumbnailPath
             };
         }

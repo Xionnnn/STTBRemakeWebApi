@@ -22,7 +22,8 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
-    <Folder Include="wwwroot\Uploads\images\" />
+    <Folder Include="wwwroot\Uploads\Images\" />
+    <Folder Include="wwwroot\Uploads\Pdf\" />
   </ItemGroup>
 
 </Project>

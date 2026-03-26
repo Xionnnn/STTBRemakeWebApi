@@ -10,11 +10,11 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Videos
     public class AddMediaVideoRequest : IRequest<AddMediaVideoResponse>
     {
         public string VideoTitle { get; set; } = string.Empty;
-        public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
+        public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public string VideoDescription { get; set; } = string.Empty;
         public DateTime PublicationDate { get; set; }
         public bool IsPublished { get; set; }
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
+        public List<string> Category { get; set; } = new List<string>();
         public string VideoUrl { get; set; } = string.Empty;
         public IFormFile? Thumbnail { get; set; }
     }

@@ -5,6 +5,7 @@ using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Videos;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Videos;
 using STTB.WebApiStandard.Entities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -34,7 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 Slug = slug,
                 Description = request.VideoDescription,
                 MediaFormat = "video",
-                PublishedAt = request.PublicationDate,
+                PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc),
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
@@ -116,8 +117,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 VideoDescription = media.Description ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 VideoUrl = request.VideoUrl,
                 ThumbnailPath = finalThumbnailPath
             };

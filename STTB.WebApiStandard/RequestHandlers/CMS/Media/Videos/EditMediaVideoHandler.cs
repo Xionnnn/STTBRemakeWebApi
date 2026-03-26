@@ -38,7 +38,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
             media.Title = request.VideoTitle;
             media.Slug = GenerateSlug(request.VideoTitle);
             media.Description = request.VideoDescription;
-            media.PublishedAt = request.PublicationDate;
+            media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
 
@@ -128,8 +128,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 VideoDescription = media.Description ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 VideoUrl = request.VideoUrl,
                 ThumbnailPath = finalThumbnailPath
             };

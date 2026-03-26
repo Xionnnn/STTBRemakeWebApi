@@ -37,7 +37,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
             media.Title = request.BuletinTitle;
             media.Slug = GenerateSlug(request.BuletinTitle);
             media.Description = request.Description;
-            media.PublishedAt = request.PublicationDate;
+            media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
 
@@ -152,8 +152,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 Description = media.Description ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 BuletinPath = finalBuletinPath,
                 ThumbnailPath = finalThumbnailPath
             };

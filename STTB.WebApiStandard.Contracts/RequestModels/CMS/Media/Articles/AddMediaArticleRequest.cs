@@ -13,8 +13,8 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Articles
         public string ArticleDescription { get; set; } = string.Empty;
         public DateTime PublicationDate { get; set; }
         public bool IsPublished { get; set; }
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
-        public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
+        public List<string> Category { get; set; } = new List<string>();
+        public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public string ArticleContent { get; set; } = string.Empty;
         public IFormFile? Thumbnail { get; set; }
     }

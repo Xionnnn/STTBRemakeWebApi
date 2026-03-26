@@ -30,6 +30,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpGet("categories/get-all")]
+        public async Task<IActionResult> GetAllMediaCategories([FromQuery] GetAllMediaCategoryRequest request)
+        {
+            var response = await _mediator.Send(request ?? new GetAllMediaCategoryRequest());
+            return Ok(response);
+        }
+
         #region Articles
         [HttpPost("articles/add")]
         public async Task<IActionResult> AddArticle([FromForm] AddMediaArticleRequest request)

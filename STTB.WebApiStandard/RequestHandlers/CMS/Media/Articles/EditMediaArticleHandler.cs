@@ -37,7 +37,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
             media.Title = request.ArticleTitle;
             media.Slug = GenerateSlug(request.ArticleTitle);
             media.Description = request.ArticleContent;
-            media.PublishedAt = request.PublicationDate;
+            media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
 
@@ -117,8 +117,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 ArticleContent = media.Description ?? string.Empty,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 ThumbnailPath = finalThumbnailPath
             };
         }

@@ -13,9 +13,9 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Buletins
         public string Description { get; set; } = string.Empty;
         public IFormFile? BuletinFile { get; set; }
         public IFormFile? Thumbnail { get; set; }
-        public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
+        public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public DateTime PublicationDate { get; set; }
         public bool IsPublished { get; set; }
-        public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();
+        public List<string> Category { get; set; } = new List<string>();
     }
 }

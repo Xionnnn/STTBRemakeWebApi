@@ -38,7 +38,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
             media.Title = request.MonografTitle;
             media.Slug = GenerateSlug(request.MonografTitle);
             media.Description = request.Synopsis;
-            media.PublishedAt = request.PublicationDate;
+            media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
 
@@ -136,8 +136,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
                 MonografTitle = media.Title,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 Synopsis = media.Description ?? string.Empty,
                 Price = request.Price,
                 Isbn = request.Isbn ?? string.Empty,

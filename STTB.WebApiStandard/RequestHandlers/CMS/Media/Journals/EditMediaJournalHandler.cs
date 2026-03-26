@@ -37,7 +37,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
 
             media.Title = request.JournalTitle;
             media.Slug = GenerateSlug(request.JournalTitle);
-            media.PublishedAt = request.PublicationDate;
+            media.PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc);
             media.IsPublished = request.IsPublished;
             media.UpdatedAt = DateTime.UtcNow;
 
@@ -170,8 +170,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 JournalTitle = media.Title,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 Issn = request.Issn ?? string.Empty,
                 EIssn = request.EIssn ?? string.Empty,
                 Doi = request.Doi ?? string.Empty,

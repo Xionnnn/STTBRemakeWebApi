@@ -5,6 +5,7 @@ using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Journals;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Journals;
 using STTB.WebApiStandard.Entities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,7 +34,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 Title = request.JournalTitle,
                 Slug = slug,
                 MediaFormat = "journal",
-                PublishedAt = request.PublicationDate,
+                PublishedAt = DateTime.SpecifyKind(request.PublicationDate, DateTimeKind.Utc),
                 IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
@@ -146,8 +147,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 JournalTitle = media.Title,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
-                Category = request.Category ?? Array.Empty<string>(),
-                Authors = request.Authors ?? Array.Empty<Contracts.DTOs.CMS.Media.AuthorDTO>(),
+                Category = request.Category ?? new List<string>(),
+                Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 Issn = request.Issn ?? string.Empty,
                 EIssn = request.EIssn ?? string.Empty,
                 Doi = request.Doi ?? string.Empty,
