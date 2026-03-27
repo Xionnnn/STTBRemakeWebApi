@@ -92,6 +92,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 {
                     buletinAsset.FilePath = finalBuletinPath;
                     buletinAsset.FileName = uniqueFileName;
+                    buletinAsset.MimeType = request.BuletinFile.ContentType;
+                    buletinAsset.SizeBytes = request.BuletinFile.Length;
                     buletinAsset.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -102,6 +104,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalBuletinPath,
+                        MimeType = request.BuletinFile.ContentType,
+                        SizeBytes = request.BuletinFile.Length,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }, ct);
@@ -127,6 +131,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                 {
                     thumbnailAsset.FilePath = finalThumbnailPath;
                     thumbnailAsset.FileName = uniqueFileName;
+                    thumbnailAsset.MimeType = request.Thumbnail.ContentType;
+                    thumbnailAsset.SizeBytes = request.Thumbnail.Length;
                     thumbnailAsset.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -137,6 +143,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,
+                        MimeType = request.Thumbnail.ContentType,
+                        SizeBytes = request.Thumbnail.Length,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }, ct);

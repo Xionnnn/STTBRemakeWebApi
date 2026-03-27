@@ -111,6 +111,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     journalAsset.FilePath = finalJournalPath;
                     journalAsset.FileName = uniqueFileName;
+                    journalAsset.MimeType = request.JournalFile.ContentType;
+                    journalAsset.SizeBytes = request.JournalFile.Length;
                     journalAsset.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -121,6 +123,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalJournalPath,
+                        MimeType = request.JournalFile.ContentType,
+                        SizeBytes = request.JournalFile.Length,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }, ct);
@@ -146,6 +150,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     thumbnailAsset.FilePath = finalThumbnailPath;
                     thumbnailAsset.FileName = uniqueFileName;
+                    thumbnailAsset.MimeType = request.Thumbnail.ContentType;
+                    thumbnailAsset.SizeBytes = request.Thumbnail.Length;
                     thumbnailAsset.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -156,6 +162,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,
+                        MimeType = request.Thumbnail.ContentType,
+                        SizeBytes = request.Thumbnail.Length,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }, ct);

@@ -94,6 +94,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 {
                     asset.FilePath = finalThumbnailPath;
                     asset.FileName = uniqueFileName;
+                    asset.MimeType = request.Thumbnail.ContentType;
+                    asset.SizeBytes = request.Thumbnail.Length;
                     asset.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -104,6 +106,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,
+                        MimeType = request.Thumbnail.ContentType,
+                        SizeBytes = request.Thumbnail.Length,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }, ct);
