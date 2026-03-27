@@ -27,5 +27,6 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Lecturers
         public bool IsActive { get; set; }
         public DateTime JoinedAt { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string LecturerImagePath { get; set; } = string.Empty;
     }
 }

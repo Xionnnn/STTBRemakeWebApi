@@ -43,6 +43,15 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media
                 .Take(request.PageSize)
                 .ToListAsync(ct);
 
+            var mediaIds = mediaList.Select(m => m.Id).ToList();
+            var thumbnailAssets = await _db.Assets
+                .Where(a => a.ModelId.HasValue && a.ModelType != null && mediaIds.Contains(a.ModelId.Value) && a.ModelType.Contains("thumbnail"))
+                .ToListAsync(ct);
+
+            var thumbnailLookup = thumbnailAssets
+                .GroupBy(a => a.ModelId!.Value)
+                .ToDictionary(g => g.Key, g => g.First().FilePath);
+
             var items = mediaList.Select(m => new MediaItemDTO
             {
                 Id = m.Id,
@@ -51,7 +60,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media
                 MediaFormat = m.MediaFormat,
                 PublishedAt = m.PublishedAt,
                 IsPublished = m.IsPublished,
-                CreatedAt = m.CreatedAt
+                CreatedAt = m.CreatedAt,
+                ThumbnailPath = thumbnailLookup.ContainsKey(m.Id) ? thumbnailLookup[m.Id] : string.Empty
             }).ToList();
 
             _logger.LogInformation("Found {Count} media items out of {Total} total.", items.Count, totalItems);

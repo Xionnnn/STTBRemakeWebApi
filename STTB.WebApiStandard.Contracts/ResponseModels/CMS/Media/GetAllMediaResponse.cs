@@ -23,5 +23,6 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media
         public DateTime? PublishedAt { get; set; }
         public bool IsPublished { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string ThumbnailPath { get; set; } = string.Empty;
     }
 }

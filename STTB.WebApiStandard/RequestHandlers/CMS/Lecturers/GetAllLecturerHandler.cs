@@ -41,21 +41,32 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
 
             // Paginate and project
-            var items = await query
+            var lecturerList = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(l => new LecturerDto
-                {
-                    Id = l.Id,
-                    LecturerName = l.LecturerName,
-                    OrganizationalRole = l.OrganizationalRole,
-                    Roles = l.LecturerRoleMaps.Select(rm => rm.LecturerRole.RoleName).ToList(),
-                    Degrees = l.LecturerDegreeMaps.Select(dm => dm.LecturerDegree.DegreeName).ToList(),
-                    IsActive = l.IsActive,
-                    JoinedAt = l.JoinedAt,
-                    CreatedAt = l.CreatedAt
-                })
                 .ToListAsync(ct);
+
+            var lecturerIds = lecturerList.Select(l => l.Id).ToList();
+            var imageAssets = await _db.Assets
+                .Where(a => a.ModelId.HasValue && a.ModelType != null && lecturerIds.Contains(a.ModelId.Value) && a.ModelType == @"lecturers\lecturer_image")
+                .ToListAsync(ct);
+
+            var imageLookup = imageAssets
+                .GroupBy(a => a.ModelId!.Value)
+                .ToDictionary(g => g.Key, g => g.First().FilePath);
+
+            var items = lecturerList.Select(l => new LecturerDto
+            {
+                Id = l.Id,
+                LecturerName = l.LecturerName,
+                OrganizationalRole = l.OrganizationalRole,
+                Roles = l.LecturerRoleMaps.Select(rm => rm.LecturerRole.RoleName).ToList(),
+                Degrees = l.LecturerDegreeMaps.Select(dm => dm.LecturerDegree.DegreeName).ToList(),
+                IsActive = l.IsActive,
+                JoinedAt = l.JoinedAt,
+                CreatedAt = l.CreatedAt,
+                LecturerImagePath = imageLookup.ContainsKey(l.Id) ? imageLookup[l.Id] : string.Empty
+            }).ToList();
 
             _logger.LogInformation("Found {Count} lecturers out of {Total} total.", items.Count, totalItems);
 
