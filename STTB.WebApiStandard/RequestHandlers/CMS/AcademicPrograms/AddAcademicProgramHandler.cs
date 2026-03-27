@@ -38,6 +38,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 TransformedDescription = request.TransformedDescription,
                 TransformativeDescription = request.TransformativeDescription,
                 TotalCredits = request.TotalCredits ?? 0,
+                IsPublished = request.IsPublished,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -51,7 +52,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
 
             var timeNow = DateTime.UtcNow;
 
-            // Rebuild collections
             if (request.ProgramRequirements != null)
             {
                 foreach (var req in request.ProgramRequirements)
@@ -145,6 +145,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 InformedDescription = program.InformedDescription,
                 TransformedDescription = program.TransformedDescription,
                 TransformativeDescription = program.TransformativeDescription,
+                IsPublished = program.IsPublished,
                 LectureCategory = program.AcademicCourseCategories.Select(c => new AcademicDTO
                 {
                     CategoryName = c.Name,

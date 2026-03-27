@@ -46,6 +46,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             program.TransformedDescription = request.TransformedDescription;
             program.TransformativeDescription = request.TransformativeDescription;
             program.TotalCredits = request.TotalCredits ?? 0;
+            program.IsPublished = request.IsPublished;
             program.UpdatedAt = DateTime.UtcNow;
 
             if (request.Duration.HasValue)
@@ -160,6 +161,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 InformedDescription = program.InformedDescription,
                 TransformedDescription = program.TransformedDescription,
                 TransformativeDescription = program.TransformativeDescription,
+                IsPublished = program.IsPublished,
                 LectureCategory = program.AcademicCourseCategories.Select(c => new AcademicDTO
                 {
                     CategoryName = c.Name,

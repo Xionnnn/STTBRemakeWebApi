@@ -20,5 +20,6 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms
         public string TransformedDescription { get; set; } = string.Empty;
         public string TransformativeDescription { get; set; } = string.Empty;
         public List<AcademicDTO> LectureCategory { get; set; } = new List<AcademicDTO>();
+        public bool IsPublished { get; set; } = false;
     }
 }
