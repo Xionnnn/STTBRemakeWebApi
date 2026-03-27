@@ -8,7 +8,6 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms
     public class AddAcademicProgramRequest : IRequest<AddAcademicProgramResponse>
     {
         public string ProgramName { get; set; } = string.Empty;
-        public string Slug { get; set; } = string.Empty;
         public string ProgramDescription { get; set; } = string.Empty;
         public List<string> ProgramRequirements { get; set; } = new List<string>();
         public int? TotalCredits { get; set; } = null;

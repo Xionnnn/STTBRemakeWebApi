@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Entities;
+using System.Text.RegularExpressions;
 
 namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
 {
@@ -33,8 +34,11 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 throw new KeyNotFoundException($"Academic Program with ID {request.Id} was not found.");
             }
 
+            var newSlug = GenerateSlug(request.ProgramName);
+
             // Update basic fields
             program.Name = request.ProgramName;
+            program.Slug = newSlug;
             program.GraduateProfileDescription = request.ProgramDescription;
             program.DegreeAbbr = request.Degree;
             program.GraduateProfileMotto = request.Motto;
@@ -144,6 +148,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             {
                 Id = program.Id,
                 ProgramName = program.Name,
+                Slug = program.Slug,
                 ProgramDescription = program.GraduateProfileDescription ?? string.Empty,
                 ProgramRequirements = program.AcademicProgramRequirements.Select(r => r.RequirementText).ToList(),
                 TotalCredits = program.TotalCredits,
@@ -167,6 +172,14 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                     }).ToList()
                 }).ToList()
             };
+        }
+        private string GenerateSlug(string phrase)
+        {
+            string str = phrase.ToLower();
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            str = Regex.Replace(str, @"\s+", "-");
+            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim('-');
+            return str;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
 
         public async Task<AddAcademicProgramResponse> Handle(AddAcademicProgramRequest request, CancellationToken ct)
         {
-            var slug = GenerateSlug(request.Slug);
+            var slug = GenerateSlug(request.ProgramName);
 
             var program = new AcademicProgram
             {
