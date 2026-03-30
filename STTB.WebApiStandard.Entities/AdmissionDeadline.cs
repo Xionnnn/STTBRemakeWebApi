@@ -9,11 +9,19 @@ public partial class AdmissionDeadline
 
     public string AcademicYear { get; set; } = null!;
 
-    public DateTime FirstBatchClosingAt { get; set; }
+    public int BatchOrder { get; set; }
 
-    public DateTime SecondBatchClosingAt { get; set; }
+    public DateTime BatchDeadlineAt { get; set; }
 
-    public DateTime ThirdBatchClosingAt { get; set; }
+    public DateTime FormReturnDeadlineAt { get; set; }
+
+    public DateTime DocumentSelectionDeadlineAt { get; set; }
+
+    public DateTime ResultBroadcastAt { get; set; }
+
+    public DateTime ParticipantCallAt { get; set; }
+
+    public bool IsActive { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

@@ -24,22 +24,27 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Admissions
 
         public async Task<GetAdmissionScheduleResponse> Handle(GetAdmissionScheduleRequest request, CancellationToken ct)
         {
-            var schedule = await _db.AdmissionDeadlines
+            var schedules = await _db.AdmissionDeadlines
                 .AsNoTracking()
-                .OrderByDescending(d => d.CreatedAt)
-                .FirstOrDefaultAsync(ct);
+                .Where(d => d.IsActive)
+                .OrderBy(d => d.BatchOrder)
+                .Select(d => new AdmissionScheduleDTO
+                {
+                    AcademicYear = d.AcademicYear,
+                    BatchOrder = d.BatchOrder,
+                    BatchDeadlineAt = d.BatchDeadlineAt,
+                    FormReturnDeadlineAt = d.FormReturnDeadlineAt,
+                    DocumentSelectionDeadlineAt = d.DocumentSelectionDeadlineAt,
+                    ResultBroadcastAt = d.ResultBroadcastAt,
+                    ParticipantCallAt = d.ParticipantCallAt
+                })
+                .ToListAsync(ct);
 
-            if (schedule == null)
-            {
-                _logger.LogInformation("No admission schedule found.");
-                return new GetAdmissionScheduleResponse();
-            }
+            _logger.LogInformation("Found {Count} admission schedules.", schedules.Count);
 
             return new GetAdmissionScheduleResponse
             {
-                FirstBatchDeadline = schedule.FirstBatchClosingAt,
-                SecondBatchDeadline = schedule.SecondBatchClosingAt,
-                ThirdBatchDeadline = schedule.ThirdBatchClosingAt
+                Items = schedules
             };
         }
     }

@@ -358,18 +358,24 @@ public partial class SttbDbContext : DbContext
 
             entity.ToTable("admission_deadlines");
 
-            entity.HasIndex(e => e.AcademicYear, "admission_deadlines_academic_year_key").IsUnique();
+            entity.HasIndex(e => new { e.AcademicYear, e.BatchOrder }, "uq_admission_deadlines_year_batch").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AcademicYear)
                 .HasMaxLength(9)
                 .HasColumnName("academic_year");
+            entity.Property(e => e.BatchDeadlineAt).HasColumnName("batch_deadline_at");
+            entity.Property(e => e.BatchOrder).HasColumnName("batch_order");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
-            entity.Property(e => e.FirstBatchClosingAt).HasColumnName("first_batch_closing_at");
-            entity.Property(e => e.SecondBatchClosingAt).HasColumnName("second_batch_closing_at");
-            entity.Property(e => e.ThirdBatchClosingAt).HasColumnName("third_batch_closing_at");
+            entity.Property(e => e.DocumentSelectionDeadlineAt).HasColumnName("document_selection_deadline_at");
+            entity.Property(e => e.FormReturnDeadlineAt).HasColumnName("form_return_deadline_at");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("is_active");
+            entity.Property(e => e.ParticipantCallAt).HasColumnName("participant_call_at");
+            entity.Property(e => e.ResultBroadcastAt).HasColumnName("result_broadcast_at");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");

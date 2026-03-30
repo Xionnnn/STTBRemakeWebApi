@@ -79,19 +79,33 @@ CREATE TABLE user_permissions (
 -- 3) ADMISSION DEADLINES
 -- =========================
 CREATE TABLE admission_deadlines (
-    id BIGSERIAL PRIMARY KEY,
-    academic_year VARCHAR(9) NOT NULL UNIQUE,
-    first_batch_closing_at TIMESTAMPTZ NOT NULL,
-    second_batch_closing_at TIMESTAMPTZ NOT NULL,
-    third_batch_closing_at TIMESTAMPTZ NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    id                               BIGSERIAL    PRIMARY KEY,
+    academic_year                    VARCHAR(9)   NOT NULL,
+    batch_order                      INT          NOT NULL,
+    batch_deadline_at               TIMESTAMPTZ  NOT NULL,
+    form_return_deadline_at          TIMESTAMPTZ  NOT NULL,
+    document_selection_deadline_at  TIMESTAMPTZ  NOT NULL,
+    result_broadcast_at             TIMESTAMPTZ  NOT NULL,
+    participant_call_at             TIMESTAMPTZ  NOT NULL,
+    is_active                        BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at                       TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at                       TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT uq_admission_deadlines_year_batch
+        UNIQUE (academic_year, batch_order),
+
     CONSTRAINT chk_admission_deadlines_academic_year_format
         CHECK (academic_year ~ '^[0-9]{4}-[0-9]{4}$'),
-    CONSTRAINT chk_admission_deadlines_batch_order
+
+    CONSTRAINT chk_admission_deadlines_batch_order_positive
+        CHECK (batch_order > 0),
+
+    CONSTRAINT chk_admission_deadlines_chronological
         CHECK (
-            first_batch_closing_at <= second_batch_closing_at
-            AND second_batch_closing_at <= third_batch_closing_at
+            result_broadcast_at        <= batch_deadline_at
+            AND form_return_deadline_at      <= document_selection_deadline_at
+            AND document_selection_deadline_at <= participant_call_at
+            AND participant_call_at         <= result_broadcast_at
         )
 );
 
