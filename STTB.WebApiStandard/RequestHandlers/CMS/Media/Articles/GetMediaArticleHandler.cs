@@ -29,7 +29,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
             if (media == null)
                 throw new InvalidOperationException($"Article {request.Id} not found.");
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"articles\article_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\article_thumbnail", ct);
 
             return new GetMediaArticleResponse
             {

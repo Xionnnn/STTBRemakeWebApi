@@ -92,7 +92,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 }
             }
 
-            var journalAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"journals\journal_file", ct);
+            var journalAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\journal_content", ct);
             string finalJournalPath = journalAsset?.FilePath ?? string.Empty;
 
             if (request.JournalFile != null && request.JournalFile.Length > 0)
@@ -119,7 +119,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     await _db.Assets.AddAsync(new Asset
                     {
-                        ModelType = @"journals\journal_file",
+                        ModelType = @"media_items\journal_content",
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalJournalPath,
@@ -131,7 +131,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 }
             }
 
-            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"journals\journal_thumbnail", ct);
+            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\journal_thumbnail", ct);
             string finalThumbnailPath = thumbnailAsset?.FilePath ?? string.Empty;
 
             if (request.Thumbnail != null && request.Thumbnail.Length > 0)
@@ -158,7 +158,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 {
                     await _db.Assets.AddAsync(new Asset
                     {
-                        ModelType = @"journals\journal_thumbnail",
+                        ModelType = @"media_items\journal_thumbnail",
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,

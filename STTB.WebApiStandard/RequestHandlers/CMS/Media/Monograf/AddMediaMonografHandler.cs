@@ -98,7 +98,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"monografs\monograf_thumbnail",
+                    ModelType = @"media_items\monograf_thumbnail",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalThumbnailPath,

@@ -31,7 +31,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
                 _db.Remove(media.MediaItemsMonograf);
             }
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"monografs\monograf_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\monograf_thumbnail", ct);
             if (asset != null) _db.Assets.Remove(asset);
 
             _db.MediaItems.Remove(media);

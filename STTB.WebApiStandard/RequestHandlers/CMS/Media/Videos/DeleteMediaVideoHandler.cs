@@ -31,7 +31,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 _db.Remove(media.MediaItemsVideo);
             }
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"videos\video_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\video_thumbnail", ct);
             if (asset != null) _db.Assets.Remove(asset);
 
             _db.MediaItems.Remove(media);

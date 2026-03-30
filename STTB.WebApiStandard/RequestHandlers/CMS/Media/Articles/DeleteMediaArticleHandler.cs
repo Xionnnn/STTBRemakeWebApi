@@ -24,7 +24,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 throw new InvalidOperationException($"Article {request.Id} not found.");
 
             // Assets table cascades/cleans up through FK or should be deleted manually.
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"articles\article_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\article_thumbnail", ct);
             if (asset != null) _db.Assets.Remove(asset);
 
             _db.MediaItems.Remove(media);

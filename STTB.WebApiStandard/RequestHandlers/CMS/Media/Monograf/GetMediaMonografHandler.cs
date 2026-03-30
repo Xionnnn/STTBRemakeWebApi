@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Monograf
             if (media == null)
                 throw new InvalidOperationException($"Monograf {request.Id} not found.");
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"monografs\monograf_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\monograf_thumbnail", ct);
 
             return new GetMediaMonografResponse
             {

@@ -84,7 +84,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 }
             }
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"videos\video_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\video_thumbnail", ct);
             string finalThumbnailPath = asset?.FilePath ?? string.Empty;
 
             if (request.Thumbnail != null && request.Thumbnail.Length > 0)
@@ -111,7 +111,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
                 {
                     await _db.Assets.AddAsync(new Asset
                     {
-                        ModelType = @"videos\video_thumbnail",
+                        ModelType = @"media_items\video_thumbnail",
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,

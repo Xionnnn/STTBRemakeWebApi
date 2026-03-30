@@ -96,7 +96,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"videos\video_thumbnail",
+                    ModelType = @"media_items\video_thumbnail",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalThumbnailPath,

@@ -97,7 +97,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"journals\journal_file",
+                    ModelType = @"media_items\journal_content",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalJournalPath,
@@ -123,7 +123,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"journals\journal_thumbnail",
+                    ModelType = @"media_items\journal_thumbnail",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalThumbnailPath,

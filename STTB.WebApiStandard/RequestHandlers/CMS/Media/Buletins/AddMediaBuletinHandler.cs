@@ -90,7 +90,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"buletins\buletin_file",
+                    ModelType = @"media_items\buletin_content",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalBuletinPath,
@@ -116,7 +116,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
 
                 await _db.Assets.AddAsync(new Asset
                 {
-                    ModelType = @"buletins\buletin_thumbnail",
+                    ModelType = @"media_items\buletin_thumbnail",
                     ModelId = media.Id,
                     FileName = uniqueFileName,
                     FilePath = finalThumbnailPath,

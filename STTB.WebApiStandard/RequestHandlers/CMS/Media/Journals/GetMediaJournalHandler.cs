@@ -30,8 +30,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
             if (media == null)
                 throw new InvalidOperationException($"Journal {request.Id} not found.");
 
-            var journalAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"journals\journal_file", ct);
-            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"journals\journal_thumbnail", ct);
+            var journalAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\journal_content", ct);
+            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\journal_thumbnail", ct);
 
             return new GetMediaJournalResponse
             {

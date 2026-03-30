@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Videos
             if (media == null)
                 throw new InvalidOperationException($"Video {request.Id} not found.");
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"videos\video_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\video_thumbnail", ct);
 
             return new GetMediaVideoResponse
             {

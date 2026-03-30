@@ -29,8 +29,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Buletins
             if (media == null)
                 throw new InvalidOperationException($"Buletin {request.Id} not found.");
 
-            var buletinAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"buletins\buletin_file", ct);
-            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"buletins\buletin_thumbnail", ct);
+            var buletinAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\buletin_content", ct);
+            var thumbnailAsset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\buletin_thumbnail", ct);
 
             return new GetMediaBuletinResponse
             {

@@ -32,7 +32,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 _db.Remove(media.MediaItemsJournal);
             }
 
-            var assets = await _db.Assets.Where(a => a.ModelId == media.Id && (a.ModelType == @"journals\journal_file" || a.ModelType == @"journals\journal_thumbnail")).ToListAsync(ct);
+            var assets = await _db.Assets.Where(a => a.ModelId == media.Id && (a.ModelType == @"media_items\journal_content" || a.ModelType == @"media_items\journal_thumbnail")).ToListAsync(ct);
             if (assets.Any()) _db.Assets.RemoveRange(assets);
 
             _db.MediaItems.Remove(media);

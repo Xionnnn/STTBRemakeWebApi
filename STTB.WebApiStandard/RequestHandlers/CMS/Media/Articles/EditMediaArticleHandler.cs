@@ -75,7 +75,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 }
             }
 
-            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"articles\article_thumbnail", ct);
+            var asset = await _db.Assets.FirstOrDefaultAsync(a => a.ModelId == media.Id && a.ModelType == @"media_items\article_thumbnail", ct);
             string finalThumbnailPath = asset?.FilePath ?? string.Empty;
 
             if (request.Thumbnail != null && request.Thumbnail.Length > 0)
@@ -102,7 +102,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Articles
                 {
                     await _db.Assets.AddAsync(new Asset
                     {
-                        ModelType = @"articles\article_thumbnail",
+                        ModelType = @"media_items\article_thumbnail",
                         ModelId = media.Id,
                         FileName = uniqueFileName,
                         FilePath = finalThumbnailPath,
