@@ -4,11 +4,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionDeadline
 {
-    public class GetAllBatchDeadlineResponse
-    {
-        public List<CMSGetAllBatchDeadlineDTO> Items { get; set; } = new List<CMSGetAllBatchDeadlineDTO>();
-    }
-    public class CMSGetAllBatchDeadlineDTO
+    public class EditBatchDeadlineResponse
     {
         public long Id { get; set; }
         public string AcademicYear { get; set; } = string.Empty;
@@ -20,6 +16,5 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionDeadline
         public DateTime ParticipantCallAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
-
     }
 }

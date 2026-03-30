@@ -1,14 +1,12 @@
-﻿using System;
+using MediatR;
+using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionDeadline;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionDeadline
+namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionDeadline
 {
-    public class GetAllBatchDeadlineResponse
-    {
-        public List<CMSGetAllBatchDeadlineDTO> Items { get; set; } = new List<CMSGetAllBatchDeadlineDTO>();
-    }
-    public class CMSGetAllBatchDeadlineDTO
+    public class EditBatchDeadlineRequest : IRequest<EditBatchDeadlineResponse>
     {
         public long Id { get; set; }
         public string AcademicYear { get; set; } = string.Empty;
@@ -18,8 +16,6 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionDeadline
         public DateTime DocumentSelectionDeadlineAt { get; set; }
         public DateTime ResultBroadcastAt { get; set; }
         public DateTime ParticipantCallAt { get; set; }
-        public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
-
     }
 }
