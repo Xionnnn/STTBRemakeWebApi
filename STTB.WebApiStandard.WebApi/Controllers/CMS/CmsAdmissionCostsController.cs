@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.Events;
 
 namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
@@ -53,6 +54,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             var request = new DeleteCostRequest { Id = id };
             await _mediator.Send(request, ct);
             return NoContent();
+        }
+
+        [HttpGet("get-all-categories")]
+        public async Task<IActionResult> GetAllCategories(CancellationToken ct)
+        {
+            var response = await _mediator.Send(new GetAllCostCategoryRequest(), ct);
+            return Ok(response);
         }
     }
 }

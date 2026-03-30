@@ -27,7 +27,6 @@
 
 
 	<ItemGroup>
-    <Folder Include="RequestHandlers\CMS\AdmissionCosts\" />
     <Folder Include="RequestHandlers\CMS\AcademicPrograms\" />
     <Folder Include="RequestHandlers\CMS\Events\" />
     <Folder Include="RequestHandlers\CMS\Media\" />
