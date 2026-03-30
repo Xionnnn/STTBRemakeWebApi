@@ -24,7 +24,10 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
 
         public async Task<GetAllUserRoleResponse> Handle(GetAllUserRoleRequest request, CancellationToken ct)
         {
-            var query = _db.Roles.AsNoTracking();
+            var query = _db.Roles
+                .Include(r => r.RolePermissions)
+                    .ThenInclude(rp => rp.Permission)
+                .AsNoTracking();
 
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.RoleName))
@@ -37,23 +40,24 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
 
             if (request.FetchAll)
             {
-                var allRoles = await query
-                    .Select(r => new RoleDTO
-                    {
-                        Id = r.Id,
-                        Name = r.Name,
-                        CreatedAt = r.CreatedAt
-                    })
-                    .ToListAsync(ct);
+                var allRoles = await query.ToListAsync(ct);
 
-                _logger.LogInformation("Fetched all {Count} roles.", allRoles.Count);
+                var allItems = allRoles.Select(r => new RoleDTO
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    RolePermissions = r.RolePermissions.Select(rp => rp.Permission.Name).ToList(),
+                    CreatedAt = r.CreatedAt
+                }).ToList();
+
+                _logger.LogInformation("Fetched all {Count} roles.", allItems.Count);
 
                 return new GetAllUserRoleResponse
                 {
-                    Items = allRoles,
+                    Items = allItems,
                     PageNumber = 1,
-                    PageSize = allRoles.Count,
-                    TotalItems = allRoles.Count,
+                    PageSize = allItems.Count,
+                    TotalItems = allItems.Count,
                     TotalPages = 1
                 };
             }
@@ -62,16 +66,18 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
             var totalItems = await query.CountAsync(ct);
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
 
-            var items = await query
+            var roleList = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(r => new RoleDTO
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    CreatedAt = r.CreatedAt
-                })
                 .ToListAsync(ct);
+
+            var items = roleList.Select(r => new RoleDTO
+            {
+                Id = r.Id,
+                Name = r.Name,
+                RolePermissions = r.RolePermissions.Select(rp => rp.Permission.Name).ToList(),
+                CreatedAt = r.CreatedAt
+            }).ToList();
 
             _logger.LogInformation("Found {Count} roles out of {Total} total.", items.Count, totalItems);
 

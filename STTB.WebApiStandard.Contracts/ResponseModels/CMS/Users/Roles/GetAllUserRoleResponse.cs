@@ -19,6 +19,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Roles
     {
         public long Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public List<string> RolePermissions { get; set; } = new List<string>();
         public DateTime CreatedAt { get; set; }
     }
 }

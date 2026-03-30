@@ -58,6 +58,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpPost("add-role")]
+        public async Task<IActionResult> AddRole([FromBody] AddRoleRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpDelete("delete-role/{id}")]
         public async Task<IActionResult> DeleteRole(long id, CancellationToken ct)
         {
@@ -70,6 +77,13 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 
         [HttpGet("get-all-permissions")]
         public async Task<IActionResult> GetAllPermissions([FromQuery] GetAllPermissionRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPost("add-permission")]
+        public async Task<IActionResult> AddPermission([FromBody] AddPermissionRequest request, CancellationToken ct)
         {
             var response = await _mediator.Send(request, ct);
             return Ok(response);
