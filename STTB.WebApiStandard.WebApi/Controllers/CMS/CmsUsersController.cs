@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Users;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.Users.Permissions;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.Users.Roles;
 
 namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
@@ -43,6 +45,40 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
         public async Task<IActionResult> DeleteUser(long id, CancellationToken ct)
         {
             var request = new DeleteUserRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+
+        // ─── Roles ────────────────────────────────────────────────────
+
+        [HttpGet("get-all-roles")]
+        public async Task<IActionResult> GetAllRoles([FromQuery] GetAllUserRoleRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-role/{id}")]
+        public async Task<IActionResult> DeleteRole(long id, CancellationToken ct)
+        {
+            var request = new DeleteUserRoleRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+
+        // ─── Permissions ──────────────────────────────────────────────
+
+        [HttpGet("get-all-permissions")]
+        public async Task<IActionResult> GetAllPermissions([FromQuery] GetAllPermissionRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-permission/{id}")]
+        public async Task<IActionResult> DeletePermission(long id, CancellationToken ct)
+        {
+            var request = new DeletePermissionRequest { Id = id };
             await _mediator.Send(request, ct);
             return NoContent();
         }
