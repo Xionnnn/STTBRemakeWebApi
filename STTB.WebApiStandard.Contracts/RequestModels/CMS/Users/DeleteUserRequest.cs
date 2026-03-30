@@ -6,7 +6,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Users
 {
-    public class GetUserRequest : IRequest<GetUserResponse>
+    public class DeleteUserRequest : IRequest<DeleteUserResponse>
     {
         public long Id { get; set; }
     }
