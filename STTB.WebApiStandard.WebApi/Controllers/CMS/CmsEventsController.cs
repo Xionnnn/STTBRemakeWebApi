@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/events")]
     [ApiController]
-    [Authorize] // Added baseline auth
+    //[Authorize]
+    [Authorize(Policy = "CanManageEvents")]
     public class CmsEventsController : ControllerBase
     {
         private readonly IMediator _mediator;

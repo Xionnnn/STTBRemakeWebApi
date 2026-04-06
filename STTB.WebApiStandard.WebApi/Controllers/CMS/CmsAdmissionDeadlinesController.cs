@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/admission-deadlines")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
+    [Authorize(Policy = "CanManageAdmissionsDeadline")]
     public class CmsAdmissionDeadlinesController : ControllerBase
     {
         private readonly IMediator _mediator;

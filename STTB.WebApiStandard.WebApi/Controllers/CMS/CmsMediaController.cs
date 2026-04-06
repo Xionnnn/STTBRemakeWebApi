@@ -13,7 +13,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [ApiController]
     [Route("api/v1/cms/media")]
-    [Authorize]
+    //[Authorize]
+    [Authorize(Policy = "CanManageMedia")]
     public class CmsMediaController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -9,7 +9,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/users")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
+    [Authorize(Policy ="CanManageUsers")]
     public class CmsUsersController : ControllerBase
     {
         private readonly IMediator _mediator;

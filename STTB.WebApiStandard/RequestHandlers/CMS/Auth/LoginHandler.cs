@@ -123,6 +123,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Auth
             {
                 Token = tokenString,
                 FullName = user.FullName,
+                Permissions = allPermissions,
                 Email = user.Email,
                 Roles = roleNames
             };

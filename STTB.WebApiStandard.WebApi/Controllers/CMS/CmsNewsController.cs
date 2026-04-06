@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/news")]
     [ApiController]
-    [Authorize] // Added baseline auth
+    //[Authorize]
+    [Authorize(Policy ="CanManageNews")]
     public class CmsNewsController : ControllerBase
     {
         private readonly IMediator _mediator;

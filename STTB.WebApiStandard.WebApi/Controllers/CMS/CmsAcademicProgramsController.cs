@@ -7,7 +7,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [Route("api/v1/cms/academic-programs")]
     [ApiController]
-    [Authorize] // Added as baseline auth
+    //[Authorize]
+    [Authorize("CanManageAcademicPrograms")]
     public class CmsAcademicProgramsController : ControllerBase
     {
         private readonly IMediator _mediator;
