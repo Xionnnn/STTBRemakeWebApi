@@ -171,7 +171,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
                 StartsAtDate = ev.StartAt,
                 EndsAtDate = ev.EndAt,
                 OrganizerName = request.OrganizerName,
-                Category = request.Category ?? Array.Empty<string>(),
+                Category = request.Category ?? new List<string>(),
                 ImagePath = finalImagePath,
                 IsPublished = ev.IsPublished
             };
