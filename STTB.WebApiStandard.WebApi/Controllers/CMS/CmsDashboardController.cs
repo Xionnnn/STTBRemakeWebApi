@@ -8,8 +8,8 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
     [ApiController]
     [Route("api/v1/cms/dashboards")]
-    //[Authorize]
-    [Authorize(Policy = "CanViewDashboard")]
+    [Authorize]
+    //[Authorize(Policy = "CanViewDashboard")]
     public class CmsDashboardController : ControllerBase
     {
         private readonly IMediator _mediator;
