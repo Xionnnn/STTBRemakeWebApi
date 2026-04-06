@@ -66,6 +66,21 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        [HttpGet("get-role/{id}")]
+        public async Task<IActionResult> GetRole(long id, CancellationToken ct)
+        {
+            var request = new GetUserRoleRequest { Id = id };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPut("edit-role")]
+        public async Task<IActionResult> EditRole([FromBody] EditUserRoleRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
         [HttpDelete("delete-role/{id}")]
         public async Task<IActionResult> DeleteRole(long id, CancellationToken ct)
         {
