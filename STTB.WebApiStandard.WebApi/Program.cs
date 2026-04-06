@@ -67,9 +67,6 @@ builder.Services.AddAuthentication(options =>
 // Authorization Policies
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("CanManageAcademics", policy =>
-        policy.Requirements.Add(new PermissionRequirement("CanManageAcademics")));
-
     options.AddPolicy("CanManageNews", policy =>
         policy.Requirements.Add(new PermissionRequirement("CanManageNews")));
 
@@ -90,6 +87,12 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("CanManageAdministrator", policy =>
         policy.Requirements.Add(new PermissionRequirement("CanManageAdministrator")));
+
+    options.AddPolicy("CanManageAdmissionsDeadline", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageAdmissionsDeadline")));
+
+    options.AddPolicy("CanManageAcademicPrograms", policy =>
+        policy.Requirements.Add(new PermissionRequirement("CanManageAcademicPrograms")));
 });
 
 // Authorization Handlers
