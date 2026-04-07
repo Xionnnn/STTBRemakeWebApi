@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.Roles;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Users.Roles;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Roles;
 using STTB.WebApiStandard.Entities;
@@ -42,17 +43,14 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
                 .Select(rp => rp.PermissionId)
                 .ToHashSet();
 
-            var newPermissions = (await _db.Permissions
-                .Where(p => request.RolePermissions.Contains(p.Name))
-                .Select(p => p.Id)
-                .ToListAsync(ct))
+            var newPermissions = request.RolePermissions
+                .Select(rp => rp.Id)
                 .ToHashSet();
 
             var toRemove = role.RolePermissions
                 .Where(rp => !newPermissions.Contains(rp.PermissionId))
                 .ToList();
             
-
             var toAdd = newPermissions
                 .Where(np => !oldPermissions.Contains(np))
                 .Select(np => new RolePermission
@@ -71,7 +69,11 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
             var updatedPermissions = await _db.RolePermissions
                 .Where(rp => rp.RoleId == role.Id)
                 .Include(rp => rp.Permission)
-                .Select(rp => rp.Permission.Name)
+                .Select(rp => new RolePermissionsDTO
+                {
+                    Id = rp.PermissionId,
+                    PermissionName = rp.Permission.Name
+                })
                 .ToListAsync(ct);
 
             return new EditUserRoleResponse

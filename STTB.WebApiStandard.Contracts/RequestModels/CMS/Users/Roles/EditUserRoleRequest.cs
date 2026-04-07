@@ -1,4 +1,5 @@
 using MediatR;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.Roles;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Roles;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Users.Roles
     {
         public long Id { get; set; }
         public string RoleName { get; set; } = string.Empty;
-        public List<string> RolePermissions { get; set; } = new List<string>();
+        public List<RolePermissionsDTO> RolePermissions { get; set; } = new List<RolePermissionsDTO>();
     }
 }

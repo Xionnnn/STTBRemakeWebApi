@@ -12,6 +12,15 @@ namespace STTB.WebApiStandard.Validators.CMS.Users.Roles
 
             RuleFor(x => x.RoleName)
                 .NotEmpty().WithMessage("RoleName is required.");
+
+            RuleForEach(x => x.RolePermissions).ChildRules(rp =>
+            {
+                rp.RuleFor(x => x.Id)
+                    .GreaterThan(0).WithMessage("Permission ID must be greater than 0.");
+
+                rp.RuleFor(x => x.PermissionName)
+                    .NotEmpty().WithMessage("PermissionName is required.");
+            });
         }
     }
 }
