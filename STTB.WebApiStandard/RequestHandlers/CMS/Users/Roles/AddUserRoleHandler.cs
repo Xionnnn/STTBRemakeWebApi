@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
 {
-    public class AddUserRoleHandler : IRequestHandler<AddRoleRequest, AddUserRoleResponse>
+    public class AddUserRoleHandler : IRequestHandler<AddUserRoleRequest, AddUserRoleResponse>
     {
         private readonly SttbDbContext _db;
         private readonly ILogger<AddUserRoleHandler> _logger;
@@ -22,7 +22,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
             _logger = logger;
         }
 
-        public async Task<AddUserRoleResponse> Handle(AddRoleRequest request, CancellationToken ct)
+        public async Task<AddUserRoleResponse> Handle(AddUserRoleRequest request, CancellationToken ct)
         {
             var role = new Role
             {

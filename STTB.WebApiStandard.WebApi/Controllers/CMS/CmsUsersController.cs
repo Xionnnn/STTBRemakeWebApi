@@ -60,7 +60,7 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
         }
 
         [HttpPost("add-role")]
-        public async Task<IActionResult> AddRole([FromBody] AddRoleRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddRole([FromBody] AddUserRoleRequest request, CancellationToken ct)
         {
             var response = await _mediator.Send(request, ct);
             return Ok(response);
