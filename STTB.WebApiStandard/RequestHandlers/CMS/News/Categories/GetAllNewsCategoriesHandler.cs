@@ -67,7 +67,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News.Categories
                     .Select(c => new GetAllNewsCategoriesDTO
                     {
                         Id = c.Id,
-                        CategoryName = c.Name
+                        CategoryName = c.Name,
+                        CreatedAt = c.CreatedAt
                     })
                     .ToListAsync(ct); // Added ct for consistency
 
