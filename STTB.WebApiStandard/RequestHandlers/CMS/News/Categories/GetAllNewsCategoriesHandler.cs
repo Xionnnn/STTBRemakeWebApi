@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.News;
 using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.News;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.News.Categories;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.News.Categories;
@@ -75,7 +76,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News.Categories
                     Items = categoryList,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
-                    TotalPages = totalPages
+                    TotalPages = totalPages,
+                    TotalItems = totalItems
                 };
 
                 _logger.LogInformation("Retrieved NewsCategories for page {PageNumber}. Items count: {Count}, Total Pages: {TotalPages}", 

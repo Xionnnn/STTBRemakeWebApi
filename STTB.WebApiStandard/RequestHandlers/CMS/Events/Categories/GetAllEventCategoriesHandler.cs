@@ -70,7 +70,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                     Items = categoryList,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
-                    TotalPages = totalPages
+                    TotalPages = totalPages,
+                    TotalItems = totalItems
                 };
 
                 _logger.LogInformation("Retrieved EventCategories for page {PageNumber}. Items count: {Count}, Total Pages: {TotalPages}",
