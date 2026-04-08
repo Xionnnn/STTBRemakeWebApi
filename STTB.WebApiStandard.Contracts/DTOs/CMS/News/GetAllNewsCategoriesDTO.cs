@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.DTOs.CMS.Users.News
+namespace STTB.WebApiStandard.Contracts.DTOs.CMS.News
 {
     public class GetAllNewsCategoriesDTO
     {

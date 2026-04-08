@@ -1,0 +1,32 @@
+using FluentValidation;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.Events.Categories;
+
+namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
+{
+    public class GetAllEventCategoriesValidator : AbstractValidator<GetAllEventCategoriesRequest>
+    {
+        private static readonly string[] AllowedOrderByFields = { "Id", "CategoryName", "CreatedAt", "Slug" };
+        private static readonly string[] AllowedOrderStates = { "asc", "desc" };
+
+        public GetAllEventCategoriesValidator()
+        {
+            RuleFor(x => x.CategoryName)
+                .Must(v => v == string.Empty || !string.IsNullOrWhiteSpace(v))
+                .WithMessage("CategoryName cannot be empty.");
+
+            RuleFor(x => x.PageNumber)
+                .GreaterThanOrEqualTo(1).WithMessage("PageNumber must be at least 1.");
+
+            RuleFor(x => x.PageSize)
+                .InclusiveBetween(1, 100).WithMessage("PageSize must be between 1 and 100.");
+
+            RuleFor(x => x.OrderBy)
+                .Must(v => string.IsNullOrEmpty(v) || AllowedOrderByFields.Contains(v))
+                .WithMessage($"OrderBy must be one of: {string.Join(", ", AllowedOrderByFields)}.");
+
+            RuleFor(x => x.OrderState)
+                .Must(v => string.IsNullOrEmpty(v) || AllowedOrderStates.Contains(v.ToLower()))
+                .WithMessage("OrderState must be 'asc' or 'desc'.");
+        }
+    }
+}

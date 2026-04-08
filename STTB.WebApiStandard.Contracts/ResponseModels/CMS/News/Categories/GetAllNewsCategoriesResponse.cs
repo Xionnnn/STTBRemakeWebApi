@@ -1,4 +1,4 @@
-using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.News;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.News;
 using System;
 using System.Collections.Generic;
 
