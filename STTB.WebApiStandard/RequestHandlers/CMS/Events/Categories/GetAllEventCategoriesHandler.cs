@@ -61,7 +61,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                     {
                         Id = c.Id,
                         CategoryName = c.Name,
-                        Slug = c.Slug
+                        Slug = c.Slug,
+                        CreatedAt = c.CreatedAt
                     })
                     .ToListAsync(ct);
 
