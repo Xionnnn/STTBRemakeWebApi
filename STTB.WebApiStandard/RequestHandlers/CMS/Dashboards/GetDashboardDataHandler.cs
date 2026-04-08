@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Dashboard;
-using STTB.WebApiStandard.Contracts.ResponseModels.Dashboards;
+using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Dashboards;
 using STTB.WebApiStandard.Entities;
 using System.Threading;
 using System.Threading.Tasks;

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using STTB.WebApiStandard.Contracts.ResponseModels.Dashboards;
+using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Dashboards;
 using System;
 using System.Collections.Generic;
 using System.Text;
