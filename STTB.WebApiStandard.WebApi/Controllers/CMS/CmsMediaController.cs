@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Articles;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Buletins;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Categories;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Journals;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Monograf;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Videos;
@@ -31,12 +32,44 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
+        #region Categories
         [HttpGet("categories/get-all")]
-        public async Task<IActionResult> GetAllMediaCategories([FromQuery] GetAllMediaCategoryRequest request)
+        public async Task<IActionResult> GetAllMediaCategories([FromQuery] GetAllMediaCategoryRequest request, CancellationToken ct)
         {
-            var response = await _mediator.Send(request ?? new GetAllMediaCategoryRequest());
+            var response = await _mediator.Send(request ?? new GetAllMediaCategoryRequest(), ct);
             return Ok(response);
         }
+
+        [HttpPost("categories/add")]
+        public async Task<IActionResult> AddMediaCategory([FromBody] AddMediaCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("categories/get/{id}")]
+        public async Task<IActionResult> GetMediaCategory(long id, CancellationToken ct)
+        {
+            var request = new GetMediaCategoryRequest { Id = id };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPut("categories/edit")]
+        public async Task<IActionResult> EditMediaCategory([FromBody] EditMediaCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("categories/delete/{id}")]
+        public async Task<IActionResult> DeleteMediaCategory(long id, CancellationToken ct)
+        {
+            var request = new DeleteMediaCategoryRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+        #endregion
 
         #region Articles
         [HttpPost("articles/add")]

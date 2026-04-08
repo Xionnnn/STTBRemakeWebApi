@@ -8,5 +8,6 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts
 {
     public class GetAllCostCategoryRequest : IRequest<GetAllCostCategoryResponse>
     {
+
     }
 }
