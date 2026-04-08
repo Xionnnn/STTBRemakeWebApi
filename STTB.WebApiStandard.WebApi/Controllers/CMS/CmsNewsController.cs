@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.News;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.News.Categories;
 
 namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
