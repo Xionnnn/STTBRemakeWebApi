@@ -26,13 +26,6 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return Ok(response);
         }
 
-        [HttpGet("get-all-categories")]
-        public async Task<IActionResult> GetAllCategories(CancellationToken ct)
-        {
-            var response = await _mediator.Send(new GetAllNewsCategoriesRequest(), ct);
-            return Ok(response);
-        }
-
         [HttpPost("add-news")]
         public async Task<IActionResult> AddNews([FromForm] AddNewsRequest request, CancellationToken ct)
         {
@@ -62,5 +55,43 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             await _mediator.Send(request, ct);
             return NoContent();
         }
+
+        #region Categories
+        [HttpGet("get-all-categories")]
+        public async Task<IActionResult> GetAllCategories([FromQuery] GetAllNewsCategoriesRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPost("add-category")]
+        public async Task<IActionResult> AddNewsCategory([FromBody] AddNewsCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("get-category/{id}")]
+        public async Task<IActionResult> GetNewsCategory(long id, CancellationToken ct)
+        {
+            var request = new GetNewsCategoryRequest { Id = id };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+        [HttpPut("edit-category")]
+        public async Task<IActionResult> EditNewsCategory([FromBody] EditNewsCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-category/{id}")]
+        public async Task<IActionResult> DeleteNewsCategory(long id, CancellationToken ct)
+        {
+            var request = new DeleteNewsCategoryRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+        #endregion
     }
 }

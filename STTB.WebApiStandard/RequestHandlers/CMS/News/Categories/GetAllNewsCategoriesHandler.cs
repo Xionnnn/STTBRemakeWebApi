@@ -33,10 +33,14 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News.Categories
                })
                .ToListAsync(ct);
 
-                return new GetAllNewsCategoriesResponse
+                var response = new GetAllNewsCategoriesResponse
                 {
                     Items = categories
                 };
+
+                _logger.LogInformation("Retrieved all NewsCategories. Total items: {Count}", categories.Count);
+
+                return response;
             }
             else
             {
@@ -46,45 +50,49 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News.Categories
                 //searching
                 if(!string.IsNullOrWhiteSpace(request.CategoryName))
                 {
-                    query = query.Where(nc => nc.Name == request.CategoryName);
+                    query = query.Where(nc => nc.Name.Contains(request.CategoryName));
                 }
 
-                //orderBy
-                ApplySorting(query, request.OrderBy, request.OrderState);
+                //order by
+                query = ApplySorting(query, request.OrderBy, request.OrderState);
 
                 //pagination
                 var totalItems = await query.CountAsync(ct);
                 var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
 
-                //fetch list based on the pagination
                 var categoryList = await query
-                    .Skip((request.PageSize - 1) * request.PageNumber)
+                    .Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .Select(c => new GetAllNewsCategoriesDTO
                     {
                         Id = c.Id,
                         CategoryName = c.Name
                     })
-                    .ToListAsync();
+                    .ToListAsync(ct); // Added ct for consistency
 
-                return new GetAllNewsCategoriesResponse
+                var response = new GetAllNewsCategoriesResponse
                 {
                     Items = categoryList,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
                     TotalPages = totalPages
                 };
+
+                _logger.LogInformation("Retrieved NewsCategories for page {PageNumber}. Items count: {Count}, Total Pages: {TotalPages}", 
+                    request.PageNumber, categoryList.Count, totalPages);
+
+                return response;
             }
         }
 
-        private IQueryable ApplySorting(IQueryable<NewsCategory> query, string orderBy, string orderState)
+        private IQueryable<NewsCategory> ApplySorting(IQueryable<NewsCategory> query, string orderBy, string orderState)
         {
-            var isDescending = orderState == "Descending" ? true : false;
+            var isDescending = orderState?.ToLower() == "desc";
 
             return orderBy switch
             {
                 "Id" => isDescending ? query.OrderByDescending(c => c.Id) : query.OrderBy(c => c.Id),
-                "CreatedAt" => isDescending ? query.OrderByDescending(c => c.CreatedAt) : query.OrderBy(c => c.Id),
+                "CreatedAt" => isDescending ? query.OrderByDescending(c => c.CreatedAt) : query.OrderBy(c => c.CreatedAt),
                 "CategoryName" => isDescending ? query.OrderByDescending(c => c.Name) : query.OrderBy(c => c.Name),
                 _ => isDescending ? query.OrderByDescending(c => c.CreatedAt) : query.OrderBy(c => c.CreatedAt)
             };
