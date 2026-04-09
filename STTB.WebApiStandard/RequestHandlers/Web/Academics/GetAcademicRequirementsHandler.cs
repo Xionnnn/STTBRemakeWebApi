@@ -28,7 +28,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
                 .Where(p => p.IsPublished)
                 .AsNoTracking()
                 .OrderBy(p => p.Name)
-                .Select(p => new ProgramRequirementDto
+                .Select(p => new AcademicProgramRequirementsDTO
                 {
                     ProgramName = p.Name,
                     Degree = p.DegreeAbbr,

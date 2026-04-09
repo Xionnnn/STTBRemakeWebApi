@@ -26,8 +26,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 .Include(p => p.AcademicProgramRequirements)
                 .Include(p => p.AcademicProgramNotes)
                 .Include(p => p.AcademicProgramSystems)
-                .Include(p => p.AcademicCourseCategories)
-                    .ThenInclude(c => c.AcademicCourses)
+                .Include(p => p.AcademicProgramCategories)
+                    .ThenInclude(c => c.AcademicCategoryCourses)
                 .FirstOrDefaultAsync(p => p.Id == request.Id, ct);
 
             if (program == null)
@@ -40,11 +40,11 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             _db.AcademicProgramNotes.RemoveRange(program.AcademicProgramNotes);
             _db.AcademicProgramSystems.RemoveRange(program.AcademicProgramSystems);
 
-            foreach (var cat in program.AcademicCourseCategories)
+            foreach (var cat in program.AcademicProgramCategories)
             {
-                _db.AcademicCourses.RemoveRange(cat.AcademicCourses);
+                _db.AcademicCategoryCourses.RemoveRange(cat.AcademicCategoryCourses);
             }
-            _db.AcademicCourseCategories.RemoveRange(program.AcademicCourseCategories);
+            _db.AcademicProgramCategories.RemoveRange(program.AcademicProgramCategories);
 
             _db.AcademicPrograms.Remove(program);
             

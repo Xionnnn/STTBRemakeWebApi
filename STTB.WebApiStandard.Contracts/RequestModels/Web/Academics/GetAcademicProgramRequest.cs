@@ -6,7 +6,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.Web.Academics
 {
-    public class GetProgramRequest : IRequest<GetProgramResponse>
+    public class GetAcademicProgramRequest : IRequest<GetAcademicProgramResponse>
     {
         public string ProgramSlug { get; set; } = string.Empty;
     }

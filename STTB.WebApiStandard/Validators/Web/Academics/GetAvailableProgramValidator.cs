@@ -6,7 +6,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Validators.Web.Academics
 {
-    public class GetAvailableProgramValidator : AbstractValidator<GetAvailableProgramRequest>
+    public class GetAvailableProgramValidator : AbstractValidator<GetAllAcademicProgramRequest>
     {
         public GetAvailableProgramValidator()
         {

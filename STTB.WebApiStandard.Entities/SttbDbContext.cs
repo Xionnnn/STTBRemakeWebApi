@@ -15,17 +15,19 @@ public partial class SttbDbContext : DbContext
     {
     }
 
-    public virtual DbSet<AcademicCourse> AcademicCourses { get; set; }
-
-    public virtual DbSet<AcademicCourseCategory> AcademicCourseCategories { get; set; }
+    public virtual DbSet<AcademicCategoryCourse> AcademicCategoryCourses { get; set; }
 
     public virtual DbSet<AcademicProgram> AcademicPrograms { get; set; }
+
+    public virtual DbSet<AcademicProgramCategory> AcademicProgramCategories { get; set; }
 
     public virtual DbSet<AcademicProgramCost> AcademicProgramCosts { get; set; }
 
     public virtual DbSet<AcademicProgramCostCategory> AcademicProgramCostCategories { get; set; }
 
     public virtual DbSet<AcademicProgramCostCategoryMap> AcademicProgramCostCategoryMaps { get; set; }
+
+    public virtual DbSet<AcademicProgramCourse> AcademicProgramCourses { get; set; }
 
     public virtual DbSet<AcademicProgramGraduateCriterion> AcademicProgramGraduateCriteria { get; set; }
 
@@ -105,53 +107,28 @@ public partial class SttbDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AcademicCourse>(entity =>
+        modelBuilder.Entity<AcademicCategoryCourse>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("academic_courses_pkey");
+            entity.HasKey(e => new { e.AcademicProgramCourseId, e.AcademicProgramCategoryId }).HasName("academic_category_course_pkey");
 
-            entity.ToTable("academic_courses");
+            entity.ToTable("academic_category_course");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CategoryId).HasColumnName("category_id");
+            entity.Property(e => e.AcademicProgramCourseId).HasColumnName("academic_program_course_id");
+            entity.Property(e => e.AcademicProgramCategoryId).HasColumnName("academic_program_category_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Credits).HasColumnName("credits");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .HasColumnName("name");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.AcademicCourses)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("academic_courses_category_id_fkey");
-        });
+            entity.HasOne(d => d.AcademicProgramCategory).WithMany(p => p.AcademicCategoryCourses)
+                .HasForeignKey(d => d.AcademicProgramCategoryId)
+                .HasConstraintName("academic_category_course_academic_program_category_id_fkey");
 
-        modelBuilder.Entity<AcademicCourseCategory>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("academic_course_categories_pkey");
-
-            entity.ToTable("academic_course_categories");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.Name)
-                .HasMaxLength(150)
-                .HasColumnName("name");
-            entity.Property(e => e.ProgramId).HasColumnName("program_id");
-            entity.Property(e => e.TotalCredits).HasColumnName("total_credits");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-
-            entity.HasOne(d => d.Program).WithMany(p => p.AcademicCourseCategories)
-                .HasForeignKey(d => d.ProgramId)
-                .HasConstraintName("academic_course_categories_program_id_fkey");
+            entity.HasOne(d => d.AcademicProgramCourse).WithMany(p => p.AcademicCategoryCourses)
+                .HasForeignKey(d => d.AcademicProgramCourseId)
+                .HasConstraintName("academic_category_course_academic_program_course_id_fkey");
         });
 
         modelBuilder.Entity<AcademicProgram>(entity =>
@@ -191,6 +168,30 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<AcademicProgramCategory>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("academic_program_categories_pkey");
+
+            entity.ToTable("academic_program_categories");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Name)
+                .HasMaxLength(150)
+                .HasColumnName("name");
+            entity.Property(e => e.ProgramId).HasColumnName("program_id");
+            entity.Property(e => e.TotalCredits).HasColumnName("total_credits");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Program).WithMany(p => p.AcademicProgramCategories)
+                .HasForeignKey(d => d.ProgramId)
+                .HasConstraintName("academic_program_categories_program_id_fkey");
         });
 
         modelBuilder.Entity<AcademicProgramCost>(entity =>
@@ -261,6 +262,26 @@ public partial class SttbDbContext : DbContext
             entity.HasOne(d => d.AcademicProgramCost).WithMany(p => p.AcademicProgramCostCategoryMaps)
                 .HasForeignKey(d => d.AcademicProgramCostId)
                 .HasConstraintName("academic_program_cost_category_ma_academic_program_cost_id_fkey");
+        });
+
+        modelBuilder.Entity<AcademicProgramCourse>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("academic_program_courses_pkey");
+
+            entity.ToTable("academic_program_courses");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Credits).HasColumnName("credits");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<AcademicProgramGraduateCriterion>(entity =>

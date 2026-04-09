@@ -1,18 +1,17 @@
-using MediatR;
-using STTB.WebApiStandard.Contracts.DTOs.CMS.AcademicCourses;
-using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Academics;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms
+namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
 {
-    public class AddAcademicProgramRequest : IRequest<AddAcademicProgramResponse>
+    public class GetAcademicProgramResponse
     {
         public string ProgramName { get; set; } = string.Empty;
         public string ProgramDescription { get; set; } = string.Empty;
         public List<string> ProgramRequirements { get; set; } = new List<string>();
         public int? TotalCredits { get; set; } = null;
-        public int? Duration { get; set; } = null;
+        public string Duration { get; set; } = string.Empty;
         public List<string> Notes { get; set; } = new List<string>();
         public List<string> LecturingSystem { get; set; } = new List<string>();
         public string Degree { get; set; } = string.Empty;
@@ -20,7 +19,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms
         public string InformedDescription { get; set; } = string.Empty;
         public string TransformedDescription { get; set; } = string.Empty;
         public string TransformativeDescription { get; set; } = string.Empty;
-        public List<AcademicCategoryDTO> CourseCategory { get; set; } = new List<AcademicCategoryDTO>();
-        public bool IsPublished { get; set; } = false;
+        public List<AcademicCategoryDTO> ProgramCategory { get; set; } = new List<AcademicCategoryDTO>();
     }
+
 }

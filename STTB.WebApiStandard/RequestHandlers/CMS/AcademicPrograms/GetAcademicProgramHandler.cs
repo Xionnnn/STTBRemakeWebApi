@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.AcademicCourses;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Entities;
@@ -24,8 +25,9 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 .Include(p => p.AcademicProgramRequirements)
                 .Include(p => p.AcademicProgramNotes)
                 .Include(p => p.AcademicProgramSystems)
-                .Include(p => p.AcademicCourseCategories)
-                    .ThenInclude(c => c.AcademicCourses)
+                .Include(p => p.AcademicProgramCategories)
+                    .ThenInclude(c => c.AcademicCategoryCourses)
+                        .ThenInclude(cc => cc.AcademicProgramCourse)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == request.Id, ct);
 
@@ -49,15 +51,16 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 InformedDescription = program.InformedDescription,
                 TransformedDescription = program.TransformedDescription,
                 TransformativeDescription = program.TransformativeDescription,
-                LectureCategory = program.AcademicCourseCategories.Select(c => new AcademicDTO
+                CourseCategory = program.AcademicProgramCategories.Select(c => new AcademicCategoryDTO
                 {
                     CategoryName = c.Name,
                     TotalCredits = c.TotalCredits,
-                    Lectures = c.AcademicCourses.Select(course => new LectureDTO
+                    Courses = c.AcademicCategoryCourses.Select(cc => new AcademicCourseDTO
                     {
-                        LectureName = course.Name,
-                        Credits = course.Credits,
-                        Description = course.Description ?? string.Empty
+                        Id = cc.AcademicProgramCourseId,
+                        CourseName = cc.AcademicProgramCourse.Name,
+                        Credits = cc.AcademicProgramCourse.Credits,
+                        Description = cc.AcademicProgramCourse.Description ?? string.Empty
                     }).ToList()
                 }).ToList()
             };

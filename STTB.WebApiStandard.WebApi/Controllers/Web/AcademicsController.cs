@@ -17,7 +17,7 @@ namespace STTB.WebApiStandard.WebApi.Controllers.Web
         }
 
         [HttpGet("get-available-programs")]
-        public async Task<IActionResult> GetAvailablePrograms([FromQuery] GetAvailableProgramRequest request, CancellationToken ct)
+        public async Task<IActionResult> GetAvailablePrograms([FromQuery] GetAllAcademicProgramRequest request, CancellationToken ct)
         {
             var response = await _mediator.Send(request, ct);
             return Ok(response);
@@ -26,7 +26,7 @@ namespace STTB.WebApiStandard.WebApi.Controllers.Web
         [HttpGet("get-program/{slug}")]
         public async Task<IActionResult> GetProgram(string slug, CancellationToken ct)
         {
-            var request = new GetProgramRequest { ProgramSlug = slug };
+            var request = new GetAcademicProgramRequest { ProgramSlug = slug };
             var response = await _mediator.Send(request, ct);
             return Ok(response);
         }

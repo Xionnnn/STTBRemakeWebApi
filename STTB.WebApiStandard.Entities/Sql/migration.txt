@@ -166,7 +166,17 @@ CREATE TABLE academic_program_graduate_criteria (
     UNIQUE (program_id, criterion_name)
 );
 
-CREATE TABLE academic_course_categories (
+CREATE TABLE academic_program_courses (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    credits INT NOT NULL CHECK (credits >= 0),
+    description TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE academic_program_categories (
     id BIGSERIAL PRIMARY KEY,
     program_id BIGINT NOT NULL REFERENCES academic_programs(id) ON DELETE CASCADE,
     name VARCHAR(150) NOT NULL,
@@ -175,14 +185,12 @@ CREATE TABLE academic_course_categories (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE academic_courses (
-    id BIGSERIAL PRIMARY KEY,
-    category_id BIGINT NOT NULL REFERENCES academic_course_categories(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    credits INT NOT NULL CHECK (credits >= 0),
-    description TEXT,
+CREATE TABLE academic_category_course (
+    academic_program_course_id BIGINT NOT NULL REFERENCES academic_program_courses(id) ON DELETE CASCADE,
+    academic_program_category_id BIGINT NOT NULL REFERENCES academic_program_categories(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (academic_program_course_id, academic_program_category_id)
 );
 
 CREATE TABLE academic_program_cost_categories (

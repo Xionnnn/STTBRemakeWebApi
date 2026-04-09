@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace STTB.WebApiStandard.Entities;
 
-public partial class AcademicCourseCategory
+public partial class AcademicProgramCategory
 {
     public long Id { get; set; }
 
@@ -17,7 +17,7 @@ public partial class AcademicCourseCategory
 
     public DateTime UpdatedAt { get; set; }
 
-    public virtual ICollection<AcademicCourse> AcademicCourses { get; set; } = new List<AcademicCourse>();
+    public virtual ICollection<AcademicCategoryCourse> AcademicCategoryCourses { get; set; } = new List<AcademicCategoryCourse>();
 
     public virtual AcademicProgram Program { get; set; } = null!;
 }

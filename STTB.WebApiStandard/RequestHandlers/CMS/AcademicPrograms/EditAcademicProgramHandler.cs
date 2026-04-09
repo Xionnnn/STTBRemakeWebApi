@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.AcademicCourses;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
 using STTB.WebApiStandard.Entities;
@@ -25,8 +26,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 .Include(p => p.AcademicProgramRequirements)
                 .Include(p => p.AcademicProgramNotes)
                 .Include(p => p.AcademicProgramSystems)
-                .Include(p => p.AcademicCourseCategories)
-                    .ThenInclude(c => c.AcademicCourses)
+                .Include(p => p.AcademicProgramCategories)
+                    .ThenInclude(c => c.AcademicCategoryCourses)
                 .FirstOrDefaultAsync(p => p.Id == request.Id, ct);
 
             if (program == null)
@@ -59,11 +60,11 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             _db.AcademicProgramNotes.RemoveRange(program.AcademicProgramNotes);
             _db.AcademicProgramSystems.RemoveRange(program.AcademicProgramSystems);
             
-            foreach (var cat in program.AcademicCourseCategories)
+            foreach (var cat in program.AcademicProgramCategories)
             {
-                _db.AcademicCourses.RemoveRange(cat.AcademicCourses);
+                _db.AcademicCategoryCourses.RemoveRange(cat.AcademicCategoryCourses);
             }
-            _db.AcademicCourseCategories.RemoveRange(program.AcademicCourseCategories);
+            _db.AcademicProgramCategories.RemoveRange(program.AcademicProgramCategories);
 
             // Rebuild collections
             var timeNow = DateTime.UtcNow;
@@ -110,11 +111,11 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 }
             }
 
-            if (request.LectureCategory != null)
+            if (request.CourseCategory != null)
             {
-                foreach (var catDto in request.LectureCategory)
+                foreach (var catDto in request.CourseCategory)
                 {
-                    var newCat = new AcademicCourseCategory
+                    var newCat = new AcademicProgramCategory
                     {
                         ProgramId = program.Id,
                         Name = catDto.CategoryName,
@@ -123,22 +124,21 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                         UpdatedAt = timeNow
                     };
 
-                    if (catDto.Lectures != null)
+                    if (catDto.Courses != null)
                     {
-                        foreach (var lecDto in catDto.Lectures)
+                        foreach (var courseDto in catDto.Courses)
                         {
-                            newCat.AcademicCourses.Add(new AcademicCourse
+                            newCat.AcademicCategoryCourses.Add(new AcademicCategoryCourse
                             {
-                                Name = lecDto.LectureName,
-                                Credits = lecDto.Credits ?? 0,
-                                Description = lecDto.Description,
+                                AcademicProgramCategory = newCat,
+                                AcademicProgramCourseId = courseDto.Id,
                                 CreatedAt = timeNow,
                                 UpdatedAt = timeNow
                             });
                         }
                     }
 
-                    program.AcademicCourseCategories.Add(newCat);
+                    program.AcademicProgramCategories.Add(newCat);
                 }
             }
 
@@ -162,17 +162,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
                 TransformedDescription = program.TransformedDescription,
                 TransformativeDescription = program.TransformativeDescription,
                 IsPublished = program.IsPublished,
-                LectureCategory = program.AcademicCourseCategories.Select(c => new AcademicDTO
-                {
-                    CategoryName = c.Name,
-                    TotalCredits = c.TotalCredits,
-                    Lectures = c.AcademicCourses.Select(course => new LectureDTO
-                    {
-                        LectureName = course.Name,
-                        Credits = course.Credits,
-                        Description = course.Description ?? string.Empty
-                    }).ToList()
-                }).ToList()
+                CourseCategory = request.CourseCategory ?? new List<AcademicCategoryDTO>()
             };
         }
         private string GenerateSlug(string phrase)

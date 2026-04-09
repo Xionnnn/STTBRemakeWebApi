@@ -3,11 +3,9 @@ using System.Collections.Generic;
 
 namespace STTB.WebApiStandard.Entities;
 
-public partial class AcademicCourse
+public partial class AcademicProgramCourse
 {
     public long Id { get; set; }
-
-    public long CategoryId { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -19,5 +17,5 @@ public partial class AcademicCourse
 
     public DateTime UpdatedAt { get; set; }
 
-    public virtual AcademicCourseCategory Category { get; set; } = null!;
+    public virtual ICollection<AcademicCategoryCourse> AcademicCategoryCourses { get; set; } = new List<AcademicCategoryCourse>();
 }

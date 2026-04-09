@@ -1,15 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
+namespace STTB.WebApiStandard.Contracts.DTOs.Web.Academics
 {
-    public class GetAvailableProgramResponse
-    {
-        public IReadOnlyList<ItemDTO> Items { get; set; } = Array.Empty<ItemDTO>();
-    }
-
-    public class ItemDTO
+    public class GetAllAcademicDTO
     {
         public long ProgramId { get; set; }
         public string Slug { get; set; } = string.Empty;
@@ -18,5 +13,4 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Academic
         public int? Duration { get; set; } = null;
         public int? TotalCredit { get; set; } = null;
     }
-
 }

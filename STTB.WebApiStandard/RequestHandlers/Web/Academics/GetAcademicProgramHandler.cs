@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Academics;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 using STTB.WebApiStandard.Contracts.ResponseModels.Academic;
 using STTB.WebApiStandard.Entities;
@@ -10,27 +11,27 @@ using System.Text;
 
 namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
 {
-    public class GetProgramHandler : IRequestHandler<GetProgramRequest, GetProgramResponse>
+    public class GetAcademicProgramHandler : IRequestHandler<GetAcademicProgramRequest, GetAcademicProgramResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly ILogger<GetProgramHandler> _logger;
-        public GetProgramHandler(SttbDbContext db, ILogger<GetProgramHandler> logger)
+        private readonly ILogger<GetAcademicProgramHandler> _logger;
+        public GetAcademicProgramHandler(SttbDbContext db, ILogger<GetAcademicProgramHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<GetProgramResponse> Handle(GetProgramRequest request, CancellationToken ct)
+        public async Task<GetAcademicProgramResponse> Handle(GetAcademicProgramRequest request, CancellationToken ct)
         {
             var program = await _db.AcademicPrograms
                 .Include(p => p.AcademicProgramRequirements)
                 .Include(p => p.AcademicProgramNotes)
                 .Include(p => p.AcademicProgramSystems)
-                .Include(p => p.AcademicCourseCategories)
-                    .ThenInclude(cc => cc.AcademicCourses)
+                .Include(p => p.AcademicProgramCategories)
+                    .ThenInclude(cc => cc.AcademicCategoryCourses)
                 .Where(p => p.Slug == request.ProgramSlug && p.IsPublished)
                 .AsNoTracking()
-                .Select(p => new GetProgramResponse
+                .Select(p => new GetAcademicProgramResponse
                 {
                     ProgramName = p.Name,
                     ProgramDescription = p.GraduateProfileDescription ?? string.Empty,
@@ -50,27 +51,27 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
                     InformedDescription = p.InformedDescription,
                     TransformedDescription = p.TransformedDescription,
                     TransformativeDescription = p.TransformativeDescription,
-                    LectureCategory = p.AcademicCourseCategories
-                        .Select(cc => new AcademicDTO
+                    ProgramCategory = p.AcademicProgramCategories
+                        .Select(c => new AcademicCategoryDTO
                         {
-                            CategoryName = cc.Name,
-                            TotalCredits = cc.TotalCredits,
-                            Lectures = cc.AcademicCourses
-                                .Select(c => new LectureDTO
+                            CategoryName = c.Name,
+                            TotalCredits = c.TotalCredits,
+                            Courses = c.AcademicCategoryCourses
+                                .Select(c => new AcademicCourseDTO
                                 {
-                                    LectureName = c.Name,
-                                    Credits = c.Credits,
-                                    Description = c.Description ?? string.Empty
+                                    CourseName = c.AcademicProgramCourse.Name,
+                                    Credits = c.AcademicProgramCourse.Credits,
+                                    Description = c.AcademicProgramCourse.Description ?? string.Empty
                                 })
                                 .ToList()
-                        })
-                        .ToList()
+                        }).ToList()
                 })
                 .FirstOrDefaultAsync(ct);
 
             if (program == null)
             {
                 _logger.LogInformation($"Program with slug '{request.ProgramSlug}' not found");
+                throw new Exception("Data doesnt exist");
             }
 
             return program;

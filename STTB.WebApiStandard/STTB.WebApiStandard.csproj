@@ -27,12 +27,12 @@
 
 
 	<ItemGroup>
-    <Folder Include="RequestHandlers\CMS\AcademicPrograms\" />
+    <Folder Include="RequestHandlers\CMS\AcademicPrograms\ProgramCourses\" />
     <Folder Include="RequestHandlers\CMS\AdmissionCosts\Categories\" />
     <Folder Include="RequestHandlers\CMS\Events\" />
     <Folder Include="RequestHandlers\CMS\Media\" />
+    <Folder Include="Validators\CMS\AcademicPrograms\ProgramCourses\" />
     <Folder Include="Validators\CMS\AdmissionCosts\" />
-    <Folder Include="Validators\CMS\AcademicPrograms\" />
     <Folder Include="Validators\Web\Profiles\" />
   </ItemGroup>
 

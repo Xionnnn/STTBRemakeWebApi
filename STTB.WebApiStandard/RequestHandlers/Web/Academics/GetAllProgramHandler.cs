@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Academics;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Academics;
 using STTB.WebApiStandard.Contracts.ResponseModels.Academic;
 using STTB.WebApiStandard.Entities;
@@ -10,17 +11,17 @@ using System.Text;
 
 namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
 {
-    public class GetAvailableProgramHandler : IRequestHandler<GetAvailableProgramRequest, GetAvailableProgramResponse>
+    public class GetAllProgramHandler : IRequestHandler<GetAllAcademicProgramRequest, GetAllAcademicProgramResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly ILogger<GetAvailableProgramHandler> _logger;
-        public GetAvailableProgramHandler(SttbDbContext db, ILogger<GetAvailableProgramHandler> logger)
+        private readonly ILogger<GetAllProgramHandler> _logger;
+        public GetAllProgramHandler(SttbDbContext db, ILogger<GetAllProgramHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<GetAvailableProgramResponse> Handle(GetAvailableProgramRequest request, CancellationToken ct)
+        public async Task<GetAllAcademicProgramResponse> Handle(GetAllAcademicProgramRequest request, CancellationToken ct)
         {
             var query = _db.AcademicPrograms
                 .Where(p => p.IsPublished)
@@ -33,7 +34,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
             }
 
             var items = await query
-                .Select(p => new ItemDTO
+                .Select(p => new GetAllAcademicDTO
                 {
                     ProgramId = p.Id,
                     Slug = p.Slug,
@@ -46,7 +47,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Academics
 
             _logger.LogInformation($"Found {items.Count} programs");
 
-            return new GetAvailableProgramResponse
+            return new GetAllAcademicProgramResponse
             {
                 Items = items
             };

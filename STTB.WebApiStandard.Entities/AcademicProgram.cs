@@ -35,7 +35,7 @@ public partial class AcademicProgram
 
     public DateTime UpdatedAt { get; set; }
 
-    public virtual ICollection<AcademicCourseCategory> AcademicCourseCategories { get; set; } = new List<AcademicCourseCategory>();
+    public virtual ICollection<AcademicProgramCategory> AcademicProgramCategories { get; set; } = new List<AcademicProgramCategory>();
 
     public virtual ICollection<AcademicProgramCost> AcademicProgramCosts { get; set; } = new List<AcademicProgramCost>();
 

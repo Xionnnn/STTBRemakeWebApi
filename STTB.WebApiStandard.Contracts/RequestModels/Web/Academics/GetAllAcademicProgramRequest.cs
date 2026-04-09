@@ -6,7 +6,7 @@ using System.Text;
 
 namespace STTB.WebApiStandard.Contracts.RequestModels.Web.Academics
 {
-    public class GetAvailableProgramRequest : IRequest<GetAvailableProgramResponse>
+    public class GetAllAcademicProgramRequest : IRequest<GetAllAcademicProgramResponse>
     {
         public int? FetchLimit { get; set; } = null;
     }

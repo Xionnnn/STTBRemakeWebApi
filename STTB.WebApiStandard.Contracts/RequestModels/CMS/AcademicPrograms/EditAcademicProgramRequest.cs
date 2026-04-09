@@ -1,4 +1,5 @@
 using MediatR;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.AcademicCourses;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AcademicPrograms;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms
         public string InformedDescription { get; set; } = string.Empty;
         public string TransformedDescription { get; set; } = string.Empty;
         public string TransformativeDescription { get; set; } = string.Empty;
-        public List<AcademicDTO> LectureCategory { get; set; } = new List<AcademicDTO>();
+        public List<AcademicCategoryDTO> CourseCategory { get; set; } = new List<AcademicCategoryDTO>();
         public bool IsPublished { get; set; } = false;
     }
 }

@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.AcademicPrograms.ProgramCourses;
 
 namespace STTB.WebApiStandard.WebApi.Controllers.CMS
 {
@@ -54,5 +55,46 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             await _mediator.Send(request, ct);
             return NoContent();
         }
+
+        #region Courses
+
+        [HttpGet("get-all-courses")]
+        public async Task<IActionResult> GetAllCourses([FromQuery] GetAllAcademicProgramCoursesRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("get-course/{id}")]
+        public async Task<IActionResult> GetCourse(long id, CancellationToken ct)
+        {
+            var request = new GetAcademicProgramCoursesRequest { Id = id };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPost("add-course")]
+        public async Task<IActionResult> AddCourse([FromBody] AddAcademicProgramCoursesRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPut("edit-course")]
+        public async Task<IActionResult> EditCourse([FromBody] EditAcademicProgramCoursesRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-course/{id}")]
+        public async Task<IActionResult> DeleteCourse(long id, CancellationToken ct)
+        {
+            var request = new DeleteAcademicProgramCoursesRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+
+        #endregion
     }
 }
