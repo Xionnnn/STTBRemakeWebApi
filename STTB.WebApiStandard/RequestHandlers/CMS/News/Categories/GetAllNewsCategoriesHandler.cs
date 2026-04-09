@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.DTOs.CMS.News;
-using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.News;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.News.Categories;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.News.Categories;
 using STTB.WebApiStandard.Entities;
