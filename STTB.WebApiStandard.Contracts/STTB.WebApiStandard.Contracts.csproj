@@ -15,9 +15,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="RequestModels\CMS\AcademicPrograms\Categories\" />
-    <Folder Include="RequestModels\CMS\AdmissionCosts\Categories\" />
-    <Folder Include="ResponseModels\CMS\AcademicPrograms\Categories\" />
+    <Folder Include="RequestModels\CMS\AcademicPrograms\AcademicCourses\" />
   </ItemGroup>
 
 </Project>

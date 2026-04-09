@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts;
+using STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts.Categories;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Events;
 
 namespace STTB.WebApiStandard.WebApi.Controllers.CMS
@@ -56,11 +57,43 @@ namespace STTB.WebApiStandard.WebApi.Controllers.CMS
             return NoContent();
         }
 
-        [HttpGet("get-all-categories")]
-        public async Task<IActionResult> GetAllCategories(CancellationToken ct)
+        #region Categories
+        [HttpGet("categories/get-all")]
+        public async Task<IActionResult> GetAllCategories([FromQuery] GetAllCostCategoryRequest request, CancellationToken ct)
         {
-            var response = await _mediator.Send(new GetAllCostCategoryRequest(), ct);
+            var response = await _mediator.Send(request ?? new GetAllCostCategoryRequest(), ct);
             return Ok(response);
         }
+
+        [HttpPost("categories/add")]
+        public async Task<IActionResult> AddCategory([FromBody] AddCostCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpGet("categories/get/{id}")]
+        public async Task<IActionResult> GetCategory(long id, CancellationToken ct)
+        {
+            var request = new GetCostCategoryRequest { Id = id };
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpPut("categories/edit")]
+        public async Task<IActionResult> EditCategory([FromBody] EditCostCategoryRequest request, CancellationToken ct)
+        {
+            var response = await _mediator.Send(request, ct);
+            return Ok(response);
+        }
+
+        [HttpDelete("categories/delete/{id}")]
+        public async Task<IActionResult> DeleteCategory(long id, CancellationToken ct)
+        {
+            var request = new DeleteCostCategoryRequest { Id = id };
+            await _mediator.Send(request, ct);
+            return NoContent();
+        }
+        #endregion
     }
 }
