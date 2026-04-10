@@ -15,6 +15,8 @@ public partial class Event
 
     public string? Description { get; set; }
 
+    public string? Location { get; set; }
+
     public DateTime StartAt { get; set; }
 
     public DateTime? EndAt { get; set; }
@@ -26,8 +28,6 @@ public partial class Event
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
-
-    public string? Location { get; set; }
 
     public virtual ICollection<EventCategoryMap> EventCategoryMaps { get; set; } = new List<EventCategoryMap>();
 

@@ -39,6 +39,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 JournalTitle = media.Title,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
+                Abstract = media.MediaItemsJournal?.Abstract ?? string.Empty,
                 Category = media.MediaItemTopics.Select(mt => mt.TopicCategory.Name).ToList(),
                 Authors = media.MediaItemWriters.Select(mw => new Contracts.DTOs.CMS.Media.AuthorDTO
                 {

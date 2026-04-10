@@ -42,6 +42,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Media
                             AuthorPosition = mw.MediaWriter.AuthorPosition ?? string.Empty
                         })
                         .ToList(),
+                    Abstract = m.MediaItemsJournal != null ? m.MediaItemsJournal.Abstract : string.Empty,
                     JournalPath = _db.Assets
                         .Where(a => a.ModelType == "media_items\\journal_content" && a.ModelId == m.Id)
                         .Select(a => a.FilePath)

@@ -438,6 +438,7 @@ CREATE TABLE media_items_video (
 
 CREATE TABLE media_items_journal (
     id BIGSERIAL PRIMARY KEY,
+    abstract TEXT NOT NULL,
     media_item_id BIGINT NOT NULL UNIQUE
         REFERENCES media_items(id) ON DELETE CASCADE,
     issn VARCHAR(20),

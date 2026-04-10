@@ -9,6 +9,7 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media.Journals
         public long Id { get; set; }
         public string JournalTitle { get; set; } = string.Empty;
         public IReadOnlyList<AuthorDTO> Authors { get; set; } = Array.Empty<AuthorDTO>();
+        public string Abstract { get; set; } = string.Empty;
         public DateTime PublicationDate { get; set; }
         public bool IsPublished { get; set; }
         public IReadOnlyList<string> Category { get; set; } = Array.Empty<string>();

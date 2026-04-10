@@ -40,6 +40,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 UpdatedAt = DateTime.UtcNow,
                 MediaItemsJournal = new MediaItemsJournal
                 {
+                    Abstract = request.Abstract,
                     Issn = request.Issn,
                     EIssn = request.EIssn,
                     Doi = request.Doi,
@@ -147,6 +148,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media.Journals
                 JournalTitle = media.Title,
                 PublicationDate = media.PublishedAt,
                 IsPublished = media.IsPublished,
+                Abstract = request.Abstract,
                 Category = request.Category ?? new List<string>(),
                 Authors = request.Authors ?? new List<Contracts.DTOs.CMS.Media.AuthorDTO>(),
                 Issn = request.Issn ?? string.Empty,

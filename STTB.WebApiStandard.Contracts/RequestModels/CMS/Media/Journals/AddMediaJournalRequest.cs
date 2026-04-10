@@ -12,6 +12,7 @@ namespace STTB.WebApiStandard.Contracts.RequestModels.CMS.Media.Journals
         public string JournalTitle { get; set; } = string.Empty;
         public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public DateTime PublicationDate { get; set; }
+        public string Abstract { get; set; } = string.Empty;
         public bool IsPublished { get; set; }
         public List<string> Category { get; set; } = new List<string>();
         public string Issn { get; set; } = string.Empty;

@@ -7,6 +7,8 @@ public partial class MediaItemsJournal
 {
     public long Id { get; set; }
 
+    public string Abstract { get; set; } = null!;
+
     public long MediaItemId { get; set; }
 
     public string? Issn { get; set; }

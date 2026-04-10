@@ -873,6 +873,7 @@ public partial class SttbDbContext : DbContext
             entity.HasIndex(e => e.MediaItemId, "media_items_journal_media_item_id_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abstract).HasColumnName("abstract");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
