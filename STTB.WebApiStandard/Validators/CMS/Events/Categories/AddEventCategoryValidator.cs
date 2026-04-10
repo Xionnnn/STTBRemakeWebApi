@@ -16,9 +16,6 @@ namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
             RuleFor(x => x.CategoryName)
                 .NotEmpty().WithMessage("Category Name is required.");
 
-            RuleFor(x => x.Slug)
-                .NotEmpty().WithMessage("Slug is required.");
-
             RuleFor(x => x).CustomAsync(ValidateBusinessAsync);
         }
 
@@ -26,7 +23,7 @@ namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
         {
             var existing = await _db.EventCategories
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Name.ToUpper() == request.CategoryName.ToUpper() || c.Slug == request.Slug, ct);
+                .FirstOrDefaultAsync(c => c.Name.ToUpper() == request.CategoryName.ToUpper(), ct);
 
             if (existing != null)
             {

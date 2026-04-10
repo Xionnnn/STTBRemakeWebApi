@@ -5,7 +5,7 @@ namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
 {
     public class GetAllEventCategoriesValidator : AbstractValidator<GetAllEventCategoriesRequest>
     {
-        private static readonly string[] AllowedOrderByFields = { "Id", "CategoryName", "CreatedAt", "Slug" };
+        private static readonly string[] AllowedOrderByFields = { "Id", "CategoryName", "CreatedAt" };
         private static readonly string[] AllowedOrderStates = { "asc", "desc" };
 
         public GetAllEventCategoriesValidator()

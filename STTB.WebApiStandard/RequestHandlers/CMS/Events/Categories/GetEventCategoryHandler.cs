@@ -25,8 +25,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                 .Select(c => new GetEventCategoryResponse
                 {
                     Id = c.Id,
-                    CategoryName = c.Name,
-                    Slug = c.Slug
+                    CategoryName = c.Name
                 })
                 .FirstOrDefaultAsync(c => c.Id == request.Id, ct);
 

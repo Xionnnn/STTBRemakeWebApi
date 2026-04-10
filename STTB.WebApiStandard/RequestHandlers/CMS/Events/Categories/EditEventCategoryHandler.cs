@@ -29,7 +29,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
             }
 
             eventCategory.Name = request.CategoryName;
-            eventCategory.Slug = request.Slug;
             eventCategory.UpdatedAt = DateTime.UtcNow;
 
             await _db.SaveChangesAsync(ct);
@@ -39,8 +38,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
             return new EditEventCategoryResponse
             {
                 Id = request.Id,
-                CategoryName = request.CategoryName,
-                Slug = request.Slug
+                CategoryName = request.CategoryName
             };
         }
     }

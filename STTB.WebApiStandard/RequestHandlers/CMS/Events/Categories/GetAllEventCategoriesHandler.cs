@@ -29,8 +29,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                     .Select(c => new GetAllEventCategoriesDTO
                     {
                         Id = c.Id,
-                        CategoryName = c.Name,
-                        Slug = c.Slug
+                        CategoryName = c.Name
                     })
                     .ToListAsync(ct);
 
@@ -61,7 +60,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                     {
                         Id = c.Id,
                         CategoryName = c.Name,
-                        Slug = c.Slug,
                         CreatedAt = c.CreatedAt
                     })
                     .ToListAsync(ct);
@@ -91,7 +89,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
                 "Id" => isDescending ? query.OrderByDescending(c => c.Id) : query.OrderBy(c => c.Id),
                 "CreatedAt" => isDescending ? query.OrderByDescending(c => c.CreatedAt) : query.OrderBy(c => c.CreatedAt),
                 "CategoryName" => isDescending ? query.OrderByDescending(c => c.Name) : query.OrderBy(c => c.Name),
-                "Slug" => isDescending ? query.OrderByDescending(c => c.Slug) : query.OrderBy(c => c.Slug),
                 _ => isDescending ? query.OrderByDescending(c => c.CreatedAt) : query.OrderBy(c => c.CreatedAt)
             };
         }

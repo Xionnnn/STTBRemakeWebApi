@@ -23,7 +23,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
             var eventCategory = new EventCategory
             {
                 Name = request.CategoryName,
-                Slug = request.Slug,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -36,8 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
             return new AddEventCategoryResponse
             {
                 Id = eventCategory.Id,
-                CategoryName = eventCategory.Name,
-                Slug = eventCategory.Slug
+                CategoryName = eventCategory.Name
             };
         }
     }

@@ -558,8 +558,6 @@ public partial class SttbDbContext : DbContext
 
             entity.HasIndex(e => e.Name, "event_categories_name_key").IsUnique();
 
-            entity.HasIndex(e => e.Slug, "event_categories_slug_key").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
@@ -567,9 +565,6 @@ public partial class SttbDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName("name");
-            entity.Property(e => e.Slug)
-                .HasMaxLength(120)
-                .HasColumnName("slug");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");

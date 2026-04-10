@@ -19,9 +19,6 @@ namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
             RuleFor(x => x.CategoryName)
                 .NotEmpty().WithMessage("Category Name is required.");
 
-            RuleFor(x => x.Slug)
-                .NotEmpty().WithMessage("Slug is required.");
-
             RuleFor(x => x).CustomAsync(ValidateBusinessAsync);
         }
 
@@ -40,7 +37,7 @@ namespace STTB.WebApiStandard.Validators.CMS.Events.Categories
             // Exclude current record from uniqueness check
             var duplicate = await _db.EventCategories
                 .FirstOrDefaultAsync(c => c.Id != request.Id &&
-                    (c.Name.ToUpper() == request.CategoryName.ToUpper() || c.Slug == request.Slug), ct);
+                    c.Name.ToUpper() == request.CategoryName.ToUpper(), ct);
 
             if (duplicate != null)
             {

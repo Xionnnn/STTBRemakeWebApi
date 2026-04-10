@@ -79,7 +79,6 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
                         cat = new EventCategory
                         {
                             Name = categoryName,
-                            Slug = categoryName.ToLower().Replace(" ", "-"),
                             CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         };
