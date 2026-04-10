@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Donations;
 using STTB.WebApiStandard.Contracts.ResponseModels.Donations;
@@ -10,12 +9,9 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Donations
     public class AddDonorMemberHandler : IRequestHandler<AddDonorMemberRequest, AddDonorMemberResponse>
     {
         private readonly SttbDbContext _db;
-        private readonly IWebHostEnvironment _env;
-
-        public AddDonorMemberHandler(SttbDbContext db, IWebHostEnvironment env)
+        public AddDonorMemberHandler(SttbDbContext db)
         {
             _db = db;
-            _env = env;
         }
 
         public async Task<AddDonorMemberResponse> Handle(AddDonorMemberRequest request, CancellationToken ct)
@@ -54,7 +50,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Donations
                 await _db.SaveChangesAsync(ct);
             }
 
-            await SaveImageAssetAsync(request.ProofOfDonationImage!, donorMember.Id, "donation_proof_image", @"donor_members\donation_proof_image", ct);
+            await SaveImageAssetAsync(request.ProofOfDonationImage!, donorMember.Id, ct);
 
             return new AddDonorMemberResponse
             {
@@ -64,14 +60,14 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Donations
             };
         }
 
-        private async Task SaveImageAssetAsync(IFormFile file, long memberId, string columnName, string modelType, CancellationToken ct)
+        private async Task SaveImageAssetAsync(IFormFile file, long memberId, CancellationToken ct)
         {
             var extension = Path.GetExtension(file.FileName);
             var uuid = Guid.NewGuid().ToString();
             var fileName = $"{uuid}{extension}";
-            var relativePath = $"uploads/images/{columnName}/{fileName}";
+            var relativePath = $"/Uploads/images/donor_members/{fileName}";
 
-            var physicalDir = Path.Combine(_env.WebRootPath, "uploads", "images", columnName);
+            var physicalDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "images", "donor_members");
             Directory.CreateDirectory(physicalDir);
 
             var physicalPath = Path.Combine(physicalDir, fileName);
@@ -86,7 +82,7 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Donations
                 FilePath = relativePath,
                 MimeType = file.ContentType,
                 SizeBytes = file.Length,
-                ModelType = modelType,
+                ModelType = @"donor_members\donation_proof_image",
                 ModelId = memberId,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
