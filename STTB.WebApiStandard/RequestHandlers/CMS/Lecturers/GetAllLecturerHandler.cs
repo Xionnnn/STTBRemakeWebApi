@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Lecturers;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Lecturers;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Lecturers;
 using STTB.WebApiStandard.Entities;
 
 namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
@@ -55,7 +56,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                 .GroupBy(a => a.ModelId!.Value)
                 .ToDictionary(g => g.Key, g => g.First().FilePath);
 
-            var items = lecturerList.Select(l => new LecturerDto
+            var items = lecturerList.Select(l => new LecturerDTO
             {
                 Id = l.Id,
                 LecturerName = l.LecturerName,

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.Roles;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Roles
 {
@@ -13,13 +14,5 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Roles
         public int TotalPages { get; set; }
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
-    }
-
-    public class RoleDTO
-    {
-        public long Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public List<string> RolePermissions { get; set; } = new List<string>();
-        public DateTime CreatedAt { get; set; }
     }
 }

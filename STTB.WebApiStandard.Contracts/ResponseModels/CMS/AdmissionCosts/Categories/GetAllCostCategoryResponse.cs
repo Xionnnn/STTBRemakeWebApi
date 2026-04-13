@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.AdmissionCosts.Categories;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionCosts.Categories
 {
@@ -15,11 +16,5 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionCosts.Catego
         public int TotalPages { get; set; }
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
-    }
-    public class CMSCostCategoryDTO
-    {
-        public long Id { get; set; }
-        public string CategoryName { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
     }
 }

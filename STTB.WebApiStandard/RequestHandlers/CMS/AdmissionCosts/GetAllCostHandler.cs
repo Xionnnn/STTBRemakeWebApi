@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.AdmissionCosts;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.AdmissionCosts;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.AdmissionCosts;
 using STTB.WebApiStandard.Entities;
 
 namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
@@ -41,7 +42,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
             var items = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(c => new CostDto
+                .Select(c => new CostDTO
                 {
                     Id = c.Id,
                     CategoryName = c.AcademicProgramCostCategoryMaps.FirstOrDefault() != null 

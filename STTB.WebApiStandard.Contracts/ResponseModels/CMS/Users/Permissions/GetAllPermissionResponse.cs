@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.Permissions;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Permissions
 {
@@ -13,12 +14,5 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Permissions
         public int TotalPages { get; set; }
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
-    }
-
-    public class PermissionDTO
-    {
-        public long Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
     }
 }

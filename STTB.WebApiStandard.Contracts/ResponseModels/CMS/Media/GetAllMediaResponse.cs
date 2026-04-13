@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Media;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media
 {
@@ -12,17 +13,5 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.CMS.Media
         public int TotalPages { get; set; }
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
-    }
-
-    public class MediaItemDTO
-    {
-        public long Id { get; set; }
-        public string MediaName { get; set; } = string.Empty;
-        public string Slug { get; set; } = string.Empty;
-        public string MediaFormat { get; set; } = string.Empty;
-        public DateTime? PublishedAt { get; set; }
-        public bool IsPublished { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string ThumbnailPath { get; set; } = string.Empty;
     }
 }

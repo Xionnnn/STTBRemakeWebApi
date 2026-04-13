@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.CMS.Users.Permissions;
 using STTB.WebApiStandard.Contracts.ResponseModels.CMS.Users.Permissions;
+using STTB.WebApiStandard.Contracts.DTOs.CMS.Users.Permissions;
 using STTB.WebApiStandard.Entities;
 using System;
 using System.Linq;
