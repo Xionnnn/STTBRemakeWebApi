@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Admissions;
 using STTB.WebApiStandard.Contracts.ResponseModels.Admissions;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Admissions;
 using STTB.WebApiStandard.Entities;
 using System;
 using System.Linq;

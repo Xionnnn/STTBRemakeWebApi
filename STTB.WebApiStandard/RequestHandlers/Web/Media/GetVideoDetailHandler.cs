@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Media;
 using STTB.WebApiStandard.Contracts.ResponseModels.Media;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Media;
 using STTB.WebApiStandard.Entities;
 using System.Linq;
 using System.Threading;

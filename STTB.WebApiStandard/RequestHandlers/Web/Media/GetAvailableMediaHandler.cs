@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Media;
 using STTB.WebApiStandard.Contracts.ResponseModels.Media;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Media;
 using STTB.WebApiStandard.Entities;
 using System;
 using System.Linq;

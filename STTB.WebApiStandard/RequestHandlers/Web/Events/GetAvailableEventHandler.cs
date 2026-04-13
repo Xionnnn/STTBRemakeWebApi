@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STTB.WebApiStandard.Contracts.RequestModels.Web.Events;
 using STTB.WebApiStandard.Contracts.ResponseModels.Events;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Events;
 using STTB.WebApiStandard.Entities;
 using System;
 using System.Collections.Generic;

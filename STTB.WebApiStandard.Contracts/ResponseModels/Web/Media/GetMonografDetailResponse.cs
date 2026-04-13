@@ -1,4 +1,5 @@
-﻿using System;
+﻿using STTB.WebApiStandard.Contracts.DTOs.Web.Media;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using STTB.WebApiStandard.Contracts.DTOs.Web.Media;
 
 namespace STTB.WebApiStandard.Contracts.ResponseModels.Media
 {
@@ -15,9 +16,4 @@ namespace STTB.WebApiStandard.Contracts.ResponseModels.Media
         public string ArticleContent { get; set; } = string.Empty;
         public string ThumbnailPath { get; set; } = string.Empty;
     }   
-    public class AuthorDTO
-    {
-        public string AuthorName { get; set; } = string.Empty;
-        public string AuthorPosition { get; set; } = string.Empty;
-    }
 }
