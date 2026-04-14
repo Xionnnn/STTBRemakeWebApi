@@ -29,7 +29,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News
             // Filter by Title
             if (!string.IsNullOrWhiteSpace(request.NewsName))
             {
-                query = query.Where(n => n.Title.Contains(request.NewsName));
+                query = query.Where(n => n.Title.ToLower().Contains(request.NewsName.ToLower()));
             }
 
             // Sorting

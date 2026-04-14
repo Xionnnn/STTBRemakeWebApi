@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events
             // Filter by Title
             if (!string.IsNullOrWhiteSpace(request.EventName))
             {
-                query = query.Where(e => e.Title.Contains(request.EventName));
+                query = query.Where(e => e.Title.ToLower().Contains(request.EventName.ToLower()));
             }
 
             // Sorting

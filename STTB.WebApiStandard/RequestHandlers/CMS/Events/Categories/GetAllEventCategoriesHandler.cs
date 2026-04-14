@@ -45,7 +45,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Events.Categories
 
                 if (!string.IsNullOrWhiteSpace(request.CategoryName))
                 {
-                    query = query.Where(c => c.Name.Contains(request.CategoryName));
+                    query = query.Where(c => c.Name.ToLower().Contains(request.CategoryName.ToLower()));
                 }
 
                 query = ApplySorting(query, request.OrderBy, request.OrderState);

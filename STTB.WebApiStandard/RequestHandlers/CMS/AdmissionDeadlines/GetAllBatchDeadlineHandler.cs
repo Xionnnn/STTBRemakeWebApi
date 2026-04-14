@@ -30,8 +30,8 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionDeadlines
             // Filter by academic year or batch order
             if (!string.IsNullOrWhiteSpace(request.SearchBatch))
             {
-                query = query.Where(d => d.AcademicYear.Contains(request.SearchBatch)
-                    || d.BatchOrder.ToString().Contains(request.SearchBatch));
+                query = query.Where(d => d.AcademicYear.ToLower().Contains(request.SearchBatch.ToLower())
+                    || d.BatchOrder.ToString().ToLower().Contains(request.SearchBatch.ToLower()));
             }
 
             // Sorting

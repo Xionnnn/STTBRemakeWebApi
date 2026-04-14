@@ -26,7 +26,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Administrators
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.AdministratorName))
             {
-                query = query.Where(a => a.AdminName.Contains(request.AdministratorName));
+                query = query.Where(a => a.AdminName.ToLower().Contains(request.AdministratorName.ToLower()));
             }
 
             // Sorting

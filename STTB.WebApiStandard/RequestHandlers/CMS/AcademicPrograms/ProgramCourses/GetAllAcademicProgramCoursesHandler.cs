@@ -47,7 +47,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms.ProgramCourse
 
                 if (!string.IsNullOrWhiteSpace(request.CourseName))
                 {
-                    query = query.Where(c => c.Name.Contains(request.CourseName));
+                    query = query.Where(c => c.Name.ToLower().Contains(request.CourseName.ToLower()));
                 }
 
                 query = ApplySorting(query, request.OrderBy, request.OrderState);

@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Permissions
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.PermissionName))
             {
-                query = query.Where(p => p.Name.Contains(request.PermissionName));
+                query = query.Where(p => p.Name.ToLower().Contains(request.PermissionName.ToLower()));
             }
 
             // Sorting

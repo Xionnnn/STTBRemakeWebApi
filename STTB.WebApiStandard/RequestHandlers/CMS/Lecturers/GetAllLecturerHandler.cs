@@ -31,7 +31,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.LecturerName))
             {
-                query = query.Where(l => l.LecturerName.Contains(request.LecturerName));
+                query = query.Where(l => l.LecturerName.ToLower().Contains(request.LecturerName.ToLower()));
             }
 
             // Sorting

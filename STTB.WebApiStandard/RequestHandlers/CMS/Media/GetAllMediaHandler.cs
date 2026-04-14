@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Media
             // Filter by Name/Title
             if (!string.IsNullOrWhiteSpace(request.MediaName))
             {
-                query = query.Where(m => m.Title.Contains(request.MediaName));
+                query = query.Where(m => m.Title.ToLower().Contains(request.MediaName.ToLower()));
             }
 
             // Apply Sorting

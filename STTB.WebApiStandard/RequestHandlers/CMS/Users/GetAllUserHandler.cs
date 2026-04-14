@@ -35,7 +35,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
-                query = query.Where(u => u.FullName.Contains(request.UserName));
+                query = query.Where(u => u.FullName.ToLower().Contains(request.UserName.ToLower()));
             }
 
             // Sorting

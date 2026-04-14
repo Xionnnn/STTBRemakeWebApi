@@ -30,7 +30,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.CostName))
             {
-                query = query.Where(c => c.Name.Contains(request.CostName));
+                query = query.Where(c => c.Name.ToLower().Contains(request.CostName.ToLower()));
             }
 
             // Sorting

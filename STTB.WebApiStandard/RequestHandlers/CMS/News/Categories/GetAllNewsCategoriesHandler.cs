@@ -50,7 +50,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.News.Categories
                 //searching
                 if(!string.IsNullOrWhiteSpace(request.CategoryName))
                 {
-                    query = query.Where(nc => nc.Name.Contains(request.CategoryName));
+                    query = query.Where(nc => nc.Name.ToLower().Contains(request.CategoryName.ToLower()));
                 }
 
                 //order by

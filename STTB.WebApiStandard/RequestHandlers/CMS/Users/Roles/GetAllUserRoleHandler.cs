@@ -33,7 +33,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Users.Roles
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.RoleName))
             {
-                query = query.Where(r => r.Name.Contains(request.RoleName));
+                query = query.Where(r => r.Name.ToLower().Contains(request.RoleName.ToLower()));
             }
 
             // Sorting

@@ -26,7 +26,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AcademicPrograms
             // Filter by name
             if (!string.IsNullOrWhiteSpace(request.AcademicProgramName))
             {
-                query = query.Where(a => a.Name.Contains(request.AcademicProgramName));
+                query = query.Where(a => a.Name.ToLower().Contains(request.AcademicProgramName.ToLower()));
             }
 
             // Sorting

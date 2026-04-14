@@ -46,7 +46,7 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.AdmissionCosts.Categories
 
                 if (!string.IsNullOrWhiteSpace(request.CategoryName))
                 {
-                    query = query.Where(c => c.CategoryName.Contains(request.CategoryName));
+                    query = query.Where(c => c.CategoryName.ToLower().Contains(request.CategoryName.ToLower()));
                 }
 
                 query = ApplySorting(query, request.OrderBy, request.OrderState);
