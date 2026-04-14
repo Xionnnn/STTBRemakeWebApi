@@ -47,12 +47,18 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                     var role = await _db.LecturerRoles.FirstOrDefaultAsync(r => r.RoleName == roleName, ct);
                     if (role == null)
                     {
-                        throw new InvalidOperationException($"Lecturer Role '{roleName}' does not exist.");
+                        role = new LecturerRole
+                        {
+                            RoleName = roleName,
+                            CreatedAt = DateTime.UtcNow,
+                            UpdatedAt = DateTime.UtcNow
+                        };
+                        await _db.LecturerRoles.AddAsync(role, ct);
                     }
                     lecturer.LecturerRoleMaps.Add(new LecturerRoleMap
                     {
                         Lecturer = lecturer,
-                        LecturerRoleId = role.Id,
+                        LecturerRole = role,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     });
@@ -67,12 +73,18 @@ namespace STTB.WebApiStandard.RequestHandlers.CMS.Lecturers
                     var degree = await _db.LecturerDegrees.FirstOrDefaultAsync(d => d.DegreeName == degreeName, ct);
                     if (degree == null)
                     {
-                        throw new InvalidOperationException($"Lecturer Degree '{degreeName}' does not exist.");
+                        degree = new LecturerDegree
+                        {
+                            DegreeName = degreeName,
+                            CreatedAt = DateTime.UtcNow,
+                            UpdatedAt = DateTime.UtcNow
+                        };
+                        await _db.LecturerDegrees.AddAsync(degree, ct);
                     }
                     lecturer.LecturerDegreeMaps.Add(new LecturerDegreeMap
                     {
                         Lecturer = lecturer,
-                        LecturerDegreeId = degree.Id,
+                        LecturerDegree = degree,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     });
