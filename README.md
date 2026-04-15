@@ -25,34 +25,5 @@ Below is the model_type list
 the DDL for this api endpoint is stored in STTB.WebApiStandard.Entities\Sql\migration.txt
 
 ## **Api Endpoint**
-There are total of 18 endpoint covering Academic Program, News, Events, Media, University Profiles, and Admissions.
+This API contains both API for STTB profile Website and the CMS endpoint.
 
-Academic:
-- api/v1/academics/get-available-programs
-- api/v1/academics/get-program/{slug}
-- api/v1/academics/get-academic-requirements
-
-News:
-- api/v1/news/get-available-news
-- api/v1/news/get-news/{slug}
-- api/v1/news/get-all-categories
-
-Events:
-- api/v1/events/get-available-events
-- api/v1/events/get-event/{slug}
-- api/v1/events/get-all-organizers
-- api/v1/events/get-all-categories
-
-Media:
-- api/v1/media/get-available-media/{media_format}
-- api/v1/media/get-media-categories
-- api/v1/media/get-journal/{slug}
-- api/v1/media/get-article/{slug}
-- api/v1/media/get-video/{slug}
-
-University Profiles:
-- api/v1/profiles/get-all-lecturers
-- api/v1/profiles/get-all-administrators
-
-Admissions:
-- api/v1/admissions/get-admission-schedule
