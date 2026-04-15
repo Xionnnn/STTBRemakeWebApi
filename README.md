@@ -1,6 +1,6 @@
 # **STTB Remake Web API**
 ## Overview
-This is the Api for STTB Profile Website (STTB Institutional Website) Remake.
+This is the Api for STTB Profile Website (STTB Institutional Website) Remake and the CMS website.
 
 This Api utilizes .Net with Mediatr, Fluent Validation for validation, Serilog for logging and this Api have implemented standard RFC 7807 for error handling with clean architecture and MARVEL Pattern. The DMBS used is PostgreSQL.
 
