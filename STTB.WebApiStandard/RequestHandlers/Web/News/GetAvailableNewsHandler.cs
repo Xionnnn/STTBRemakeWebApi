@@ -31,13 +31,13 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.News
 
             if (!string.IsNullOrWhiteSpace(request.NewsTitle))
             {
-                query = query.Where(n => n.Title.Contains(request.NewsTitle));
+                query = query.Where(n => n.Title.ToLower().Contains(request.NewsTitle.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.CategoryName))
             {
                 query = query.Where(n => n.NewsPostCategories
-                    .Any(npc => npc.Category.Name.Contains(request.CategoryName)));
+                    .Any(npc => npc.Category.Name.ToLower().Contains(request.CategoryName.ToLower())));
             }
 
             if (request.EventDate.HasValue)

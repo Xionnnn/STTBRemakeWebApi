@@ -32,19 +32,19 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Events
 
             if (!string.IsNullOrWhiteSpace(request.EventTitle))
             {
-                query = query.Where(e => e.Title.Contains(request.EventTitle));
+                query = query.Where(e => e.Title.ToLower().Contains(request.EventTitle.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.CategoryName))
             {
                 query = query.Where(e => e.EventCategoryMaps
-                    .Any(ecm => ecm.Category.Name.Contains(request.CategoryName)));
+                    .Any(ecm => ecm.Category.Name.ToLower().Contains(request.CategoryName.ToLower())));
             }
 
             if (!string.IsNullOrWhiteSpace(request.OrganizerName))
             {
                 query = query.Where(e => e.EventOrganizer != null
-                    && e.EventOrganizer.Name.Contains(request.OrganizerName));
+                    && e.EventOrganizer.Name.ToLower().Contains(request.OrganizerName.ToLower()));
             }
 
             if (request.EventDate.HasValue)

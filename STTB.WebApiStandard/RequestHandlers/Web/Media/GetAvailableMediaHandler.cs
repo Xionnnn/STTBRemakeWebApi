@@ -36,19 +36,19 @@ namespace STTB.WebApiStandard.RequestHandlers.Web.Media
 
             if (!string.IsNullOrWhiteSpace(request.MediaTitle))
             {
-                query = query.Where(m => m.Title.Contains(request.MediaTitle));
+                query = query.Where(m => m.Title.ToLower().Contains(request.MediaTitle.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(request.AuthorName))
             {
                 query = query.Where(m => m.MediaItemWriters
-                    .Any(mw => mw.MediaWriter.AuthorName.Contains(request.AuthorName)));
+                    .Any(mw => mw.MediaWriter.AuthorName.ToLower().Contains(request.AuthorName.ToLower())));
             }
 
             if (!string.IsNullOrWhiteSpace(request.CategoryName))
             {
                 query = query.Where(m => m.MediaItemTopics
-                    .Any(mt => mt.TopicCategory.Name.Contains(request.CategoryName)));
+                    .Any(mt => mt.TopicCategory.Name.ToLower().Contains(request.CategoryName.ToLower())));
             }
 
             if (request.PublicationDate.HasValue)
